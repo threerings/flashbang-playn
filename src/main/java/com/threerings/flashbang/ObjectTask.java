@@ -21,7 +21,7 @@ public abstract class ObjectTask
     /**
      * @return a clone of this task.
      */
-    public ObjectTask clone ()
+    public final ObjectTask clone ()
     {
         ObjectTask clone = createClone();
         initClone(clone);
