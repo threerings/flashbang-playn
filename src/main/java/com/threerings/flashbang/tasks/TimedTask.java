@@ -34,12 +34,6 @@ public class TimedTask extends ObjectTask
         return new TimedTask(_totalTime);
     }
 
-    @Override
-    protected void initClone (ObjectTask task)
-    {
-        ((TimedTask) task)._elapsedTime = 0;
-    }
-
     protected final float _totalTime;
     protected float _elapsedTime;
 }
