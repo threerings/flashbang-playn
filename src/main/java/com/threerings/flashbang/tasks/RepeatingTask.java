@@ -15,7 +15,7 @@ public class RepeatingTask extends TaskContainer
     }
 
     @Override
-    public TaskContainer createClone ()
+    protected TaskContainer createClone ()
     {
         return new RepeatingTask();
     }

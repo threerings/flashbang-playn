@@ -15,7 +15,7 @@ public class SerialTask extends TaskContainer
     }
 
     @Override
-    public TaskContainer createClone ()
+    protected TaskContainer createClone ()
     {
         return new SerialTask();
     }
