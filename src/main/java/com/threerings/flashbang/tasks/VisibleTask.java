@@ -11,8 +11,7 @@ import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 import com.threerings.flashbang.components.VisibleComponent;
 
-public class VisibleTask
-    implements ObjectTask
+public class VisibleTask extends ObjectTask
 {
     public VisibleTask (boolean visible)
     {
@@ -20,20 +19,27 @@ public class VisibleTask
     }
 
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
     {
         Preconditions.checkArgument(obj instanceof VisibleComponent,
             "VisibleTask only operates on GameObjects that implement VisibleComponent");
+        _target = (VisibleComponent)obj;
+    }
 
-        ((VisibleComponent) obj).setVisible(_toVisible);
+    @Override
+    public boolean update (float dt)
+    {
+        _target.setVisible(_toVisible);
         return true;
     }
 
     @Override
-    public VisibleTask clone ()
+    protected ObjectTask createClone ()
     {
         return new VisibleTask(_toVisible);
     }
+
+    protected VisibleComponent _target;
 
     protected final boolean _toVisible;
 }

@@ -70,6 +70,7 @@ public class GameObject
         if (_lazyAnonymousTasks == null) {
             _lazyAnonymousTasks = new ParallelTask();
         }
+        task.init(this);
         _lazyAnonymousTasks.addTask(task);
     }
 
@@ -92,6 +93,7 @@ public class GameObject
         if (removeExistingTasksWithName) {
             tasks.removeAllTasks();
         }
+        task.init(this);
         tasks.addTask(task);
     }
 
@@ -338,14 +340,14 @@ public class GameObject
 
             // Anonymous tasks
             if (_lazyAnonymousTasks != null) {
-                if (_lazyAnonymousTasks.update(dt, this)) {
+                if (_lazyAnonymousTasks.update(dt)) {
                     _lazyAnonymousTasks = null;
                 }
             }
 
             // Named tasks
             for (ParallelTask namedTask : _namedTasks.values()) {
-                namedTask.update(dt, this);
+                namedTask.update(dt);
             }
 
             if (_pendingNamedTasks != null) {

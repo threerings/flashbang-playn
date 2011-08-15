@@ -10,6 +10,7 @@ import tripleplay.util.Interpolator;
 import com.google.common.base.Preconditions;
 
 import com.threerings.flashbang.GameObject;
+import com.threerings.flashbang.ObjectTask;
 import com.threerings.flashbang.components.ScaleComponent;
 
 public class ScaleTask extends InterpolatingTask
@@ -27,31 +28,36 @@ public class ScaleTask extends InterpolatingTask
     }
 
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
     {
         Preconditions.checkArgument(obj instanceof ScaleComponent,
             "ScaleTask only operates on GameObjects that implement ScaleComponent");
+        _target = (ScaleComponent)obj;
+    }
 
-        ScaleComponent sc = (ScaleComponent) obj;
-
+    @Override
+    public boolean update (float dt)
+    {
         if (_elapsedTime == 0) {
-            _fromX = sc.scaleX();
-            _fromY = sc.scaleY();
+            _fromX = _target.scaleX();
+            _fromY = _target.scaleY();
         }
 
         _elapsedTime += dt;
 
-        sc.setScaleX(interpolate(_fromX, _toX));
-        sc.setScaleY(interpolate(_fromY, _toY));
+        _target.setScaleX(interpolate(_fromX, _toX));
+        _target.setScaleY(interpolate(_fromY, _toY));
 
         return (_elapsedTime >= _totalTime);
     }
 
     @Override
-    public ScaleTask clone ()
+    protected ObjectTask createClone ()
     {
         return new ScaleTask(_toX, _toY, _totalTime, _interp);
     }
+
+    protected ScaleComponent _target;
 
     protected final float _toX;
     protected final float _toY;

@@ -10,6 +10,7 @@ import tripleplay.util.Interpolator;
 import com.google.common.base.Preconditions;
 
 import com.threerings.flashbang.GameObject;
+import com.threerings.flashbang.ObjectTask;
 import com.threerings.flashbang.components.RotationComponent;
 
 public class RotationTask extends InterpolatingTask
@@ -26,29 +27,34 @@ public class RotationTask extends InterpolatingTask
     }
 
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
     {
         Preconditions.checkArgument(obj instanceof RotationComponent,
             "RotationTask only operates on GameObjects that implement RotationComponent");
+        _target = (RotationComponent)obj;
+    }
 
-        RotationComponent ac = (RotationComponent) obj;
-
+    @Override
+    public boolean update (float dt)
+    {
         if (_elapsedTime == 0) {
-            _fromRotation = ac.rotation();
+            _fromRotation = _target.rotation();
         }
 
         _elapsedTime += dt;
 
-        ac.setRotation(interpolate(_fromRotation, _toRotation));
+        _target.setRotation(interpolate(_fromRotation, _toRotation));
 
         return (_elapsedTime >= _totalTime);
     }
 
     @Override
-    public RotationTask clone ()
+    public ObjectTask createClone ()
     {
         return new RotationTask(_toRotation, _totalTime, _interp);
     }
+
+    protected RotationComponent _target;
 
     protected final float _toRotation;
     protected float _fromRotation;

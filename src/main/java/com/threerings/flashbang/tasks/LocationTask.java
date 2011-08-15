@@ -8,6 +8,7 @@ package com.threerings.flashbang.tasks;
 import com.google.common.base.Preconditions;
 
 import com.threerings.flashbang.GameObject;
+import com.threerings.flashbang.ObjectTask;
 import com.threerings.flashbang.components.LocationComponent;
 
 import tripleplay.util.Interpolator;
@@ -27,31 +28,36 @@ public class LocationTask extends InterpolatingTask
     }
 
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
     {
         Preconditions.checkArgument(obj instanceof LocationComponent,
             "LocationTask only operates on GameObjects that implement LocationComponent");
+        _target = (LocationComponent)obj;
+    }
 
-        LocationComponent lc = (LocationComponent) obj;
-
+    @Override
+    public boolean update (float dt)
+    {
         if (_elapsedTime == 0) {
-            _fromX = lc.x();
-            _fromY = lc.y();
+            _fromX = _target.x();
+            _fromY = _target.y();
         }
 
         _elapsedTime += dt;
 
-        lc.setX(interpolate(_fromX, _toX));
-        lc.setY(interpolate(_fromY, _toY));
+        _target.setX(interpolate(_fromX, _toX));
+        _target.setY(interpolate(_fromY, _toY));
 
         return (_elapsedTime >= _totalTime);
     }
 
     @Override
-    public LocationTask clone ()
+    public ObjectTask createClone ()
     {
         return new LocationTask(_toX, _toY, _totalTime, _interp);
     }
+
+    protected LocationComponent _target;
 
     protected final float _toX;
     protected final float _toY;

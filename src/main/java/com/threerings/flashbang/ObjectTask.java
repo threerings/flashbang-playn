@@ -5,16 +5,38 @@
 
 package com.threerings.flashbang;
 
-public interface ObjectTask extends Cloneable
+public abstract class ObjectTask
 {
+    /**
+     * Initializes this task with the object on which it will operate.
+     */
+    public abstract void init (GameObject obj);
+
     /**
      * Updates the ObjectTask.
      * @return true if the task has completed, otherwise false.
      */
-    boolean update (float dt, GameObject obj);
+    public abstract boolean update (float dt);
 
     /**
-     * @return a clone of the ObjectTask
+     * @return a clone of this task.
      */
-    ObjectTask clone ();
+    public ObjectTask clone ()
+    {
+        ObjectTask clone = createClone();
+        initClone(clone);
+        return clone;
+    }
+
+    /**
+     * Leaf-most object tasks override this method to create clones of themselves.
+     */
+    protected abstract ObjectTask createClone ();
+
+    /**
+     * Intermediate tasks override this to initialize their fields on a cloned subtask.
+     */
+    protected void initClone (ObjectTask task)
+    {
+    }
 }

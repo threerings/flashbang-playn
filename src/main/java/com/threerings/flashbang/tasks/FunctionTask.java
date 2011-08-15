@@ -8,8 +8,7 @@ package com.threerings.flashbang.tasks;
 import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 
-public class FunctionTask
-    implements ObjectTask
+public class FunctionTask extends ObjectTask
 {
     public FunctionTask (Runnable runnable)
     {
@@ -17,14 +16,20 @@ public class FunctionTask
     }
 
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
+    {
+        // nada
+    }
+
+    @Override
+    public boolean update (float dt)
     {
         _runnable.run();
         return true;
     }
 
     @Override
-    public FunctionTask clone ()
+    protected ObjectTask createClone ()
     {
         return new FunctionTask(_runnable);
     }

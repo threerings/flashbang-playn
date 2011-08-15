@@ -7,21 +7,12 @@ package com.threerings.flashbang.tasks;
 
 import tripleplay.util.Interpolator;
 
-import com.threerings.flashbang.GameObject;
-
 public abstract class InterpolatingTask extends TimedTask
 {
     public InterpolatingTask (float time, Interpolator interp)
     {
         super(time);
         _interp = interp;
-    }
-
-    @Override
-    public boolean update (float dt, GameObject obj)
-    {
-        _elapsedTime += dt;
-        return (_elapsedTime >= _totalTime);
     }
 
     /**

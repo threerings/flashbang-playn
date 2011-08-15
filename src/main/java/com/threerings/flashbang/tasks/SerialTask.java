@@ -14,4 +14,9 @@ public class SerialTask extends TaskContainer
         super(Type.SERIAL, subtasks);
     }
 
+    @Override
+    protected ObjectTask createClone ()
+    {
+        return new SerialTask();
+    }
 }

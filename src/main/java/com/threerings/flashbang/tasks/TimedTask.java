@@ -8,8 +8,7 @@ package com.threerings.flashbang.tasks;
 import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 
-public class TimedTask
-    implements ObjectTask
+public class TimedTask extends ObjectTask
 {
     public TimedTask (float time)
     {
@@ -17,24 +16,28 @@ public class TimedTask
     }
 
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
+    {
+        // nada
+    }
+
+    @Override
+    public boolean update (float dt)
     {
         _elapsedTime += dt;
         return (_elapsedTime >= _totalTime);
     }
 
     @Override
-    public TimedTask clone ()
+    protected ObjectTask createClone ()
     {
-        TimedTask theClone = null;
-        try {
-            theClone = (TimedTask) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+        return new TimedTask(_totalTime);
+    }
 
-        theClone._elapsedTime = 0;
-        return theClone;
+    @Override
+    protected void initClone (ObjectTask task)
+    {
+        ((TimedTask) task)._elapsedTime = 0;
     }
 
     protected final float _totalTime;

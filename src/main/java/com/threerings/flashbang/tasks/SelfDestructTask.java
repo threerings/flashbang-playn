@@ -8,19 +8,26 @@ package com.threerings.flashbang.tasks;
 import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 
-public class SelfDestructTask
-    implements ObjectTask
+public class SelfDestructTask extends ObjectTask
 {
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
     {
-        obj.destroySelf();
+        _obj = obj;
+    }
+
+    @Override
+    public boolean update (float dt)
+    {
+        _obj.destroySelf();
         return true;
     }
 
     @Override
-    public SelfDestructTask clone ()
+    protected ObjectTask createClone ()
     {
         return new SelfDestructTask();
     }
+
+    protected GameObject _obj;
 }

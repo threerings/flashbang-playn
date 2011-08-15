@@ -11,8 +11,7 @@ import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 import com.threerings.flashbang.components.DepthComponent;
 
-public class DepthTask
-    implements ObjectTask
+public class DepthTask extends ObjectTask
 {
     public DepthTask (float depth)
     {
@@ -20,20 +19,27 @@ public class DepthTask
     }
 
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
     {
         Preconditions.checkArgument(obj instanceof DepthComponent,
             "DepthTask only operates on GameObjects that implement DepthComponent");
+        _target = (DepthComponent)obj;
+    }
 
-        ((DepthComponent) obj).setDepth(_toDepth);
+    @Override
+    public boolean update (float dt)
+    {
+        _target.setDepth(_toDepth);
         return true;
     }
 
     @Override
-    public DepthTask clone ()
+    protected ObjectTask createClone ()
     {
         return new DepthTask(_toDepth);
     }
+
+    protected DepthComponent _target;
 
     protected final float _toDepth;
 }

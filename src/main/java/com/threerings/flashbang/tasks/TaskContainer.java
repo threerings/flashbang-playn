@@ -13,8 +13,7 @@ import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 
-public abstract class TaskContainer
-    implements ObjectTask
+public abstract class TaskContainer extends ObjectTask
 {
     public TaskContainer (Type type, ObjectTask... subtasks)
     {
@@ -29,6 +28,9 @@ public abstract class TaskContainer
     public void addTask (ObjectTask ...tasks)
     {
         for (ObjectTask task : tasks) {
+            if (_obj != null) {
+                task.init(_obj);
+            } // else: we'll init these tasks when we're added to an object
             _tasks.add(task);
             _completedTasks.add(null);
             _activeTaskCount += 1;
@@ -51,7 +53,19 @@ public abstract class TaskContainer
     }
 
     @Override
-    public boolean update (float dt, GameObject obj)
+    public void init (GameObject obj)
+    {
+        _obj = obj;
+        for (int ii = 0, ll = _tasks.size(); ii < ll; ii++) {
+            ObjectTask task = _tasks.get(ii);
+            if (task != null) {
+                task.init(obj);
+            }
+        }
+    }
+
+    @Override
+    public boolean update (float dt)
     {
         _invalidated = false;
 
@@ -64,7 +78,7 @@ public abstract class TaskContainer
                 continue;
             }
 
-            boolean complete = task.update(dt, obj);
+            boolean complete = task.update(dt);
 
             if (_invalidated) {
                 // The TaskContainer was destroyed by its containing
@@ -100,25 +114,17 @@ public abstract class TaskContainer
         return (0 == _activeTaskCount);
     }
 
-    /** Returns a clone of the TaskContainer. */
     @Override
-    public TaskContainer clone ()
+    protected void initClone (ObjectTask task)
     {
-        TaskContainer theClone = null;
-        try {
-            theClone = (TaskContainer) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-
+        TaskContainer theClone = (TaskContainer) task;
+        theClone._obj = _obj;
         theClone._tasks = cloneSubtasks();
         theClone._activeTaskCount = theClone._tasks.size();
         theClone._completedTasks = Lists.newArrayListWithExpectedSize(theClone._tasks.size());
         for (int ii = 0; ii < theClone._tasks.size(); ++ii) {
             theClone._completedTasks.add(null);
         }
-
-        return theClone;
     }
 
     protected List<ObjectTask> cloneSubtasks ()
@@ -129,7 +135,8 @@ public abstract class TaskContainer
 
         // clone each child task and put it in the cloned container
         for (int ii = 0; ii < _tasks.size(); ++ii) {
-            ObjectTask task = (null != _tasks.get(ii) ? _tasks.get(ii) : _completedTasks.get(ii));
+            ObjectTask task = (null != _tasks.get(ii)) ?
+                _tasks.get(ii) : _completedTasks.get(ii);
             Preconditions.checkNotNull(task);
             out.add(task.clone());
         }
@@ -144,6 +151,7 @@ public abstract class TaskContainer
     };
 
     protected final Type _type;
+    protected GameObject _obj;
     protected List<ObjectTask> _tasks = Lists.newArrayList();
     protected List<ObjectTask> _completedTasks = Lists.newArrayList();
     protected int _activeTaskCount;
