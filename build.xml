@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project name="nod" default="compile">
+  <property name="java.classname" value="com.threerings.who.java.Nod"/>
+  <property name="gwt.module" value="com.threerings.nod.Nod"/>
+  <property name="html.index" value="index.html"/>
+  <import file="etc/build-common.xml"/>
+</project>
