@@ -49,7 +49,7 @@ public class AlphaTask extends InterpolatingTask
     }
 
     @Override
-    public ObjectTask createClone ()
+    public ObjectTask clone ()
     {
         return new AlphaTask(_toAlpha, _totalTime, _interp);
     }

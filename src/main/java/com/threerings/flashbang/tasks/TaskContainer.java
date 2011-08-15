@@ -115,9 +115,17 @@ public abstract class TaskContainer extends ObjectTask
     }
 
     @Override
-    protected void initClone (ObjectTask task)
+    public ObjectTask clone ()
     {
-        TaskContainer theClone = (TaskContainer) task;
+        TaskContainer theClone = createClone();
+        initClone(theClone);
+        return theClone;
+    }
+
+    protected abstract TaskContainer createClone ();
+
+    protected void initClone (TaskContainer theClone)
+    {
         theClone._obj = _obj;
         theClone._tasks = cloneSubtasks();
         theClone._activeTaskCount = theClone._tasks.size();

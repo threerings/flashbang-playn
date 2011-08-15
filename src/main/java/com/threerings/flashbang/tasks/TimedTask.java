@@ -29,7 +29,7 @@ public class TimedTask extends ObjectTask
     }
 
     @Override
-    protected ObjectTask createClone ()
+    public ObjectTask clone ()
     {
         return new TimedTask(_totalTime);
     }

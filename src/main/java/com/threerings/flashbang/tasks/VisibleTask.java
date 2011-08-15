@@ -34,7 +34,7 @@ public class VisibleTask extends ObjectTask
     }
 
     @Override
-    protected ObjectTask createClone ()
+    public ObjectTask clone ()
     {
         return new VisibleTask(_toVisible);
     }

@@ -21,22 +21,5 @@ public abstract class ObjectTask
     /**
      * @return a clone of this task.
      */
-    public final ObjectTask clone ()
-    {
-        ObjectTask clone = createClone();
-        initClone(clone);
-        return clone;
-    }
-
-    /**
-     * Leaf-most object tasks override this method to create clones of themselves.
-     */
-    protected abstract ObjectTask createClone ();
-
-    /**
-     * Intermediate tasks override this to initialize their fields on a cloned subtask.
-     */
-    protected void initClone (ObjectTask task)
-    {
-    }
+    public abstract ObjectTask clone ();
 }

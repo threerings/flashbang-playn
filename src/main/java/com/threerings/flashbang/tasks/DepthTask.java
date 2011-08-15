@@ -34,7 +34,7 @@ public class DepthTask extends ObjectTask
     }
 
     @Override
-    protected ObjectTask createClone ()
+    public ObjectTask clone ()
     {
         return new DepthTask(_toDepth);
     }

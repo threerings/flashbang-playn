@@ -52,7 +52,7 @@ public class LocationTask extends InterpolatingTask
     }
 
     @Override
-    public ObjectTask createClone ()
+    public ObjectTask clone ()
     {
         return new LocationTask(_toX, _toY, _totalTime, _interp);
     }

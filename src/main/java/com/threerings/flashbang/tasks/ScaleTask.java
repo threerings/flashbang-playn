@@ -52,7 +52,7 @@ public class ScaleTask extends InterpolatingTask
     }
 
     @Override
-    protected ObjectTask createClone ()
+    public ObjectTask clone ()
     {
         return new ScaleTask(_toX, _toY, _totalTime, _interp);
     }

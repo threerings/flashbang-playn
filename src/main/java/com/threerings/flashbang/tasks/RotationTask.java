@@ -49,7 +49,7 @@ public class RotationTask extends InterpolatingTask
     }
 
     @Override
-    public ObjectTask createClone ()
+    public ObjectTask clone ()
     {
         return new RotationTask(_toRotation, _totalTime, _interp);
     }

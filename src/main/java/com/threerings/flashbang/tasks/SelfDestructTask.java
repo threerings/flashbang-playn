@@ -24,7 +24,7 @@ public class SelfDestructTask extends ObjectTask
     }
 
     @Override
-    protected ObjectTask createClone ()
+    public ObjectTask clone ()
     {
         return new SelfDestructTask();
     }

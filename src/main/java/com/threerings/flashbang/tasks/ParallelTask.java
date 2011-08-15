@@ -15,7 +15,7 @@ public class ParallelTask extends TaskContainer
     }
 
     @Override
-    protected ObjectTask createClone ()
+    protected TaskContainer createClone ()
     {
         return new ParallelTask();
     }
