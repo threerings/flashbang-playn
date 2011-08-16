@@ -9,32 +9,33 @@ import java.util.List;
 
 import com.google.common.base.Preconditions;
 
-public class AnimDesc
+/**
+ * BoneAnimDesc describes how to animate a single bone in a Model.
+ */
+public class BoneAnimDesc
 {
-    public enum EndBehavior {
-        STOP,
-        LOOP;
-    }
-
+    public String boneSelector;
     public List<KeyframeDesc> keyframes;
-    public EndBehavior endBehavior;
-    public float framerate;
 
     /**
      * @return The total number of frames in the animation
      */
-    public int totalFrames ()
+    public int numFrames ()
     {
-        return _totalFrames;
+        return _numFrames;
     }
 
     /**
-     * @return the KeyframeDesc for the given frameIdx
+     * @return the KeyframeDesc for the given frameIdx. If frameIdx >= _totalFrames,
+     * returns the last KeyFrameDesc in the list.
      */
     public KeyframeDesc getKeyframe (int frameIdx)
     {
-        Preconditions.checkArgument(frameIdx >= 0 && frameIdx < _totalFrames,
-            "frameIdx out bounds [frameIdx=%s, totalFrames=%s]", frameIdx, _totalFrames);
+        Preconditions.checkArgument(frameIdx >= 0);
+
+        if (frameIdx >= _numFrames) {
+            return keyframes.get(keyframes.size() - 1);
+        }
 
         // binary-search
         int loIdx = 0;
@@ -60,7 +61,7 @@ public class AnimDesc
         Preconditions.checkState(!keyframes.isEmpty(),
             "An animation must consist of at least one keyframe");
 
-        _totalFrames = keyframes.get(keyframes.size() - 1).frameIdx + 1;
+        _numFrames = keyframes.get(keyframes.size() - 1).frameIdx + 1;
 
         // Give each keyframe a pointer to its next keyframe, for faster interpolation
         int lastKeyframeIdx = -1;
@@ -75,5 +76,5 @@ public class AnimDesc
         }
     }
 
-    protected int _totalFrames;
+    protected int _numFrames;
 }
