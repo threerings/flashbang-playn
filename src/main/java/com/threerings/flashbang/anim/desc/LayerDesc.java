@@ -64,6 +64,8 @@ public abstract class LayerDesc
 
     public void fromJson (Json.Object json)
     {
+        name = json.getString("name");
+
         x = (float) json.getNumber("x");
         y = (float) json.getNumber("y");
         scaleX = (float) json.getNumber("scaleX");
