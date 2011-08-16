@@ -7,7 +7,11 @@ package com.threerings.flashbang.anim.desc;
 
 import java.util.List;
 
+import playn.core.Json;
+import tripleplay.util.JsonUtil;
+
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
 /**
  * LayerAnimDesc describes how to animate a single layer in a Model.
@@ -16,6 +20,18 @@ public class LayerAnimDesc
 {
     public String layerSelector;
     public List<KeyframeDesc> keyframes;
+
+    public void fromJson (Json.Object json)
+    {
+        layerSelector = json.getString("layerSelector");
+
+        keyframes = Lists.newArrayList();
+        for (Json.Object jsonKeyframe : JsonUtil.getArrayObjects(json, "keyframes")) {
+            KeyframeDesc kf = new KeyframeDesc();
+            kf.fromJson(jsonKeyframe);
+            keyframes.add(kf);
+        }
+    }
 
     /**
      * @return The total number of frames in the animation

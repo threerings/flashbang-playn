@@ -7,6 +7,7 @@ package com.threerings.flashbang.anim.desc;
 
 import java.util.Map;
 
+import playn.core.Json;
 import playn.core.Layer;
 
 public abstract class LayerDesc
@@ -25,6 +26,23 @@ public abstract class LayerDesc
     public float originY;
     public float depth;
 
+    public static LayerDesc create (Json.Object json)
+    {
+        LayerDesc desc = null;
+
+        String typeName = json.getString("type");
+        if ("ImageLayer".equals(typeName)) {
+            desc = new ImageLayerDesc();
+        } else if ("GroupLayer".equals(typeName)) {
+            desc = new GroupLayerDesc();
+        } else {
+            throw new RuntimeException("Unrecognized layer type [type=" + typeName + "]");
+        }
+
+        desc.fromJson(json);
+        return desc;
+    }
+
     public Layer build (String selectorPrefix, Map<String, Layer> layerLookup)
     {
         Layer layer = createLayer();
@@ -42,6 +60,21 @@ public abstract class LayerDesc
         }
 
         return layer;
+    }
+
+    public void fromJson (Json.Object json)
+    {
+        x = (float) json.getNumber("x");
+        y = (float) json.getNumber("y");
+        scaleX = (float) json.getNumber("scaleX");
+        scaleY = (float) json.getNumber("scaleY");
+        rotation = (float) json.getNumber("rotation");
+        alpha = (float) json.getNumber("alpha");
+        visible = json.getBoolean("visible");
+
+        originX = (float) json.getNumber("originX");
+        originY = (float) json.getNumber("originY");
+        depth = (float) json.getNumber("depth");
     }
 
     protected abstract Layer createLayer ();

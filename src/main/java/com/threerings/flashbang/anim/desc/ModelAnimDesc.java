@@ -7,6 +7,11 @@ package com.threerings.flashbang.anim.desc;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
+import playn.core.Json;
+import tripleplay.util.JsonUtil;
+
 /**
  * ModelAnimDesc describes how to animate multiple layers in a single model
  */
@@ -20,6 +25,19 @@ public class ModelAnimDesc
     public List<LayerAnimDesc> layerAnims;
     public EndBehavior endBehavior;
     public float framerate;
+
+    public void fromJson (Json.Object json)
+    {
+        layerAnims = Lists.newArrayList();
+        for (Json.Object layerAnimJson : JsonUtil.getArrayObjects(json, "layerAnims")) {
+            LayerAnimDesc layerAnim = new LayerAnimDesc();
+            layerAnim.fromJson(layerAnimJson);
+            layerAnims.add(layerAnim);
+        }
+
+        endBehavior = JsonUtil.getEnum(json, "endBehavior", EndBehavior.class);
+        framerate = (float) json.getNumber("framerate");
+    }
 
     /**
      * @return The total number of frames in this animation

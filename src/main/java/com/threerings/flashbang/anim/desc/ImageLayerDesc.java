@@ -8,12 +8,20 @@ package com.threerings.flashbang.anim.desc;
 import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
 import playn.core.Image;
+import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
 
 public class ImageLayerDesc extends LayerDesc
 {
     public String imageName;
+
+    @Override
+    public void fromJson (Json.Object json)
+    {
+        super.fromJson(json);
+        imageName = json.getString("imageName");
+    }
 
     @Override
     protected Layer createLayer ()
