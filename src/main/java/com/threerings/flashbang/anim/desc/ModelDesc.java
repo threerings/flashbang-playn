@@ -5,10 +5,10 @@
 
 package com.threerings.flashbang.anim.desc;
 
-import java.util.List;
+import java.util.Map;
 
 public class ModelDesc
 {
     public LayerDesc rootLayer;
-    public List<ModelAnimDesc> anims;
+    public Map<String, ModelAnimDesc> anims;
 }

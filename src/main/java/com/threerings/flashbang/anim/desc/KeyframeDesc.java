@@ -5,8 +5,6 @@
 
 package com.threerings.flashbang.anim.desc;
 
-import pythagoras.f.Point;
-import pythagoras.f.Vector;
 import tripleplay.util.Interpolator;
 
 public class KeyframeDesc
@@ -14,8 +12,10 @@ public class KeyframeDesc
     public int frameIdx;
     public Interpolator interp;
 
-    public Point loc;
-    public Vector scale;
+    public float x;
+    public float y;
+    public float scaleX;
+    public float scaleY;
     public float rotation;
     public boolean visible;
     public float alpha;
@@ -32,7 +32,7 @@ public class KeyframeDesc
 
     public int endFrameIdx ()
     {
-        return (next != null ? next.frameIdx - 1 : frameIdx);
+        return (next != null ? next.frameIdx - 1 : Integer.MAX_VALUE);
     }
 
     KeyframeDesc next;
