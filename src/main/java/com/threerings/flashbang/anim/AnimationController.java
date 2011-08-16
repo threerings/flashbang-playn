@@ -7,18 +7,17 @@ package com.threerings.flashbang.anim;
 
 import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
-import com.threerings.flashbang.GameObject;
-import com.threerings.flashbang.anim.desc.AnimDesc;
+import com.threerings.flashbang.anim.desc.ModelAnimDesc;
 import com.threerings.flashbang.anim.desc.KeyframeDesc;
 
-public class Animator extends GameObject
+public class AnimationController
 {
-    public Animator (AnimDesc desc)
+    public AnimationController (ModelAnimDesc anim)
     {
-        _desc = desc;
+        _desc = anim;
     }
 
-    public AnimDesc animDesc ()
+    public ModelAnimDesc animDesc ()
     {
         return _desc;
     }
@@ -44,8 +43,7 @@ public class Animator extends GameObject
         _stopped = stopped;
     }
 
-    @Override
-    protected void update (float dt)
+    public void update (Model model, float dt)
     {
         if (_stopped) {
             return;
@@ -74,14 +72,6 @@ public class Animator extends GameObject
         }
     }
 
-    protected KeyframeDesc curKeyframe ()
-    {
-        if (_curKeyframe == null) {
-            _curKeyframe = _desc.getKeyframe(_curFrame);
-        }
-        return _curKeyframe;
-    }
-
     protected void setCurFrameInternal (int frame)
     {
         if (_curFrame == frame) {
@@ -104,7 +94,7 @@ public class Animator extends GameObject
         }
     }
 
-    protected final AnimDesc _desc;
+    protected final ModelAnimDesc _desc;
 
     protected int _curFrame;
     protected boolean _stopped;
