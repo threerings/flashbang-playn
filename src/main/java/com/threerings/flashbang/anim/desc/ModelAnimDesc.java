@@ -8,7 +8,7 @@ package com.threerings.flashbang.anim.desc;
 import java.util.List;
 
 /**
- * ModelAnimDesc describes how to animate multiple bones in a single model
+ * ModelAnimDesc describes how to animate multiple layers in a single model
  */
 public class ModelAnimDesc
 {
@@ -17,7 +17,7 @@ public class ModelAnimDesc
         LOOP;
     }
 
-    public List<BoneAnimDesc> boneAnims;
+    public List<LayerAnimDesc> layerAnims;
     public EndBehavior endBehavior;
     public float framerate;
 
@@ -32,9 +32,9 @@ public class ModelAnimDesc
     public void init ()
     {
         _totalFrames = 0;
-        for (BoneAnimDesc boneAnim : boneAnims) {
-            boneAnim.init();
-            _totalFrames = Math.max(_totalFrames, boneAnim.numFrames());
+        for (LayerAnimDesc layerAnim : layerAnims) {
+            layerAnim.init();
+            _totalFrames = Math.max(_totalFrames, layerAnim.numFrames());
         }
     }
 

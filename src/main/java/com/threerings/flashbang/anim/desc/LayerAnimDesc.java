@@ -10,11 +10,11 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 /**
- * BoneAnimDesc describes how to animate a single bone in a Model.
+ * LayerAnimDesc describes how to animate a single layer in a Model.
  */
-public class BoneAnimDesc
+public class LayerAnimDesc
 {
-    public String boneSelector;
+    public String layerSelector;
     public List<KeyframeDesc> keyframes;
 
     /**
