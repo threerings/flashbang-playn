@@ -10,7 +10,7 @@ public abstract class ObjectTask
     /**
      * Initializes this task with the object on which it will operate.
      */
-    public abstract void init (GameObject obj);
+    public abstract void init (GameObject target);
 
     /**
      * Updates the ObjectTask.

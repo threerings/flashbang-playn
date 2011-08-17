@@ -8,8 +8,6 @@ package com.threerings.flashbang.tasks;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.google.gwt.thirdparty.guava.common.base.Preconditions;
-
 import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 
@@ -28,8 +26,8 @@ public abstract class TaskContainer extends ObjectTask
     public void addTask (ObjectTask ...tasks)
     {
         for (ObjectTask task : tasks) {
-            if (_obj != null) {
-                task.init(_obj);
+            if (_target != null) {
+                task.init(_target);
             } // else: we'll init these tasks when we're added to an object
             _tasks.add(task);
             _completedTasks.add(null);
@@ -53,13 +51,13 @@ public abstract class TaskContainer extends ObjectTask
     }
 
     @Override
-    public void init (GameObject obj)
+    public void init (GameObject target)
     {
-        _obj = obj;
+        _target = target;
         for (int ii = 0, ll = _tasks.size(); ii < ll; ii++) {
             ObjectTask task = _tasks.get(ii);
             if (task != null) {
-                task.init(obj);
+                task.init(target);
             }
         }
     }
@@ -126,30 +124,13 @@ public abstract class TaskContainer extends ObjectTask
 
     protected void initClone (TaskContainer theClone)
     {
-        theClone._obj = _obj;
-        theClone._tasks = cloneSubtasks();
-        theClone._activeTaskCount = theClone._tasks.size();
-        theClone._completedTasks = Lists.newArrayListWithExpectedSize(theClone._tasks.size());
-        for (int ii = 0; ii < theClone._tasks.size(); ++ii) {
-            theClone._completedTasks.add(null);
-        }
-    }
-
-    protected List<ObjectTask> cloneSubtasks ()
-    {
-        Preconditions.checkState(_tasks.size() == _completedTasks.size());
-
-        List<ObjectTask> out = Lists.newArrayListWithExpectedSize(_tasks.size());
-
-        // clone each child task and put it in the cloned container
+        theClone._target = _target;
+        theClone._tasks = Lists.newArrayListWithExpectedSize(_tasks.size());
+        theClone._completedTasks = Lists.newArrayListWithExpectedSize(_tasks.size());
         for (int ii = 0; ii < _tasks.size(); ++ii) {
-            ObjectTask task = (null != _tasks.get(ii)) ?
-                _tasks.get(ii) : _completedTasks.get(ii);
-            Preconditions.checkNotNull(task);
-            out.add(task.clone());
+            ObjectTask task = (null != _tasks.get(ii) ? _tasks.get(ii) : _completedTasks.get(ii));
+            theClone.addTask(task.clone());
         }
-
-        return out;
     }
 
     protected enum Type {
@@ -159,7 +140,7 @@ public abstract class TaskContainer extends ObjectTask
     };
 
     protected final Type _type;
-    protected GameObject _obj;
+    protected GameObject _target;
     protected List<ObjectTask> _tasks = Lists.newArrayList();
     protected List<ObjectTask> _completedTasks = Lists.newArrayList();
     protected int _activeTaskCount;
