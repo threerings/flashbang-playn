@@ -20,6 +20,10 @@ public class Model extends SceneObject
     {
         _desc = desc;
         _root = _desc.rootLayer.build("", _layerLookup);
+
+        if (_desc.defaultAnimation != null) {
+            playAnimation(_desc.defaultAnimation);
+        }
     }
 
     public Layer getLayer (String selector)

@@ -17,6 +17,7 @@ public class ModelDesc
 {
     public LayerDesc rootLayer;
     public Map<String, ModelAnimDesc> anims;
+    public String defaultAnimation; // Nullable
 
     public void fromJson (Json.Object json)
     {
@@ -30,5 +31,7 @@ public class ModelDesc
             anim.fromJson(jsonAnims.getObject(animName));
             anims.put(animName, anim);
         }
+
+        defaultAnimation = json.getString("defaultAnimation");
     }
 }
