@@ -16,17 +16,12 @@ import com.google.common.collect.Maps;
 import playn.core.Game;
 import playn.core.GroupLayer;
 import playn.core.PlayN;
+import playn.core.SurfaceLayer;
 import pythagoras.i.Point;
 
 public abstract class FlashbangApp
     implements Game
 {
-    public FlashbangApp ()
-    {
-        // Create our default viewport
-        createViewport(Viewport.DEFAULT);
-    }
-
     /**
      * Returns the approximate frames-per-second that the application
      * is running at.
@@ -79,6 +74,16 @@ public abstract class FlashbangApp
    {
        Point screenSize = screenSize();
        graphics().setSize(screenSize.x, screenSize.y);
+
+       // Create our background
+       SurfaceLayer bg = graphics().createSurfaceLayer(screenSize.x, screenSize.y);
+       bg.setDepth(-Float.MAX_VALUE);
+       bg.surface().setFillColor(0xffffffff);
+       bg.surface().fillRect(0, 0, screenSize.x, screenSize.y);
+       graphics().rootLayer().add(bg);
+
+       // Create our default viewport
+       createViewport(Viewport.DEFAULT);
    }
 
    /**
