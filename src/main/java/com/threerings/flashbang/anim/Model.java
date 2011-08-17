@@ -10,8 +10,8 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import playn.core.Layer;
-
 import com.threerings.flashbang.SceneObject;
+import com.threerings.flashbang.anim.desc.ModelAnimDesc;
 import com.threerings.flashbang.anim.desc.ModelDesc;
 
 public class Model extends SceneObject
@@ -27,14 +27,30 @@ public class Model extends SceneObject
         return _layerLookup.get(selector);
     }
 
+    public void playAnimation (String name)
+    {
+        ModelAnimDesc animDesc = _desc.anims.get(name);
+        _animator = new AnimationController(this, animDesc);
+    }
+
     @Override
     public Layer layer ()
     {
         return _root;
     }
 
+    @Override
+    protected void update (float dt)
+    {
+        super.update(dt);
+        if (_animator != null) {
+            _animator.update(dt);
+        }
+    }
+
     protected final ModelDesc _desc;
     protected final Map<String, Layer> _layerLookup = Maps.newHashMap();
     protected Layer _root;
+    protected AnimationController _animator;
 
 }

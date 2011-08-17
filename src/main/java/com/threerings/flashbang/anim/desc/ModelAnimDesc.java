@@ -37,6 +37,8 @@ public class ModelAnimDesc
 
         endBehavior = JsonUtil.getEnum(json, "endBehavior", EndBehavior.class);
         framerate = (float) json.getNumber("framerate");
+
+        init();
     }
 
     /**
