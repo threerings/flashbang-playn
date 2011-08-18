@@ -18,7 +18,6 @@ import playn.core.GroupLayer;
 import playn.core.PlayN;
 import playn.core.Pointer;
 import playn.core.SurfaceLayer;
-import playn.core.Pointer.Event;
 import pythagoras.i.Point;
 
 public abstract class FlashbangApp
@@ -122,7 +121,7 @@ public abstract class FlashbangApp
    }
 
    @Override
-   public void onPointerStart (final Event event)
+   public void onPointerStart (final Pointer.Event event)
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
@@ -132,7 +131,7 @@ public abstract class FlashbangApp
    }
 
    @Override
-   public void onPointerEnd (final Event event)
+   public void onPointerEnd (final Pointer.Event event)
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
@@ -142,7 +141,7 @@ public abstract class FlashbangApp
    }
 
    @Override
-   public void onPointerDrag (final Event event)
+   public void onPointerDrag (final Pointer.Event event)
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
