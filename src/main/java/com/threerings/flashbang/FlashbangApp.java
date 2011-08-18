@@ -16,11 +16,13 @@ import com.google.common.collect.Maps;
 import playn.core.Game;
 import playn.core.GroupLayer;
 import playn.core.PlayN;
+import playn.core.Pointer;
 import playn.core.SurfaceLayer;
+import playn.core.Pointer.Event;
 import pythagoras.i.Point;
 
 public abstract class FlashbangApp
-    implements Game
+    implements Game, Pointer.Listener
 {
     /**
      * Returns the approximate frames-per-second that the application
@@ -84,6 +86,9 @@ public abstract class FlashbangApp
 
        // Create our default viewport
        createViewport(Viewport.DEFAULT);
+
+       // We'll handle all PlayN input events
+       PlayN.pointer().setListener(this);
    }
 
    /**
@@ -114,6 +119,52 @@ public abstract class FlashbangApp
    @Override
    public void paint (float alpha)
    {
+   }
+
+   @Override
+   public void onPointerStart (final Event event)
+   {
+       dispatchToTopAppModes(new AppModeOp() {
+           @Override public void apply (AppMode mode) {
+               mode.onPointerStart(event);
+           }
+       });
+   }
+
+   @Override
+   public void onPointerEnd (final Event event)
+   {
+       dispatchToTopAppModes(new AppModeOp() {
+           @Override public void apply (AppMode mode) {
+               mode.onPointerEnd(event);
+           }
+       });
+   }
+
+   @Override
+   public void onPointerDrag (final Event event)
+   {
+       dispatchToTopAppModes(new AppModeOp() {
+           @Override public void apply (AppMode mode) {
+               mode.onPointerDrag(event);
+           }
+       });
+   }
+
+   protected void dispatchToTopAppModes (AppModeOp op)
+   {
+       for (Viewport viewport : _viewports.values()) {
+           if (!viewport.isDestroyed()) {
+               AppMode topMode = viewport.topMode();
+               if (topMode != null) {
+                   op.apply(topMode);
+               }
+           }
+       }
+   }
+
+   protected interface AppModeOp {
+       void apply (AppMode mode);
    }
 
    protected float _fps;

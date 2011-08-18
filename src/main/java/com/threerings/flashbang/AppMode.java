@@ -7,6 +7,7 @@ package com.threerings.flashbang;
 
 import playn.core.GroupLayer;
 import playn.core.PlayN;
+import playn.core.Pointer.Event;
 
 import com.google.common.base.Preconditions;
 
@@ -75,6 +76,21 @@ public class AppMode extends GameObjectDatabase
 
     /** Called when the mode becomes inactive on the mode stack */
     protected void exit()
+    {
+    }
+
+    /** Called when the pointer is pressed while the mode is active */
+    protected void onPointerStart (Event event)
+    {
+    }
+
+    /** Called when the pointer is released while the mode is active */
+    protected void onPointerEnd (Event event)
+    {
+    }
+
+    /** Called when the pointer is dragged while the mode is active */
+    protected void onPointerDrag (Event event)
     {
     }
 
