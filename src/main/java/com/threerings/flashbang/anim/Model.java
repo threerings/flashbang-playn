@@ -11,8 +11,8 @@ import com.google.common.collect.Maps;
 
 import playn.core.Layer;
 import com.threerings.flashbang.SceneObject;
-import com.threerings.flashbang.anim.desc.ModelAnimDesc;
-import com.threerings.flashbang.anim.desc.ModelDesc;
+import com.threerings.flashbang.rsrc.anim.ModelAnimDesc;
+import com.threerings.flashbang.rsrc.anim.ModelDesc;
 
 public class Model extends SceneObject
 {

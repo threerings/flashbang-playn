@@ -3,7 +3,7 @@
 // Copyright (C) 2011 Three Rings Design, Inc., All Rights Reserved
 // http://github.com/threerings/flashbang-playn
 
-package com.threerings.flashbang.anim.desc;
+package com.threerings.flashbang.rsrc.anim;
 
 import java.util.List;
 import java.util.Map;
