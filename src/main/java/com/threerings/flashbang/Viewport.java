@@ -220,7 +220,7 @@ public class Viewport
 
         // Ensure that our modes are rendered at their proper depths
         for (int ii = 0; ii < _modeStack.size(); ++ii) {
-            _modeStack.get(ii).getModeLayer().setDepth(ii);
+            _modeStack.get(ii).modeLayer().setDepth(ii);
         }
 
         AppMode topMode = topMode();
@@ -246,7 +246,7 @@ public class Viewport
         index = Math.min(index, _modeStack.size());
 
         _modeStack.add(index, mode);
-        _topLayer.add(mode.getModeLayer());
+        _topLayer.add(mode.modeLayer());
 
         mode.setupInternal(_app, this);
     }
@@ -269,7 +269,7 @@ public class Viewport
         mode.destroyInternal();
 
         _modeStack.remove(index);
-        _topLayer.remove(mode.getModeLayer());
+        _topLayer.remove(mode.modeLayer());
     }
 
     protected void clearModeStackNow ()
@@ -291,12 +291,14 @@ public class Viewport
         clearModeStackNow();
         _modeStack = null;
         _pendingModeTransitionQueue = null;
+        _topLayer.destroy();
+        _topLayer = null;
         this.destroyed.emit();
     }
 
     protected final FlashbangApp _app;
     protected final String _name;
-    protected final GroupLayer _topLayer = PlayN.graphics().createGroupLayer();
+    protected GroupLayer _topLayer = PlayN.graphics().createGroupLayer();
     protected List<AppMode> _modeStack = Lists.newArrayList();
     protected List<PendingTransition> _pendingModeTransitionQueue = Lists.newArrayList();
     protected boolean _destroyed;

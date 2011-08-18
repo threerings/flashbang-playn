@@ -16,7 +16,7 @@ public class AppMode extends GameObjectDatabase
 {
     public final Input input = new Input();
 
-    public final GroupLayer getModeLayer ()
+    public final GroupLayer modeLayer ()
     {
         return _modeLayer;
     }
@@ -111,15 +111,14 @@ public class AppMode extends GameObjectDatabase
         shutdown();
         _app = null;
         _viewport = null;
+        _modeLayer.destroy();
+        _modeLayer = null;
     }
 
     void enterInternal ()
     {
         Preconditions.checkState(!_active);
         _active = true;
-        //_modeSprite.mouseEnabled = true;
-        //_modeSprite.mouseChildren = true;
-
         enter();
     }
 
@@ -127,13 +126,10 @@ public class AppMode extends GameObjectDatabase
     {
         Preconditions.checkState(_active);
         _active = false;
-        //_modeSprite.mouseEnabled = false;
-        //_modeSprite.mouseChildren = false;
-
         exit();
     }
 
-    protected final GroupLayer _modeLayer = PlayN.graphics().createGroupLayer();
+    protected GroupLayer _modeLayer = PlayN.graphics().createGroupLayer();
     protected FlashbangApp _app;
     protected Viewport _viewport;
     boolean _active;
