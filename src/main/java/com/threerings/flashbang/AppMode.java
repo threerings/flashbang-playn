@@ -8,13 +8,14 @@ package com.threerings.flashbang;
 import playn.core.GroupLayer;
 import playn.core.PlayN;
 import playn.core.Pointer;
-
 import com.google.common.base.Preconditions;
 
 import com.threerings.flashbang.components.LayerComponent;
 
 public class AppMode extends GameObjectDatabase
 {
+    public final Input input = new Input();
+
     public final GroupLayer getModeLayer ()
     {
         return _modeLayer;
@@ -82,16 +83,19 @@ public class AppMode extends GameObjectDatabase
     /** Called when the pointer is pressed while the mode is active */
     protected void onPointerStart (Pointer.Event event)
     {
+        input.onPointerStart(event);
     }
 
     /** Called when the pointer is released while the mode is active */
     protected void onPointerEnd (Pointer.Event event)
     {
+        input.onPointerEnd(event);
     }
 
     /** Called when the pointer is dragged while the mode is active */
     protected void onPointerDrag (Pointer.Event event)
     {
+        input.onPointerDrag(event);
     }
 
     void setupInternal (FlashbangApp app, Viewport viewport)
