@@ -6,6 +6,7 @@
 package com.threerings.flashbang.desc;
 
 import playn.core.Json;
+import tripleplay.util.JsonUtil;
 
 public abstract class BasicNamedDataDesc extends BasicDataDesc
     implements NamedDataDesc
@@ -60,6 +61,6 @@ public abstract class BasicNamedDataDesc extends BasicDataDesc
     @Override
     public void fromJson (Json.Object json)
     {
-
+        name = JsonUtil.requireString(json, "name");
     }
 }

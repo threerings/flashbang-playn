@@ -11,7 +11,6 @@ import playn.core.Json;
 
 public interface DataDesc
 {
-    void resolveRefs (DataMgr<?>... mgrs);
-    void resolveRefs (Map<Class<?>, DataMgr<?>> mgrs);
     void fromJson (Json.Object json);
+    void resolveRefs (Map<Class<?>, DataMgr<?>> mgrs);
 }

@@ -5,13 +5,13 @@
 
 package com.threerings.flashbang.desc;
 
-public abstract class BasicDataDesc implements DataDesc
+import java.util.Map;
+
+public abstract class BasicDataDesc
+    implements DataDesc
 {
-    /* (non-Javadoc)
-     * @see com.threerings.who.datadesc.IDataDesc#resolveRefs(com.threerings.who.datadesc.DataMgr)
-     */
-    public void resolveRefs (DataMgr<?>...mgrs)
+    @Override
+    public void resolveRefs (Map<Class<?>, DataMgr<?>> mgrs)
     {
-        resolveRefs(DataMgr.buildDataMgrMap(mgrs));
     }
 }
