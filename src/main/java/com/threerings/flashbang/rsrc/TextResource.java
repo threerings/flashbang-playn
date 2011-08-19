@@ -5,8 +5,6 @@
 
 package com.threerings.flashbang.rsrc;
 
-import com.google.common.base.Preconditions;
-
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
 
@@ -18,16 +16,15 @@ public class TextResource extends Resource<String>
     }
 
     @Override
-    public void load (final ResourceCallback<? super String> callback)
+    protected void doLoad ()
     {
-        Preconditions.checkState(_text == null, "Already loaded");
         PlayN.assetManager().getText(path, new ResourceCallback<String>() {
             @Override public void done (String rsrc) {
                 _text = rsrc;
-                callback.done(rsrc);
+                loadComplete(null);
             }
             @Override public void error (Throwable err) {
-                callback.error(err);
+                loadComplete(err);
             }
         });
     }

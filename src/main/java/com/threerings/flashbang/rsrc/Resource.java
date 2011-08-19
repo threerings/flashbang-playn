@@ -5,9 +5,9 @@
 
 package com.threerings.flashbang.rsrc;
 
-import playn.core.ResourceCallback;
+import com.threerings.flashbang.util.Loadable;
 
-public abstract class Resource<T>
+public abstract class Resource<T> extends Loadable
 {
     public final String path;
 
@@ -16,6 +16,5 @@ public abstract class Resource<T>
         this.path = path;
     }
 
-    public abstract void load (ResourceCallback<? super T> callback);
     public abstract T get ();
 }

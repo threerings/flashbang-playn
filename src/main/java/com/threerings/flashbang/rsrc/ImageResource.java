@@ -5,8 +5,6 @@
 
 package com.threerings.flashbang.rsrc;
 
-import com.google.common.base.Preconditions;
-
 import playn.core.Image;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
@@ -19,16 +17,15 @@ public class ImageResource extends Resource<Image>
     }
 
     @Override
-    public void load (final ResourceCallback<? super Image> callback)
+    protected void doLoad ()
     {
-        Preconditions.checkState(_image == null, "Already loaded");
-        _image = PlayN.assetManager().getImage(path);
-        _image.addCallback(new ResourceCallback<Image>() {
+        PlayN.assetManager().getImage(path).addCallback(new ResourceCallback<Image>() {
             @Override public void done (Image rsrc) {
-                callback.done(rsrc);
+                _image = rsrc;
+                loadComplete(null);
             }
             @Override public void error (Throwable err) {
-                callback.error(err);
+                loadComplete(err);
             }
         });
     }
