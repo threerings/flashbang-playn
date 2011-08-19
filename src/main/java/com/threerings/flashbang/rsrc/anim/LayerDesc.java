@@ -8,7 +8,7 @@ package com.threerings.flashbang.rsrc.anim;
 import java.util.Map;
 
 import com.threerings.flashbang.desc.DataDesc;
-
+import com.threerings.flashbang.rsrc.AssetPackageDesc;
 import playn.core.Json;
 import playn.core.Layer;
 import tripleplay.util.JsonUtil;
@@ -30,7 +30,7 @@ public abstract class LayerDesc
     public float originY;
     public float depth;
 
-    public static LayerDesc create (Json.Object json)
+    public static LayerDesc create (Json.Object json, AssetPackageDesc assets)
     {
         LayerDesc desc = null;
 
@@ -43,7 +43,7 @@ public abstract class LayerDesc
             throw new RuntimeException("Unrecognized layer type [type=" + typeName + "]");
         }
 
-        desc.fromJson(json);
+        desc.fromJson(json, assets);
         return desc;
     }
 
@@ -66,7 +66,7 @@ public abstract class LayerDesc
         return layer;
     }
 
-    public void fromJson (Json.Object json)
+    public void fromJson (Json.Object json, AssetPackageDesc assets)
     {
         name = json.getString("name");
 

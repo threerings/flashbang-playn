@@ -5,32 +5,29 @@
 
 package com.threerings.flashbang.rsrc.anim;
 
-import com.google.gwt.thirdparty.guava.common.base.Preconditions;
-
-import playn.core.Image;
 import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
 import tripleplay.util.JsonUtil;
 
+import com.threerings.flashbang.rsrc.AssetPackageDesc;
+import com.threerings.flashbang.rsrc.ImageDesc;
+
 public class ImageLayerDesc extends LayerDesc
 {
-    public String imageName;
+    public ImageDesc image;
 
     @Override
-    public void fromJson (Json.Object json)
+    public void fromJson (Json.Object json, AssetPackageDesc assets)
     {
-        super.fromJson(json);
-        imageName = JsonUtil.requireString(json, "imageName");
+        super.fromJson(json, assets);
+        image = assets.images.requireData(JsonUtil.requireString(json, "image"));
     }
 
     @Override
     protected Layer createLayer ()
     {
-        Image image = PlayN.assetManager().getImage(imageName);
-        Preconditions.checkState(image != null, "invalid image [name=%s]", imageName);
-
-        return PlayN.graphics().createImageLayer(image);
+        return PlayN.graphics().createImageLayer(image.image());
     }
 
 }

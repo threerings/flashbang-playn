@@ -10,7 +10,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import com.threerings.flashbang.desc.BasicNamedDataDesc;
-
+import com.threerings.flashbang.rsrc.AssetPackageDesc;
 import playn.core.Json;
 import tripleplay.util.JsonUtil;
 
@@ -20,12 +20,11 @@ public class ModelDesc extends BasicNamedDataDesc
     public Map<String, ModelAnimDesc> anims;
     public String defaultAnimation; // Nullable
 
-    @Override
-    public void fromJson (Json.Object json)
+    public void fromJson (Json.Object json, AssetPackageDesc assets)
     {
         super.fromJson(json);
 
-        rootLayer = LayerDesc.create(json.getObject("rootLayer"));
+        rootLayer = LayerDesc.create(json.getObject("rootLayer"), assets);
 
         Json.Object jsonAnims = JsonUtil.requireObject(json, "anims");
         anims = Maps.newHashMap();

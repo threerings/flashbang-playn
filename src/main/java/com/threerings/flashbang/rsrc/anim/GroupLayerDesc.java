@@ -16,18 +16,20 @@ import tripleplay.util.JsonUtil;
 
 import com.google.common.collect.Lists;
 
+import com.threerings.flashbang.rsrc.AssetPackageDesc;
+
 public class GroupLayerDesc extends LayerDesc
 {
     public List<LayerDesc> children;
 
     @Override
-    public void fromJson (Json.Object json)
+    public void fromJson (Json.Object json, AssetPackageDesc assets)
     {
-        super.fromJson(json);
+        super.fromJson(json, assets);
 
         children = Lists.newArrayList();
         for (Json.Object jsonChild : JsonUtil.requireArrayObjects(json, "children")) {
-            children.add(LayerDesc.create(jsonChild));
+            children.add(LayerDesc.create(jsonChild, assets));
         }
     }
 

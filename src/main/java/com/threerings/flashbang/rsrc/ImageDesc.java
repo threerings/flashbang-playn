@@ -17,13 +17,17 @@ import tripleplay.util.JsonUtil;
 
 public class ImageDesc extends BasicNamedDataDesc
 {
-    public String filename;
     public List<RectangleDesc> frameRects; // nullable
+
+    public String filename ()
+    {
+        return name;
+    }
 
     public Image image ()
     {
         if (_image == null) {
-            _image = PlayN.assetManager().getImage(filename);
+            _image = PlayN.assetManager().getImage(filename());
         }
         return _image;
     }
@@ -31,7 +35,6 @@ public class ImageDesc extends BasicNamedDataDesc
     public void fromJson (Json.Object json)
     {
         super.fromJson(json);
-        filename = JsonUtil.requireString(json, "filename");
 
         if (json.getObject("frameRects") != null) {
             frameRects = Lists.newArrayList();
