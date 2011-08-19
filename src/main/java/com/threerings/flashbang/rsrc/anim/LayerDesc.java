@@ -8,7 +8,6 @@ package com.threerings.flashbang.rsrc.anim;
 import java.util.Map;
 
 import com.threerings.flashbang.desc.DataDesc;
-import com.threerings.flashbang.rsrc.AssetPackageDesc;
 import playn.core.Json;
 import playn.core.Layer;
 import tripleplay.util.JsonUtil;

@@ -10,7 +10,6 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import com.threerings.flashbang.desc.BasicNamedDataDesc;
-import com.threerings.flashbang.rsrc.AssetPackageDesc;
 import playn.core.Json;
 import tripleplay.util.JsonUtil;
 

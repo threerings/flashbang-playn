@@ -3,16 +3,15 @@
 // Copyright (C) 2011 Three Rings Design, Inc., All Rights Reserved
 // http://github.com/threerings/flashbang-playn
 
-package com.threerings.flashbang.rsrc;
+package com.threerings.flashbang.rsrc.anim;
 
 import java.util.List;
 import com.google.common.collect.Lists;
 
+import com.threerings.flashbang.Flashbang;
 import com.threerings.flashbang.desc.BasicNamedDataDesc;
 import playn.core.Image;
 import playn.core.Json;
-import playn.core.PlayN;
-
 import tripleplay.util.JsonUtil;
 
 public class ImageDesc extends BasicNamedDataDesc
@@ -27,7 +26,7 @@ public class ImageDesc extends BasicNamedDataDesc
     public Image image ()
     {
         if (_image == null) {
-            _image = PlayN.assetManager().getImage(filename());
+            _image = Flashbang.rsrcs().getImage(filename());
         }
         return _image;
     }

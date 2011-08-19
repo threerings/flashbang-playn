@@ -16,7 +16,6 @@ import tripleplay.util.JsonUtil;
 
 import com.google.common.collect.Lists;
 
-import com.threerings.flashbang.rsrc.AssetPackageDesc;
 
 public class GroupLayerDesc extends LayerDesc
 {

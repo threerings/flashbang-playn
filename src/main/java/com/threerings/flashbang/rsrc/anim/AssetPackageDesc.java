@@ -3,7 +3,7 @@
 // Copyright (C) 2011 Three Rings Design, Inc., All Rights Reserved
 // http://github.com/threerings/flashbang-playn
 
-package com.threerings.flashbang.rsrc;
+package com.threerings.flashbang.rsrc.anim;
 
 import playn.core.Json;
 import playn.core.Json.Object;
@@ -11,7 +11,6 @@ import tripleplay.util.JsonUtil;
 
 import com.threerings.flashbang.desc.BasicDataMgr;
 import com.threerings.flashbang.desc.DataDesc;
-import com.threerings.flashbang.rsrc.anim.ModelDesc;
 
 public class AssetPackageDesc
     implements DataDesc

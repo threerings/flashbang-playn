@@ -10,8 +10,6 @@ import playn.core.Layer;
 import playn.core.PlayN;
 import tripleplay.util.JsonUtil;
 
-import com.threerings.flashbang.rsrc.AssetPackageDesc;
-import com.threerings.flashbang.rsrc.ImageDesc;
 
 public class ImageLayerDesc extends LayerDesc
 {
