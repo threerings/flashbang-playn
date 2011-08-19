@@ -23,6 +23,11 @@ import pythagoras.i.Point;
 public abstract class FlashbangApp
     implements Game, Pointer.Listener
 {
+    public FlashbangApp ()
+    {
+        Flashbang.registerApp(this);
+    }
+
     /**
      * Returns the approximate frames-per-second that the application
      * is running at.
@@ -167,6 +172,5 @@ public abstract class FlashbangApp
    }
 
    protected float _fps;
-
    protected Map<String, Viewport> _viewports = Maps.newHashMap();
 }
