@@ -47,35 +47,14 @@ public abstract class DataMgr<T extends NamedDataDesc>
         return data;
     }
 
-    @SuppressWarnings("unchecked")
-    public <X extends T> X requireData (int id, Class<X> clazz)
-    {
-        T data = requireData(id);
-        Preconditions.checkState(clazz.isInstance(data), "Can't convert to %s [id=%s]",
-            clazz.getSimpleName(), id);
-        return (X) data;
-    }
-
     public T getData (int id)
     {
         return _data.get(id);
     }
 
-    @SuppressWarnings("unchecked")
-    public <X extends T> X getData (int id, Class<X> clazz)
-    {
-        T data = getData(id);
-        return (data != null && clazz.isInstance(data) ? (X) data : null);
-    }
-
     public T getData (String name)
     {
         return getData(DataDescUtil.nameToId(name));
-    }
-
-    public <X extends T> X getData (String name, Class<X> clazz)
-    {
-        return getData(DataDescUtil.nameToId(name), clazz);
     }
 
     public Collection<T> getAllData ()
