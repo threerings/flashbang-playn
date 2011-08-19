@@ -7,24 +7,27 @@ package com.threerings.flashbang.rsrc.anim;
 
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+
+import com.threerings.flashbang.desc.BasicNamedDataDesc;
 
 import playn.core.Json;
 import tripleplay.util.JsonUtil;
 
-public class ModelDesc
+public class ModelDesc extends BasicNamedDataDesc
 {
     public LayerDesc rootLayer;
     public Map<String, ModelAnimDesc> anims;
     public String defaultAnimation; // Nullable
 
+    @Override
     public void fromJson (Json.Object json)
     {
+        super.fromJson(json);
+
         rootLayer = LayerDesc.create(json.getObject("rootLayer"));
 
-        Json.Object jsonAnims = json.getObject("anims");
-        Preconditions.checkNotNull(jsonAnims, "Missing anims");
+        Json.Object jsonAnims = JsonUtil.requireObject(json, "anims");
         anims = Maps.newHashMap();
         for (String animName : JsonUtil.getKeys(jsonAnims)) {
             ModelAnimDesc anim = new ModelAnimDesc();

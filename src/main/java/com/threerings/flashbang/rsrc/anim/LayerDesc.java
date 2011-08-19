@@ -7,10 +7,14 @@ package com.threerings.flashbang.rsrc.anim;
 
 import java.util.Map;
 
+import com.threerings.flashbang.desc.DataDesc;
+
 import playn.core.Json;
 import playn.core.Layer;
+import tripleplay.util.JsonUtil;
 
 public abstract class LayerDesc
+    implements DataDesc
 {
     public String name;
 
@@ -66,17 +70,17 @@ public abstract class LayerDesc
     {
         name = json.getString("name");
 
-        x = (float) json.getNumber("x");
-        y = (float) json.getNumber("y");
-        scaleX = (float) json.getNumber("scaleX");
-        scaleY = (float) json.getNumber("scaleY");
-        rotation = (float) json.getNumber("rotation");
-        alpha = (float) json.getNumber("alpha");
-        visible = json.getBoolean("visible");
+        x = JsonUtil.requireFloat(json, "x");
+        y = JsonUtil.requireFloat(json, "y");
+        scaleX = JsonUtil.requireFloat(json, "scaleX");
+        scaleY = JsonUtil.requireFloat(json, "scaleY");
+        rotation = JsonUtil.requireFloat(json, "rotation");
+        alpha = JsonUtil.requireFloat(json, "alpha");
+        visible = JsonUtil.requireBoolean(json, "visible");
 
-        originX = (float) json.getNumber("originX");
-        originY = (float) json.getNumber("originY");
-        depth = (float) json.getNumber("depth");
+        originX = JsonUtil.requireFloat(json, "originX");
+        originY = JsonUtil.requireFloat(json, "originY");
+        depth = JsonUtil.requireFloat(json, "depth");
     }
 
     protected abstract Layer createLayer ();

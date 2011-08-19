@@ -28,7 +28,6 @@ public class ImageDesc extends BasicNamedDataDesc
         return _image;
     }
 
-    @Override
     public void fromJson (Json.Object json)
     {
         super.fromJson(json);

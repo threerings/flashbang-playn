@@ -6,20 +6,12 @@
 package com.threerings.flashbang.desc;
 
 import java.util.Collection;
-import java.util.Map;
 
 public class BasicDataMgr<T extends NamedDataDesc> extends DataMgr<T>
 {
     public BasicDataMgr (Class<T> klass)
     {
         super(klass);
-    }
-
-    public void resolveRefs (Map<Class<?>, DataMgr<?>> mgrs)
-    {
-        for (T desc : _data.values()) {
-            desc.resolveRefs(mgrs);
-        }
     }
 
     /**

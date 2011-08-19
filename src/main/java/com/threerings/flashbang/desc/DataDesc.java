@@ -5,12 +5,8 @@
 
 package com.threerings.flashbang.desc;
 
-import java.util.Map;
-
-import playn.core.Json;
-
 public interface DataDesc
 {
-    void fromJson (Json.Object json);
-    void resolveRefs (Map<Class<?>, DataMgr<?>> mgrs);
+    //void fromJson (Json.Object json);
+    //void resolveRefs (Map<Class<?>, DataMgr<?>> mgrs);
 }

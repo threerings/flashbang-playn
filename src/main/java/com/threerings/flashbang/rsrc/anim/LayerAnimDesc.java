@@ -13,10 +13,13 @@ import tripleplay.util.JsonUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
+import com.threerings.flashbang.desc.DataDesc;
+
 /**
  * LayerAnimDesc describes how to animate a single layer in a Model.
  */
 public class LayerAnimDesc
+    implements DataDesc
 {
     public String layerSelector;
     public List<KeyframeDesc> keyframes;

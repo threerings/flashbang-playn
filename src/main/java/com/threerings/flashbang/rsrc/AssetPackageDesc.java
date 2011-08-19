@@ -5,22 +5,20 @@
 
 package com.threerings.flashbang.rsrc;
 
-import java.util.Map;
-
 import playn.core.Json;
 import playn.core.Json.Object;
 import tripleplay.util.JsonUtil;
 
 import com.threerings.flashbang.desc.BasicDataMgr;
 import com.threerings.flashbang.desc.DataDesc;
-import com.threerings.flashbang.desc.DataMgr;
+import com.threerings.flashbang.rsrc.anim.ModelDesc;
 
 public class AssetPackageDesc
     implements DataDesc
 {
     public BasicDataMgr<ImageDesc> images;
+    public BasicDataMgr<ModelDesc> models;
 
-    @Override
     public void fromJson (Object json)
     {
         images = new BasicDataMgr<ImageDesc>(ImageDesc.class);
@@ -29,11 +27,12 @@ public class AssetPackageDesc
             image.fromJson(imageJson);
             images.addData(image);
         }
-    }
 
-    @Override
-    public void resolveRefs (Map<Class<?>, DataMgr<?>> mgrs)
-    {
-        images.resolveRefs(mgrs);
+        models = new BasicDataMgr<ModelDesc>(ModelDesc.class);
+        for (Json.Object modelJson : JsonUtil.requireArrayObjects(json, "models")) {
+            ModelDesc model = new ModelDesc();
+            model.fromJson(modelJson);
+            models.addData(model);
+        }
     }
 }

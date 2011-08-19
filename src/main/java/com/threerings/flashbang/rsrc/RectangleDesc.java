@@ -5,18 +5,19 @@
 
 package com.threerings.flashbang.rsrc;
 
-import com.threerings.flashbang.desc.BasicDataDesc;
+import com.threerings.flashbang.desc.DataDesc;
+
 import playn.core.Json;
 import tripleplay.util.JsonUtil;
 
-public class RectangleDesc extends BasicDataDesc
+public class RectangleDesc
+    implements DataDesc
 {
     public float x;
     public float y;
     public float width;
     public float height;
 
-    @Override
     public void fromJson (Json.Object json)
     {
         x = JsonUtil.requireFloat(json, "x");

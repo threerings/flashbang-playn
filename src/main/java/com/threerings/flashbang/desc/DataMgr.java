@@ -17,21 +17,6 @@ public abstract class DataMgr<T extends NamedDataDesc>
 {
     public final Signal<T> dataAdded = new Signal<T>();
 
-    /**
-     * Returns a mapping of DataDesc types to DataMgrs (used in DescRef resolution)
-     */
-    public static Map<Class<?>, DataMgr<?>> buildDataMgrMap (DataMgr<?>... dataMgrs)
-    {
-        Map<Class<?>, DataMgr<?>> mgrMap = Maps.newHashMap();
-        for (DataMgr<?> mgr : dataMgrs) {
-            DataMgr<?> cur = mgrMap.put(mgr.getDescClass(), mgr);
-            Preconditions.checkState(cur == null,
-                "Multiple DataMgrs with the same DescType [type=%s, mgr1=%s, mgr2=%s]",
-                mgr.getDescClass(), mgr, cur);
-        }
-        return mgrMap;
-    }
-
     public DataMgr (Class<T> klass)
     {
         _klass = klass;

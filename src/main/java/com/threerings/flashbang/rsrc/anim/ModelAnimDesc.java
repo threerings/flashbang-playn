@@ -9,6 +9,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import com.threerings.flashbang.desc.DataDesc;
+
 import playn.core.Json;
 import tripleplay.util.JsonUtil;
 
@@ -16,6 +18,7 @@ import tripleplay.util.JsonUtil;
  * ModelAnimDesc describes how to animate multiple layers in a single model
  */
 public class ModelAnimDesc
+    implements DataDesc
 {
     public enum EndBehavior {
         STOP,
@@ -35,8 +38,8 @@ public class ModelAnimDesc
             layerAnims.add(layerAnim);
         }
 
-        endBehavior = JsonUtil.getEnum(json, "endBehavior", EndBehavior.class);
-        framerate = (float) json.getNumber("framerate");
+        endBehavior = JsonUtil.requireEnum(json, "endBehavior", EndBehavior.class);
+        framerate = JsonUtil.requireFloat(json, "framerate");
 
         init();
     }
@@ -49,7 +52,7 @@ public class ModelAnimDesc
         return _totalFrames;
     }
 
-    public void init ()
+    protected void init ()
     {
         _totalFrames = 0;
         for (LayerAnimDesc layerAnim : layerAnims) {

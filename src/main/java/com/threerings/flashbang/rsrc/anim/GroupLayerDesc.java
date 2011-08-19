@@ -26,7 +26,7 @@ public class GroupLayerDesc extends LayerDesc
         super.fromJson(json);
 
         children = Lists.newArrayList();
-        for (Json.Object jsonChild : JsonUtil.getArrayObjects(json, "children")) {
+        for (Json.Object jsonChild : JsonUtil.requireArrayObjects(json, "children")) {
             children.add(LayerDesc.create(jsonChild));
         }
     }
