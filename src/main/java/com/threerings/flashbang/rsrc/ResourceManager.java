@@ -11,8 +11,8 @@ import playn.core.Image;
 import playn.core.Json;
 import playn.core.Sound;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
-import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
 public class ResourceManager
 {

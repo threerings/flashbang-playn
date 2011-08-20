@@ -7,8 +7,8 @@ package com.threerings.flashbang.rsrc;
 
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
-import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
 import com.threerings.flashbang.util.Loadable;
 import com.threerings.flashbang.util.LoadableBatch;
