@@ -26,6 +26,8 @@ public class ResourceGroup extends Loadable
 
     public void add (Resource rsrc)
     {
+        Preconditions.checkState(rsrc._group == null,
+            "Resource already belongs to a group [rsrc=%s]", rsrc);
         Preconditions.checkState(_state == State.NOT_LOADED,
             "Can't add Resources to a group that's loading or loaded");
 
@@ -62,7 +64,7 @@ public class ResourceGroup extends Loadable
     {
         if (err == null) {
             try {
-                Flashbang.rsrcs().add(_resources.values(), _name);
+                Flashbang.rsrcs().add(_resources.values());
             } catch (Throwable addErr) {
                 err = addErr;
             }

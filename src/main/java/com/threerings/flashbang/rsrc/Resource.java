@@ -22,6 +22,6 @@ public abstract class Resource extends Loadable
         return _group;
     }
 
-    /** The group that this Resource belongs to */
+    /** The group that this Resource belongs to. Set by ResourceGroup. */
     String _group;
 }

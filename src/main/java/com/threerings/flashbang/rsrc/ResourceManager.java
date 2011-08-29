@@ -32,22 +32,6 @@ public class ResourceManager
         return (getResource(name) != null);
     }
 
-    public void add (Resource rsrc, String group)
-    {
-        Preconditions.checkState(rsrc.state() == Loadable.State.LOADED, "Resource must be loaded");
-        rsrc._group = group;
-        Resource old = _resources.put(rsrc.name, rsrc);
-        Preconditions.checkState(old == null,
-            "A resource with that name already exists [name=%s]", rsrc.name);
-    }
-
-    public void add (Iterable<Resource> rsrcs, String group)
-    {
-        for (Resource rsrc : rsrcs) {
-            add(rsrc, group);
-        }
-    }
-
     /**
      * Unloads all Resources that belong to the specified group
      */
@@ -76,6 +60,23 @@ public class ResourceManager
     public ResourceFactory getFactory (String type)
     {
         return _factories.get(type);
+    }
+
+    void add (Resource rsrc)
+    {
+        Preconditions.checkNotNull(rsrc._group,
+            "Resource doesn't belong to a group [rsrc=%s]", rsrc);
+        Preconditions.checkState(rsrc.state() == Loadable.State.LOADED, "Resource must be loaded");
+        Resource old = _resources.put(rsrc.name, rsrc);
+        Preconditions.checkState(old == null,
+            "A resource with that name already exists [name=%s]", rsrc.name);
+    }
+
+    void add (Iterable<Resource> rsrcs)
+    {
+        for (Resource rsrc : rsrcs) {
+            add(rsrc);
+        }
     }
 
     protected Map<String, ResourceFactory> _factories = Maps.newHashMap();
