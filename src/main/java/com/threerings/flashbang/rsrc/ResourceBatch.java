@@ -10,37 +10,37 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
+import com.threerings.flashbang.Flashbang;
 import com.threerings.flashbang.util.Loadable;
 import com.threerings.flashbang.util.LoadableBatch;
 
+/**
+ * A LoadableBatch that loads a collection of resources and adds them all to the ResourceManager
+ */
 public class ResourceBatch extends LoadableBatch
 {
-    public ResourceBatch (ResourceManager rm, boolean loadInSequence)
+    public ResourceBatch (String group)
     {
-        super(loadInSequence);
-        _rm = rm;
-    }
-
-    public ResourceBatch (ResourceManager rm)
-    {
-        this(rm, false);
+        super(false);
+        _group = group;
     }
 
     @Override
     public void add (Loadable loadable)
     {
-        if (loadable instanceof Resource) {
-            Resource<?> rsrc = (Resource<?>) loadable;
-            Resource<?> old = _resources.put(rsrc.path, rsrc);
-            Preconditions.checkState(old == null,
-                "A resource with that name is already queued [name=%s]", rsrc.path);
-        }
+        Preconditions.checkArgument(loadable instanceof Resource,
+            "ResourceBatch can only load Resources");
+
+        Resource<?> rsrc = (Resource<?>) loadable;
+        Resource<?> old = _resources.put(rsrc.path, rsrc);
+        Preconditions.checkState(old == null,
+            "A resource with that name is already queued [name=%s]", rsrc.path);
         super.add(loadable);
     }
 
-    public boolean containsResource (String name)
+    public boolean containsResource (String path)
     {
-        return _resources.containsKey(name);
+        return _resources.containsKey(path);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ResourceBatch extends LoadableBatch
     {
         if (err == null) {
             try {
-                _rm.addAll(_resources.values());
+                Flashbang.rsrcs().add(_resources.values(), _group);
             } catch (Throwable addErr) {
                 err = addErr;
             }
@@ -57,6 +57,6 @@ public class ResourceBatch extends LoadableBatch
         super.loadComplete(err);
     }
 
-    protected final ResourceManager _rm;
+    protected final String _group;
     protected Map<String, Resource<?>> _resources = Maps.newHashMap();
 }

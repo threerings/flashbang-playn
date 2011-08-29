@@ -12,18 +12,21 @@ import playn.core.Json;
 import playn.core.Sound;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import com.threerings.flashbang.util.Loadable;
 
 public class ResourceManager
 {
-    public Resource<?> getResource (String name)
+    public Resource<?> getResource (String path)
     {
-        return _resources.get(name);
+        return _resources.get(path);
     }
 
-    public Sound getSound (String name)
+    public Sound getSound (String path)
     {
-        Resource<?> rsrc = getResource(name);
+        Resource<?> rsrc = getResource(path);
         if (rsrc == null) {
             return null;
         }
@@ -31,9 +34,9 @@ public class ResourceManager
         return ((SoundResource) rsrc).get();
     }
 
-    public Image getImage (String name)
+    public Image getImage (String path)
     {
-        Resource<?> rsrc = getResource(name);
+        Resource<?> rsrc = getResource(path);
         if (rsrc == null) {
             return null;
         }
@@ -41,9 +44,9 @@ public class ResourceManager
         return ((ImageResource) rsrc).get();
     }
 
-    public Json.Object getJson (String name)
+    public Json.Object getJson (String path)
     {
-        Resource<?> rsrc = getResource(name);
+        Resource<?> rsrc = getResource(path);
         if (rsrc == null) {
             return null;
         }
@@ -51,9 +54,9 @@ public class ResourceManager
         return ((JsonResource) rsrc).get();
     }
 
-    public String getText (String name)
+    public String getText (String path)
     {
-        Resource<?> rsrc = getResource(name);
+        Resource<?> rsrc = getResource(path);
         if (rsrc == null) {
             return null;
         }
@@ -61,23 +64,45 @@ public class ResourceManager
         return ((TextResource) rsrc).get();
     }
 
-    public boolean isResourceLoaded (String name)
+    public boolean isLoaded (String path)
     {
-        return (getResource(name) != null);
+        return (getResource(path) != null);
     }
 
+    public void add (Resource<?> rsrc, String group)
+    {
+        Preconditions.checkState(rsrc.state() == Loadable.State.LOADED, "Resource must be loaded");
+        rsrc._group = group;
+        Resource<?> old = _resources.put(rsrc.path, rsrc);
+        Preconditions.checkState(old == null,
+            "A resource with that name already exists [name=%s]", rsrc.path);
+    }
+
+    public void add (Iterable<Resource<?>> rsrcs, String group)
+    {
+        for (Resource<?> rsrc : rsrcs) {
+            add(rsrc, group);
+        }
+    }
+
+    /**
+     * Unloads all Resources that belong to the specified group
+     */
+    public void unload (String group)
+    {
+        for (Resource<?> rsrc : Lists.newArrayList(_resources.values())) {
+            if (rsrc.group().equals(group)) {
+                _resources.remove(rsrc.path);
+            }
+        }
+    }
+
+    /**
+     * Unloads all Resources
+     */
     public void unloadAll ()
     {
         _resources.clear();
-    }
-
-    void addAll (Iterable<Resource<?>> resources)
-    {
-        for (Resource<?> rsrc : resources) {
-            Resource<?> old = _resources.put(rsrc.path, rsrc);
-            Preconditions.checkState(old == null,
-                "A resource with that name already exists [name=%s]", rsrc.path);
-        }
     }
 
     protected Map<String, Resource<?>> _resources = Maps.newHashMap();
