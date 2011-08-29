@@ -17,11 +17,11 @@ import com.threerings.flashbang.util.LoadableBatch;
 /**
  * Loads a group of Resources and adds them all to the ResourceManager
  */
-public class ResourceGroup extends Loadable
+public class ResourceBatch extends Loadable
 {
-    public ResourceGroup (String name)
+    public ResourceBatch (String group)
     {
-        _name = name;
+        _group = group;
     }
 
     public void add (Resource rsrc)
@@ -32,7 +32,7 @@ public class ResourceGroup extends Loadable
             "Can't add Resources to a group that's loading or loaded");
 
         Resource old = _resources.put(rsrc.name, rsrc);
-        rsrc._group = _name;
+        rsrc._group = _group;
         Preconditions.checkState(old == null,
             "A resource with that name is already queued [name=%s]", rsrc.name);
     }
@@ -73,6 +73,6 @@ public class ResourceGroup extends Loadable
         super.loadComplete(err);
     }
 
-    protected final String _name;
+    protected final String _group;
     protected Map<String, Resource> _resources = Maps.newHashMap();
 }
