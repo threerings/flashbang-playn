@@ -19,14 +19,14 @@ import com.threerings.flashbang.util.Loadable;
 
 public class ResourceManager
 {
-    public Resource getResource (String path)
+    public Resource getResource (String name)
     {
-        return _resources.get(path);
+        return _resources.get(name);
     }
 
-    public Sound getSound (String path)
+    public Sound getSound (String name)
     {
-        Resource rsrc = getResource(path);
+        Resource rsrc = getResource(name);
         if (rsrc == null) {
             return null;
         }
@@ -34,9 +34,9 @@ public class ResourceManager
         return ((SoundResource) rsrc).get();
     }
 
-    public Image getImage (String path)
+    public Image getImage (String name)
     {
-        Resource rsrc = getResource(path);
+        Resource rsrc = getResource(name);
         if (rsrc == null) {
             return null;
         }
@@ -44,9 +44,9 @@ public class ResourceManager
         return ((ImageResource) rsrc).get();
     }
 
-    public Json.Object getJson (String path)
+    public Json.Object getJson (String name)
     {
-        Resource rsrc = getResource(path);
+        Resource rsrc = getResource(name);
         if (rsrc == null) {
             return null;
         }
@@ -54,9 +54,9 @@ public class ResourceManager
         return ((JsonResource) rsrc).get();
     }
 
-    public String getText (String path)
+    public String getText (String name)
     {
-        Resource rsrc = getResource(path);
+        Resource rsrc = getResource(name);
         if (rsrc == null) {
             return null;
         }
@@ -64,18 +64,18 @@ public class ResourceManager
         return ((TextResource) rsrc).get();
     }
 
-    public boolean isLoaded (String path)
+    public boolean isLoaded (String name)
     {
-        return (getResource(path) != null);
+        return (getResource(name) != null);
     }
 
     public void add (Resource rsrc, String group)
     {
         Preconditions.checkState(rsrc.state() == Loadable.State.LOADED, "Resource must be loaded");
         rsrc._group = group;
-        Resource old = _resources.put(rsrc.path, rsrc);
+        Resource old = _resources.put(rsrc.name, rsrc);
         Preconditions.checkState(old == null,
-            "A resource with that name already exists [name=%s]", rsrc.path);
+            "A resource with that name already exists [name=%s]", rsrc.name);
     }
 
     public void add (Iterable<Resource> rsrcs, String group)
@@ -92,7 +92,7 @@ public class ResourceManager
     {
         for (Resource rsrc : Lists.newArrayList(_resources.values())) {
             if (rsrc.group().equals(group)) {
-                _resources.remove(rsrc.path);
+                _resources.remove(rsrc.name);
             }
         }
     }

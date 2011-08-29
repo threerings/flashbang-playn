@@ -18,7 +18,7 @@ public class SoundResource extends Resource
     @Override
     protected void doLoad ()
     {
-        _sound = PlayN.assetManager().getSound(path);
+        _sound = PlayN.assetManager().getSound(name);
         // sounds currently load immediately
         loadComplete(null);
     }

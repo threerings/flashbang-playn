@@ -9,12 +9,12 @@ import com.threerings.flashbang.util.Loadable;
 
 public abstract class Resource extends Loadable
 {
-    /** The unique path for this Resource */
-    public final String path;
+    /** The unique name for this Resource */
+    public final String name;
 
-    public Resource (String path)
+    public Resource (String name)
     {
-        this.path = path;
+        this.name = name;
     }
 
     public String group ()

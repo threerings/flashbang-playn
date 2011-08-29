@@ -18,7 +18,7 @@ public class TextResource extends Resource
     @Override
     protected void doLoad ()
     {
-        PlayN.assetManager().getText(path, new ResourceCallback<String>() {
+        PlayN.assetManager().getText(name, new ResourceCallback<String>() {
             @Override public void done (String rsrc) {
                 _text = rsrc;
                 loadComplete(null);

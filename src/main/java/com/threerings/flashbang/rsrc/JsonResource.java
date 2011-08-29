@@ -19,7 +19,7 @@ public class JsonResource extends Resource
     @Override
     protected void doLoad ()
     {
-        PlayN.assetManager().getText(path, new ResourceCallback<String>() {
+        PlayN.assetManager().getText(name, new ResourceCallback<String>() {
             @Override public void done (String text) {
                 try {
                     _json = PlayN.json().parse(text);

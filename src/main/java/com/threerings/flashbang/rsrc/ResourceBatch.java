@@ -32,9 +32,9 @@ public class ResourceBatch extends LoadableBatch
             "ResourceBatch can only load Resources");
 
         Resource rsrc = (Resource) loadable;
-        Resource old = _resources.put(rsrc.path, rsrc);
+        Resource old = _resources.put(rsrc.name, rsrc);
         Preconditions.checkState(old == null,
-            "A resource with that name is already queued [name=%s]", rsrc.path);
+            "A resource with that name is already queued [name=%s]", rsrc.name);
         super.add(loadable);
     }
 
