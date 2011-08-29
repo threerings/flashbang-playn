@@ -8,7 +8,7 @@ package com.threerings.flashbang.rsrc;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
 
-public class TextResource extends Resource<String>
+public class TextResource extends Resource
 {
     public TextResource (String path)
     {
@@ -29,7 +29,6 @@ public class TextResource extends Resource<String>
         });
     }
 
-    @Override
     public String get ()
     {
         return _text;

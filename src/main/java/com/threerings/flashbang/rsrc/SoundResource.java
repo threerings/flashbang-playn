@@ -8,7 +8,7 @@ package com.threerings.flashbang.rsrc;
 import playn.core.PlayN;
 import playn.core.Sound;
 
-public class SoundResource extends Resource<Sound>
+public class SoundResource extends Resource
 {
     public SoundResource (String path)
     {
@@ -23,7 +23,6 @@ public class SoundResource extends Resource<Sound>
         loadComplete(null);
     }
 
-    @Override
     public Sound get ()
     {
         return _sound;

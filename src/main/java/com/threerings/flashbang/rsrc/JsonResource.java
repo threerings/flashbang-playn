@@ -9,7 +9,7 @@ import playn.core.Json;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
 
-public class JsonResource extends Resource<Json.Object>
+public class JsonResource extends Resource
 {
     public JsonResource (String path)
     {
@@ -34,7 +34,6 @@ public class JsonResource extends Resource<Json.Object>
         });
     }
 
-    @Override
     public Json.Object get ()
     {
         return _json;

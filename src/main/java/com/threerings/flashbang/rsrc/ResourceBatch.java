@@ -31,8 +31,8 @@ public class ResourceBatch extends LoadableBatch
         Preconditions.checkArgument(loadable instanceof Resource,
             "ResourceBatch can only load Resources");
 
-        Resource<?> rsrc = (Resource<?>) loadable;
-        Resource<?> old = _resources.put(rsrc.path, rsrc);
+        Resource rsrc = (Resource) loadable;
+        Resource old = _resources.put(rsrc.path, rsrc);
         Preconditions.checkState(old == null,
             "A resource with that name is already queued [name=%s]", rsrc.path);
         super.add(loadable);
@@ -58,5 +58,5 @@ public class ResourceBatch extends LoadableBatch
     }
 
     protected final String _group;
-    protected Map<String, Resource<?>> _resources = Maps.newHashMap();
+    protected Map<String, Resource> _resources = Maps.newHashMap();
 }

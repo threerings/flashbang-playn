@@ -9,7 +9,7 @@ import playn.core.Image;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
 
-public class ImageResource extends Resource<Image>
+public class ImageResource extends Resource
 {
     public ImageResource (String path)
     {
@@ -30,7 +30,6 @@ public class ImageResource extends Resource<Image>
         });
     }
 
-    @Override
     public Image get ()
     {
         return _image;

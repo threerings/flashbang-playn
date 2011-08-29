@@ -19,14 +19,14 @@ import com.threerings.flashbang.util.Loadable;
 
 public class ResourceManager
 {
-    public Resource<?> getResource (String path)
+    public Resource getResource (String path)
     {
         return _resources.get(path);
     }
 
     public Sound getSound (String path)
     {
-        Resource<?> rsrc = getResource(path);
+        Resource rsrc = getResource(path);
         if (rsrc == null) {
             return null;
         }
@@ -36,7 +36,7 @@ public class ResourceManager
 
     public Image getImage (String path)
     {
-        Resource<?> rsrc = getResource(path);
+        Resource rsrc = getResource(path);
         if (rsrc == null) {
             return null;
         }
@@ -46,7 +46,7 @@ public class ResourceManager
 
     public Json.Object getJson (String path)
     {
-        Resource<?> rsrc = getResource(path);
+        Resource rsrc = getResource(path);
         if (rsrc == null) {
             return null;
         }
@@ -56,7 +56,7 @@ public class ResourceManager
 
     public String getText (String path)
     {
-        Resource<?> rsrc = getResource(path);
+        Resource rsrc = getResource(path);
         if (rsrc == null) {
             return null;
         }
@@ -69,18 +69,18 @@ public class ResourceManager
         return (getResource(path) != null);
     }
 
-    public void add (Resource<?> rsrc, String group)
+    public void add (Resource rsrc, String group)
     {
         Preconditions.checkState(rsrc.state() == Loadable.State.LOADED, "Resource must be loaded");
         rsrc._group = group;
-        Resource<?> old = _resources.put(rsrc.path, rsrc);
+        Resource old = _resources.put(rsrc.path, rsrc);
         Preconditions.checkState(old == null,
             "A resource with that name already exists [name=%s]", rsrc.path);
     }
 
-    public void add (Iterable<Resource<?>> rsrcs, String group)
+    public void add (Iterable<Resource> rsrcs, String group)
     {
-        for (Resource<?> rsrc : rsrcs) {
+        for (Resource rsrc : rsrcs) {
             add(rsrc, group);
         }
     }
@@ -90,7 +90,7 @@ public class ResourceManager
      */
     public void unload (String group)
     {
-        for (Resource<?> rsrc : Lists.newArrayList(_resources.values())) {
+        for (Resource rsrc : Lists.newArrayList(_resources.values())) {
             if (rsrc.group().equals(group)) {
                 _resources.remove(rsrc.path);
             }
@@ -105,5 +105,5 @@ public class ResourceManager
         _resources.clear();
     }
 
-    protected Map<String, Resource<?>> _resources = Maps.newHashMap();
+    protected Map<String, Resource> _resources = Maps.newHashMap();
 }

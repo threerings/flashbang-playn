@@ -7,7 +7,7 @@ package com.threerings.flashbang.rsrc;
 
 import com.threerings.flashbang.util.Loadable;
 
-public abstract class Resource<T> extends Loadable
+public abstract class Resource extends Loadable
 {
     /** The unique path for this Resource */
     public final String path;
@@ -21,8 +21,6 @@ public abstract class Resource<T> extends Loadable
     {
         return _group;
     }
-
-    public abstract T get ();
 
     /** The group that this Resource belongs to */
     String _group;
