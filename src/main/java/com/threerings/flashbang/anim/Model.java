@@ -12,11 +12,11 @@ import com.google.common.collect.Maps;
 import playn.core.Layer;
 import com.threerings.flashbang.SceneObject;
 import com.threerings.flashbang.rsrc.anim.ModelAnimDesc;
-import com.threerings.flashbang.rsrc.anim.ModelDesc;
+import com.threerings.flashbang.rsrc.anim.ModelResource;
 
 public class Model extends SceneObject
 {
-    public Model (ModelDesc desc)
+    public Model (ModelResource desc)
     {
         _desc = desc;
         _root = _desc.rootLayer.build("", _layerLookup);
@@ -52,7 +52,7 @@ public class Model extends SceneObject
         }
     }
 
-    protected final ModelDesc _desc;
+    protected final ModelResource _desc;
     protected final Map<String, Layer> _layerLookup = Maps.newHashMap();
     protected Layer _root;
     protected AnimationController _animator;

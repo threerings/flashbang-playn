@@ -14,7 +14,10 @@ import playn.core.ResourceCallback;
 import pythagoras.f.Rectangle;
 import tripleplay.util.JsonUtil;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+
+import com.threerings.flashbang.Flashbang;
 
 public class ImageResource extends Resource
 {
@@ -37,6 +40,14 @@ public class ImageResource extends Resource
             return new ImageResource(name, frameRects);
         }
     };
+
+    public static ImageResource require (String name)
+    {
+        Resource rsrc = Flashbang.rsrcs().requireResource(name);
+        Preconditions.checkState(rsrc instanceof ImageResource,
+            "Not an ImageResource [name=%s]", name);
+        return (ImageResource) rsrc;
+    }
 
     public final List<Rectangle> frameRects;
 

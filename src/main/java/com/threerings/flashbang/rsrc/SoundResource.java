@@ -5,6 +5,10 @@
 
 package com.threerings.flashbang.rsrc;
 
+import com.google.common.base.Preconditions;
+
+import com.threerings.flashbang.Flashbang;
+
 import playn.core.Json;
 import playn.core.PlayN;
 import playn.core.Sound;
@@ -17,6 +21,14 @@ public class SoundResource extends Resource
             return new SoundResource(name);
         }
     };
+
+    public static SoundResource require (String name)
+    {
+        Resource rsrc = Flashbang.rsrcs().requireResource(name);
+        Preconditions.checkState(rsrc instanceof SoundResource,
+            "Not a SoundResource [name=%s]", name);
+        return (SoundResource) rsrc;
+    }
 
     public SoundResource (String path)
     {

@@ -20,24 +20,11 @@ public class ResourceManager
         return _resources.get(name);
     }
 
-    public SoundResource getSound (String name)
+    public Resource requireResource (String name)
     {
-        Resource rsrc = getResource(name);
-        if (rsrc == null) {
-            return null;
-        }
-        Preconditions.checkState(rsrc instanceof SoundResource);
-        return ((SoundResource) rsrc);
-    }
-
-    public ImageResource getImage (String name)
-    {
-        Resource rsrc = getResource(name);
-        if (rsrc == null) {
-            return null;
-        }
-        Preconditions.checkState(rsrc instanceof ImageResource);
-        return ((ImageResource) rsrc);
+        Resource rsrc = _resources.get(name);
+        Preconditions.checkNotNull(rsrc, "No such resource [name=%s]", name);
+        return rsrc;
     }
 
     public boolean isLoaded (String name)

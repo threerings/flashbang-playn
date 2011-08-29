@@ -15,6 +15,7 @@ import com.google.common.collect.Maps;
 
 import com.threerings.flashbang.rsrc.ImageResource;
 import com.threerings.flashbang.rsrc.SoundResource;
+import com.threerings.flashbang.rsrc.anim.ModelResource;
 
 import playn.core.Game;
 import playn.core.GroupLayer;
@@ -31,6 +32,7 @@ public abstract class FlashbangApp
         Flashbang.registerApp(this);
         Flashbang.rsrcs().registerFactory(ImageResource.TYPE, ImageResource.FACTORY);
         Flashbang.rsrcs().registerFactory(SoundResource.TYPE, SoundResource.FACTORY);
+        Flashbang.rsrcs().registerFactory(ModelResource.TYPE, ModelResource.FACTORY);
     }
 
     /**

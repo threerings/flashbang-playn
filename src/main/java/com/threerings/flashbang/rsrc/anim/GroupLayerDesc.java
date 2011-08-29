@@ -22,13 +22,13 @@ public class GroupLayerDesc extends LayerDesc
     public List<LayerDesc> children;
 
     @Override
-    public void fromJson (Json.Object json, AssetPackageDesc assets)
+    public void fromJson (Json.Object json)
     {
-        super.fromJson(json, assets);
+        super.fromJson(json);
 
         children = Lists.newArrayList();
         for (Json.Object jsonChild : JsonUtil.requireArrayObjects(json, "children")) {
-            children.add(LayerDesc.create(jsonChild, assets));
+            children.add(LayerDesc.create(jsonChild));
         }
     }
 

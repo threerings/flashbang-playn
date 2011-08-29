@@ -29,7 +29,7 @@ public abstract class LayerDesc
     public float originY;
     public float depth;
 
-    public static LayerDesc create (Json.Object json, AssetPackageDesc assets)
+    public static LayerDesc create (Json.Object json)
     {
         LayerDesc desc = null;
 
@@ -42,7 +42,7 @@ public abstract class LayerDesc
             throw new RuntimeException("Unrecognized layer type [type=" + typeName + "]");
         }
 
-        desc.fromJson(json, assets);
+        desc.fromJson(json);
         return desc;
     }
 
@@ -65,7 +65,7 @@ public abstract class LayerDesc
         return layer;
     }
 
-    public void fromJson (Json.Object json, AssetPackageDesc assets)
+    public void fromJson (Json.Object json)
     {
         name = json.getString("name");
 

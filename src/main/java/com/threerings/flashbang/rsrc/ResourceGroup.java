@@ -15,7 +15,7 @@ import com.threerings.flashbang.util.Loadable;
 import com.threerings.flashbang.util.LoadableBatch;
 
 /**
- * A LoadableBatch that loads a collection of resources and adds them all to the ResourceManager
+ * Loads a group of Resources and adds them all to the ResourceManager
  */
 public class ResourceGroup extends Loadable
 {
@@ -26,6 +26,9 @@ public class ResourceGroup extends Loadable
 
     public void add (Resource rsrc)
     {
+        Preconditions.checkState(_state == State.NOT_LOADED,
+            "Can't add Resources to a group that's loading or loaded");
+
         Resource old = _resources.put(rsrc.name, rsrc);
         rsrc._group = _name;
         Preconditions.checkState(old == null,
