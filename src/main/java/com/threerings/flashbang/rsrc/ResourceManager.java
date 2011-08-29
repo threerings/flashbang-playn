@@ -33,6 +33,15 @@ public class ResourceManager
     }
 
     /**
+     * Convenience function to load a set of resources from a JSON file
+     */
+    public void loadResourceFile (String filename, Loadable.Callback callback)
+    {
+        ResourceFile batch = new ResourceFile(filename);
+        batch.load(callback);
+    }
+
+    /**
      * Unloads all Resources that belong to the specified group
      */
     public void unload (String group)

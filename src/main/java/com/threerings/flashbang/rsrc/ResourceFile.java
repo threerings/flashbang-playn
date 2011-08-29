@@ -17,12 +17,17 @@ import tripleplay.util.JsonUtil;
 /**
  * A ResourceBatch that takes reads a set of resources from a JSON file and loads them
  */
-public class FileResourceBatch extends ResourceBatch
+public class ResourceFile extends ResourceBatch
 {
-    public FileResourceBatch (String filename, String group)
+    public ResourceFile (String filename, String group)
     {
         super(group);
         _filename = filename;
+    }
+
+    public ResourceFile (String filename)
+    {
+        this(filename, filename);
     }
 
     @Override
@@ -40,14 +45,14 @@ public class FileResourceBatch extends ResourceBatch
                         Preconditions.checkNotNull(factory,
                             "No ResourceFactory for Resource [type=%s]", type);
                         add(factory.create(JsonUtil.requireString(jsonRsrc, "name"), jsonRsrc));
-
                     }
+
                 } catch (Throwable err) {
                     loadComplete(err);
                 }
 
                 // And load!
-                FileResourceBatch.super.doLoad();
+                ResourceFile.super.doLoad();
             }
 
             @Override public void error (Throwable err) {
