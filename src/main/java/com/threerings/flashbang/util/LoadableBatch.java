@@ -28,7 +28,7 @@ public class LoadableBatch extends Loadable
         this(false);
     }
 
-    public void addLoadable (Loadable loadable)
+    public void add (Loadable loadable)
     {
         Preconditions.checkState(_state == State.NOT_LOADED, "Can't add Loadables now [state=%s]",
             _state);

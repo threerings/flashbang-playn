@@ -27,7 +27,7 @@ public class ResourceSet extends LoadableBatch
     }
 
     @Override
-    public void addLoadable (Loadable loadable)
+    public void add (Loadable loadable)
     {
         if (loadable instanceof Resource) {
             Resource<?> rsrc = (Resource<?>) loadable;
@@ -35,7 +35,7 @@ public class ResourceSet extends LoadableBatch
             Preconditions.checkState(old == null,
                 "A resource with that name is already queued [name=%s]", rsrc.path);
         }
-        super.addLoadable(loadable);
+        super.add(loadable);
     }
 
     public boolean containsResource (String name)
