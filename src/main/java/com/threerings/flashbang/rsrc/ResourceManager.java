@@ -7,10 +7,6 @@ package com.threerings.flashbang.rsrc;
 
 import java.util.Map;
 
-import playn.core.Image;
-import playn.core.Json;
-import playn.core.Sound;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -24,44 +20,24 @@ public class ResourceManager
         return _resources.get(name);
     }
 
-    public Sound getSound (String name)
+    public SoundResource getSound (String name)
     {
         Resource rsrc = getResource(name);
         if (rsrc == null) {
             return null;
         }
         Preconditions.checkState(rsrc instanceof SoundResource);
-        return ((SoundResource) rsrc).get();
+        return ((SoundResource) rsrc);
     }
 
-    public Image getImage (String name)
+    public ImageResource getImage (String name)
     {
         Resource rsrc = getResource(name);
         if (rsrc == null) {
             return null;
         }
         Preconditions.checkState(rsrc instanceof ImageResource);
-        return ((ImageResource) rsrc).get();
-    }
-
-    public Json.Object getJson (String name)
-    {
-        Resource rsrc = getResource(name);
-        if (rsrc == null) {
-            return null;
-        }
-        Preconditions.checkState(rsrc instanceof JsonResource);
-        return ((JsonResource) rsrc).get();
-    }
-
-    public String getText (String name)
-    {
-        Resource rsrc = getResource(name);
-        if (rsrc == null) {
-            return null;
-        }
-        Preconditions.checkState(rsrc instanceof TextResource);
-        return ((TextResource) rsrc).get();
+        return ((ImageResource) rsrc);
     }
 
     public boolean isLoaded (String name)
@@ -105,5 +81,16 @@ public class ResourceManager
         _resources.clear();
     }
 
+    public void registerFactory (String type, ResourceFactory factory)
+    {
+        _factories.put(type, factory);
+    }
+
+    public ResourceFactory getFactory (String type)
+    {
+        return _factories.get(type);
+    }
+
+    protected Map<String, ResourceFactory> _factories = Maps.newHashMap();
     protected Map<String, Resource> _resources = Maps.newHashMap();
 }

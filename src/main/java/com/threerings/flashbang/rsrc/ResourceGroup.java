@@ -17,30 +17,41 @@ import com.threerings.flashbang.util.LoadableBatch;
 /**
  * A LoadableBatch that loads a collection of resources and adds them all to the ResourceManager
  */
-public class ResourceBatch extends LoadableBatch
+public class ResourceGroup extends Loadable
 {
-    public ResourceBatch (String group)
+    public ResourceGroup (String name)
     {
-        super(false);
-        _group = group;
+        _name = name;
+    }
+
+    public void add (Resource rsrc)
+    {
+        Resource old = _resources.put(rsrc.name, rsrc);
+        rsrc._group = _name;
+        Preconditions.checkState(old == null,
+            "A resource with that name is already queued [name=%s]", rsrc.name);
+    }
+
+    public boolean contains (String name)
+    {
+        return _resources.containsKey(name);
     }
 
     @Override
-    public void add (Loadable loadable)
+    protected void doLoad ()
     {
-        Preconditions.checkArgument(loadable instanceof Resource,
-            "ResourceBatch can only load Resources");
-
-        Resource rsrc = (Resource) loadable;
-        Resource old = _resources.put(rsrc.name, rsrc);
-        Preconditions.checkState(old == null,
-            "A resource with that name is already queued [name=%s]", rsrc.name);
-        super.add(loadable);
-    }
-
-    public boolean containsResource (String path)
-    {
-        return _resources.containsKey(path);
+        LoadableBatch batch = new LoadableBatch();
+        for (Resource rsrc : _resources.values()) {
+            batch.add(rsrc);
+        }
+        batch.load(new Callback() {
+            @Override public void done () {
+                loadComplete(null);
+            }
+            @Override public void error (Throwable err) {
+                loadComplete(err);
+            }
+        });
     }
 
     @Override
@@ -48,7 +59,7 @@ public class ResourceBatch extends LoadableBatch
     {
         if (err == null) {
             try {
-                Flashbang.rsrcs().add(_resources.values(), _group);
+                Flashbang.rsrcs().add(_resources.values(), _name);
             } catch (Throwable addErr) {
                 err = addErr;
             }
@@ -57,6 +68,6 @@ public class ResourceBatch extends LoadableBatch
         super.loadComplete(err);
     }
 
-    protected final String _group;
+    protected final String _name;
     protected Map<String, Resource> _resources = Maps.newHashMap();
 }

@@ -10,7 +10,6 @@ import playn.core.Layer;
 import playn.core.PlayN;
 import tripleplay.util.JsonUtil;
 
-
 public class ImageLayerDesc extends LayerDesc
 {
     public ImageDesc image;

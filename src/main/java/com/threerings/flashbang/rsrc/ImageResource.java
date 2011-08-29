@@ -5,15 +5,50 @@
 
 package com.threerings.flashbang.rsrc;
 
+import java.util.List;
+
 import playn.core.Image;
+import playn.core.Json;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
+import pythagoras.f.Rectangle;
+import tripleplay.util.JsonUtil;
+
+import com.google.common.collect.Lists;
 
 public class ImageResource extends Resource
 {
-    public ImageResource (String path)
+    public static final String TYPE = "image";
+
+    public static ResourceFactory FACTORY = new ResourceFactory() {
+        @Override public Resource create (String name, Json.Object json) {
+            List<Rectangle> frameRects = null;
+            if (json.getObject("frameRects") != null) {
+                frameRects = Lists.newArrayList();
+                for (Json.Object jsonRect : JsonUtil.getArrayObjects(json, "frameRects")) {
+                    Rectangle r = new Rectangle();
+                    r.x = JsonUtil.requireFloat(jsonRect, "x");
+                    r.y = JsonUtil.requireFloat(jsonRect, "y");
+                    r.width = JsonUtil.requireFloat(jsonRect, "width");
+                    r.height = JsonUtil.requireFloat(jsonRect, "height");
+                }
+            }
+
+            return new ImageResource(name, frameRects);
+        }
+    };
+
+    public final List<Rectangle> frameRects;
+
+    public ImageResource (String path, List<Rectangle> frameRects)
     {
         super(path);
+        this.frameRects = frameRects;
+    }
+
+    public ImageResource (String path)
+    {
+        this(path, null);
     }
 
     @Override
@@ -30,7 +65,7 @@ public class ImageResource extends Resource
         });
     }
 
-    public Image get ()
+    public Image image ()
     {
         return _image;
     }

@@ -13,6 +13,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import com.threerings.flashbang.rsrc.ImageResource;
+import com.threerings.flashbang.rsrc.SoundResource;
+
 import playn.core.Game;
 import playn.core.GroupLayer;
 import playn.core.PlayN;
@@ -26,6 +29,8 @@ public abstract class FlashbangApp
     public FlashbangApp ()
     {
         Flashbang.registerApp(this);
+        Flashbang.rsrcs().registerFactory(ImageResource.TYPE, ImageResource.FACTORY);
+        Flashbang.rsrcs().registerFactory(SoundResource.TYPE, SoundResource.FACTORY);
     }
 
     /**

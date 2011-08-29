@@ -26,7 +26,7 @@ public class ImageDesc extends BasicNamedDataDesc
     public Image image ()
     {
         if (_image == null) {
-            _image = Flashbang.rsrcs().getImage(filename());
+            _image = Flashbang.rsrcs().getImage(filename()).image();
         }
         return _image;
     }
