@@ -13,15 +13,15 @@ import com.google.common.collect.Maps;
 import com.threerings.flashbang.util.Loadable;
 import com.threerings.flashbang.util.LoadableBatch;
 
-public class ResourceSet extends LoadableBatch
+public class ResourceBatch extends LoadableBatch
 {
-    public ResourceSet (ResourceManager rm, boolean loadInSequence)
+    public ResourceBatch (ResourceManager rm, boolean loadInSequence)
     {
         super(loadInSequence);
         _rm = rm;
     }
 
-    public ResourceSet (ResourceManager rm)
+    public ResourceBatch (ResourceManager rm)
     {
         this(rm, false);
     }
