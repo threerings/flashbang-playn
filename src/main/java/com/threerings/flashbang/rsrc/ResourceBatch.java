@@ -31,10 +31,7 @@ public class ResourceBatch extends Loadable
         Preconditions.checkState(_state == State.NOT_LOADED,
             "Can't add Resources to a group that's loading or loaded");
 
-        Resource old = _resources.put(rsrc.name, rsrc);
-        rsrc._group = _group;
-        Preconditions.checkState(old == null,
-            "A resource with that name is already queued [name=%s]", rsrc.name);
+        addInternal(rsrc);
     }
 
     public boolean contains (String name)
@@ -71,6 +68,14 @@ public class ResourceBatch extends Loadable
         }
 
         super.loadComplete(err);
+    }
+
+    protected void addInternal (Resource rsrc)
+    {
+        Resource old = _resources.put(rsrc.name, rsrc);
+        rsrc._group = _group;
+        Preconditions.checkState(old == null,
+            "A resource with that name is already queued [name=%s]", rsrc.name);
     }
 
     protected final String _group;

@@ -44,11 +44,13 @@ public class ResourceFile extends ResourceBatch
                         ResourceFactory factory = Flashbang.rsrcs().getFactory(type);
                         Preconditions.checkNotNull(factory,
                             "No ResourceFactory for Resource [type=%s]", type);
-                        add(factory.create(JsonUtil.requireString(jsonRsrc, "name"), jsonRsrc));
+                        addInternal(factory.create(JsonUtil.requireString(jsonRsrc, "name"),
+                            jsonRsrc));
                     }
 
                 } catch (Throwable err) {
                     loadComplete(err);
+                    return;
                 }
 
                 // And load!
