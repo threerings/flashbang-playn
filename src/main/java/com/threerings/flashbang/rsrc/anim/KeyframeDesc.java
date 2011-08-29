@@ -27,16 +27,16 @@ public class KeyframeDesc
 
     public void fromJson (Json.Object json)
     {
-        frameIdx = json.getInt("frameIdx");
+        frameIdx = JsonUtil.requireInt(json, "frameIdx");
         interp = JsonUtil.getEnum(json, "interp", InterpolatorType.class).interp;
 
-        x = (float) json.getNumber("x");
-        y = (float) json.getNumber("y");
-        scaleX = (float) json.getNumber("scaleX");
-        scaleY = (float) json.getNumber("scaleY");
-        rotation = (float) json.getNumber("rotation");
-        visible = json.getBoolean("visible");
-        alpha = (float) json.getNumber("alpha");
+        x = JsonUtil.requireFloat(json, "x");
+        y = JsonUtil.requireFloat(json, "y");
+        scaleX = JsonUtil.requireFloat(json, "scaleX");
+        scaleY = JsonUtil.requireFloat(json, "scaleY");
+        rotation = JsonUtil.requireFloat(json, "rotation");
+        visible = JsonUtil.requireBoolean(json, "visible");
+        alpha = JsonUtil.requireFloat(json, "alpha");
     }
 
     public KeyframeDesc next ()
