@@ -75,6 +75,6 @@ public abstract class Loadable
     }
 
     protected List<Callback> _callbacks = Lists.newArrayList();
-    protected State _state;
+    protected State _state = State.NOT_LOADED;
     protected Throwable _loadError;
 }
