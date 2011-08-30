@@ -7,6 +7,8 @@ package com.threerings.flashbang.util;
 
 import java.util.List;
 
+import playn.core.PlayN;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
@@ -65,12 +67,17 @@ public abstract class Loadable
 
         List<Callback> callbacks = _callbacks;
         _callbacks = Lists.newArrayList();
-        for (Callback cb : callbacks) {
-            if (_state == State.ERROR) {
-                cb.error(_loadError);
-            } else {
-                cb.done();
+        try {
+            for (Callback cb : callbacks) {
+                if (_state == State.ERROR) {
+                    cb.error(_loadError);
+                } else {
+                    cb.done();
+                }
             }
+        } catch (Throwable e) {
+            PlayN.log().error("Unhandled error in Loadable.loadComplete", e);
+            // Is there any reason to rethrow this error? There's probably nobody to catch it.
         }
     }
 
