@@ -59,7 +59,7 @@ public abstract class Loadable
 
     protected void loadComplete (Throwable err)
     {
-        Preconditions.checkState(_state == State.LOADING);
+        Preconditions.checkState(_state == State.LOADING, "We weren't loading [state=%s]", _state);
         _loadError = err;
         _state = (err == null ? State.LOADED : State.ERROR);
 
