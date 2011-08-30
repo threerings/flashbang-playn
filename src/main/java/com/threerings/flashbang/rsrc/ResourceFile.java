@@ -37,20 +37,14 @@ public class ResourceFile extends ResourceBatch
         PlayN.assetManager().getText(_filename, new ResourceCallback<String>() {
             @Override public void done (String text) {
                 // Parse our Resources from JSON
-                try {
-                    Json.Object json = PlayN.json().parse(text);
-                    for (Json.Object jsonRsrc : JsonUtil.getArrayObjects(json, "resources")) {
-                        String type = JsonUtil.requireString(jsonRsrc, "type");
-                        ResourceFactory factory = Flashbang.rsrcs().getFactory(type);
-                        Preconditions.checkNotNull(factory,
-                            "No ResourceFactory for Resource [type=%s]", type);
-                        addInternal(factory.create(JsonUtil.requireString(jsonRsrc, "name"),
-                            jsonRsrc));
-                    }
-
-                } catch (Throwable err) {
-                    loadComplete(err);
-                    return;
+                Json.Object json = PlayN.json().parse(text);
+                for (Json.Object jsonRsrc : JsonUtil.getArrayObjects(json, "resources")) {
+                    String type = JsonUtil.requireString(jsonRsrc, "type");
+                    ResourceFactory factory = Flashbang.rsrcs().getFactory(type);
+                    Preconditions.checkNotNull(factory,
+                        "No ResourceFactory for Resource [type=%s]", type);
+                    addInternal(factory.create(JsonUtil.requireString(jsonRsrc, "name"),
+                        jsonRsrc));
                 }
 
                 // And load!
