@@ -41,7 +41,7 @@ public class AppMode extends GameObjectDatabase
      *
      * @param parentLayer the GroupLayer to attach the Layer to.
      */
-    public GameObjectRef addSceneObject (GameObject obj, GroupLayer parentLayer)
+    public GameObjectRef addObject (GameObject obj, GroupLayer parentLayer)
     {
         Preconditions.checkArgument(obj instanceof LayerComponent,
             "obj must implement LayerComponent");
@@ -51,15 +51,6 @@ public class AppMode extends GameObjectDatabase
         parentLayer.add(((LayerComponent) obj).layer());
 
         return addObject(obj);
-    }
-
-    /**
-     * A convenience function that adds the given SceneObject to the mode and attaches its
-     * Layer to the AppMode's modeLayer.
-     */
-    public GameObjectRef addSceneObject (GameObject obj)
-    {
-        return addSceneObject(obj, _modeLayer);
     }
 
     /** Called when the mode is added to the mode stack */
