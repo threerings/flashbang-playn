@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import playn.core.GroupLayer;
+
 import react.ConnectionGroup;
 import react.UnitSignal;
 
@@ -198,14 +200,24 @@ public class GameObject
      */
     public void addDependentObject (GameObject obj)
     {
+        addDependentObject(obj, null);
+    }
+
+    /**
+     * Causes the lifecycle of the given GameObject to be managed by this object. Dependent
+     * objects will be added to this object's GameObjectDatabase, and will be destroyed when this
+     * object is destroyed.
+     */
+    public void addDependentObject (GameObject obj, GroupLayer parentLayer)
+    {
         Preconditions.checkState(!isZombie(), "GameObject is a zombie: %s", this);
 
         if (_parentDb != null) {
-            manageDependentObject(obj);
+            manageDependentObject(obj, parentLayer);
         } else {
             // If this GameObject isn't part of a database, add the new dependent
             // to a list. It'll be added in this GameObject's addedToDbInternal
-            _pendingDependentObjects.add(obj);
+            _pendingDependentObjects.add(new PendingDependentObject(obj, parentLayer));
         }
     }
 
@@ -254,7 +266,7 @@ public class GameObject
     {
     }
 
-    protected void manageDependentObject (GameObject obj)
+    protected void manageDependentObject (GameObject obj, GroupLayer parentLayer)
     {
         GameObjectRef ref;
 
@@ -263,6 +275,8 @@ public class GameObject
             Preconditions.checkState(obj._parentDb == _parentDb,
                 "Dependent object belongs to another GameObjectDatabase");
             ref = obj.ref();
+        } else if (parentLayer != null) {
+            ref = ((AppMode) _parentDb).addObject(obj, parentLayer);
         } else {
             ref = _parentDb.addObject(obj);
         }
@@ -301,8 +315,8 @@ public class GameObject
         _ref = ref;
 
         // Add dependent objects to the database
-        for (GameObject dep : _pendingDependentObjects) {
-            manageDependentObject(dep);
+        for (PendingDependentObject dep : _pendingDependentObjects) {
+            manageDependentObject(dep.obj, dep.parentLayer);
         }
         _pendingDependentObjects = null;
 
@@ -377,6 +391,16 @@ public class GameObject
         return Iterables.concat(Collections.singleton(obj1), concat(obj2, other));
     }
 
+    protected static class PendingDependentObject {
+        public final GameObject obj;
+        public final GroupLayer parentLayer;
+
+        public PendingDependentObject (GameObject obj, GroupLayer parentLayer) {
+            this.obj = obj;
+            this.parentLayer = parentLayer;
+        }
+    }
+
     // Note: this is null until needed. Subclassers beware
     protected ParallelTask _lazyAnonymousTasks;
     // Use a LinkedHashMap so that iteration order is guaranteed
@@ -387,7 +411,7 @@ public class GameObject
 
     protected ConnectionGroup _conns = new ConnectionGroup();
     protected List<GameObjectRef> _dependentObjectRefs = Lists.newArrayList();
-    protected List<GameObject> _pendingDependentObjects = Lists.newArrayList();
+    protected List<PendingDependentObject> _pendingDependentObjects = Lists.newArrayList();
 
     GameObjectRef _ref;
     GameObjectDatabase _parentDb;
