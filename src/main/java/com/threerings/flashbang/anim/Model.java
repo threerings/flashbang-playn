@@ -16,13 +16,13 @@ import com.threerings.flashbang.rsrc.anim.ModelResource;
 
 public class Model extends SceneObject
 {
-    public Model (ModelResource desc)
+    public Model (ModelResource rsrc)
     {
-        _desc = desc;
-        _root = _desc.rootLayer.build("", _layerLookup);
+        _rsrc = rsrc;
+        _root = _rsrc.rootLayer.build("", _layerLookup);
 
-        if (_desc.defaultAnimation != null) {
-            playAnimation(_desc.defaultAnimation);
+        if (_rsrc.defaultAnimation != null) {
+            playAnimation(_rsrc.defaultAnimation);
         }
     }
 
@@ -33,7 +33,7 @@ public class Model extends SceneObject
 
     public void playAnimation (String name)
     {
-        ModelAnimDesc animDesc = _desc.anims.get(name);
+        ModelAnimDesc animDesc = _rsrc.anims.get(name);
         _animator = new AnimationController(this, animDesc);
     }
 
@@ -52,7 +52,7 @@ public class Model extends SceneObject
         }
     }
 
-    protected final ModelResource _desc;
+    protected final ModelResource _rsrc;
     protected final Map<String, Layer> _layerLookup = Maps.newHashMap();
     protected Layer _root;
     protected AnimationController _animator;
