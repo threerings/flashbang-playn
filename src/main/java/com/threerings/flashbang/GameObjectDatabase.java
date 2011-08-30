@@ -119,25 +119,6 @@ public class GameObjectDatabase
     }
 
     /**
-     * @return the object with the given name, or null if no such object exists in the database.
-     */
-    public <T> T getObject (String name, Class<T> clazz)
-    {
-        return clazz.cast(getObject(name));
-    }
-
-    /**
-     * @return the object with the given name. Throws an exception if no such object exists.
-     */
-    public <T> T requireObject (String name, Class<T> clazz)
-    {
-        T obj = getObject(name, clazz);
-        Preconditions.checkState(obj != null, "Missing required %s [name=%s]",
-            clazz.getSimpleName(), name);
-        return obj;
-    }
-
-    /**
      * @return the objects in the given group.
      */
     public Iterable<GameObject> getObjects (String groupName)
@@ -154,15 +135,6 @@ public class GameObjectDatabase
         });
 
         return Iterables.filter(objs, Predicates.notNull());
-    }
-
-    /**
-     * Returns the objects in the given group.
-     */
-    public <T> Iterable<T> getObjects (String groupName, final Class<T> clazz)
-    {
-        @SuppressWarnings("unchecked") Iterable<T> group = (Iterable<T>)getObjects(groupName);
-        return group;
     }
 
     /**
