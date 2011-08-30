@@ -24,11 +24,6 @@ public class GameObjectRef
         return _obj;
     }
 
-    public <T> T obj (Class<T> clazz)
-    {
-        return clazz.cast(obj());
-    }
-
     public boolean isLive ()
     {
         return (_obj != null);
