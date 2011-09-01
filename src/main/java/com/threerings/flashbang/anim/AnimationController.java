@@ -147,8 +147,7 @@ public class AnimationController
         public final LayerAnimDesc desc;
         public final Layer layer;
 
-        public KeyframeDesc getKeyframe (int frameIdx)
-        {
+        public KeyframeDesc getKeyframe (int frameIdx) {
             // Invalidate our cached keyframe?
             if (_cachedKeyframe != null && !_cachedKeyframe.validForFrame(frameIdx)) {
                 // Can we save ourselves from looking up our keyframe again?
