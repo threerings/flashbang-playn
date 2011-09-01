@@ -13,9 +13,9 @@ import tripleplay.util.Interpolator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
-import com.threerings.flashbang.rsrc.anim.KeyframeDesc;
-import com.threerings.flashbang.rsrc.anim.LayerAnimDesc;
-import com.threerings.flashbang.rsrc.anim.ModelAnimDesc;
+import com.threerings.flashbang.anim.rsrc.KeyframeDesc;
+import com.threerings.flashbang.anim.rsrc.LayerAnimDesc;
+import com.threerings.flashbang.anim.rsrc.ModelAnimDesc;
 
 public class AnimationController
 {
