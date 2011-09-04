@@ -107,6 +107,11 @@ public abstract class FlashbangApp
     */
    public abstract Point screenSize ();
 
+   /**
+    * @return the desired framerate
+    */
+   public abstract int desiredFramerate ();
+
    @Override
    public void update (float deltaMillis)
    {
@@ -160,6 +165,12 @@ public abstract class FlashbangApp
                mode.onPointerDrag(event);
            }
        });
+   }
+
+   @Override
+   public final int updateRate ()
+   {
+       return (desiredFramerate() > 0 ? 1000 / desiredFramerate() : 0);
    }
 
    protected void dispatchToTopAppModes (AppModeOp op)
