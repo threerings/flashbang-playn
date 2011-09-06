@@ -108,9 +108,12 @@ public abstract class FlashbangApp
    public abstract Point screenSize ();
 
    /**
-    * @return the desired framerate
+    * @return the desired framerate (or 0 to run as fast as possible)
     */
-   public abstract int desiredFramerate ();
+   public int desiredFramerate ()
+   {
+       return 0;
+   }
 
    @Override
    public void update (float deltaMillis)
