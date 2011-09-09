@@ -6,6 +6,8 @@
 package com.threerings.flashbang;
 
 import playn.core.Layer;
+import pythagoras.f.Point;
+import pythagoras.f.Vector;
 
 import com.threerings.flashbang.components.AlphaComponent;
 import com.threerings.flashbang.components.DepthComponent;
@@ -33,6 +35,10 @@ public abstract class SceneObject extends GameObject
     public void setX (float x) { layer().transform().setTx(x); }
     public void setY (float y) { layer().transform().setTy(y); }
 
+    public Point loc () { return new Point (x(), y()); }
+    public void setLoc (Point loc) { setX(loc.x); setY(loc.y); }
+    public void setLoc (float x, float y) { setX(x); setY(y); }
+
     // Rotation Component
     public float rotation () { return layer().transform().rotation(); }
     public void setRotation (float angle) { layer().transform().setRotation(angle); }
@@ -42,6 +48,10 @@ public abstract class SceneObject extends GameObject
     public float scaleY () { return layer().transform().scaleY(); }
     public void setScaleX (float scaleX) { layer().transform().setScaleX(scaleX); }
     public void setScaleY (float scaleY) { layer().transform().setScaleY(scaleY); }
+
+    public Vector scale () { return layer().transform().scale(); }
+    public void setScale (Vector scale) { setScaleX(scale.x); setScaleY(scale.y); }
+    public void setScale (float scaleX, float scaleY) { setScaleX(scaleX); setScaleY(scaleY); }
 
     // VisibleComponent
     public boolean visible () { return layer().visible(); }
