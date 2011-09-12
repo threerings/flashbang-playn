@@ -31,10 +31,11 @@ public class Model extends SceneObject
         return _layerLookup.get(selector);
     }
 
-    public void playAnimation (String name)
+    public AnimationController playAnimation (String name)
     {
         ModelAnimDesc animDesc = _rsrc.anims.get(name);
         _animator = new AnimationController(this, animDesc);
+        return _animator;
     }
 
     @Override

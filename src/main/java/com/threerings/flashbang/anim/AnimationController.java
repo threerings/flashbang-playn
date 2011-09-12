@@ -34,9 +34,9 @@ public class AnimationController
         }
     }
 
-    public ModelAnimDesc animDesc ()
+    public int totalFrames ()
     {
-        return _desc;
+        return _desc.totalFrames();
     }
 
     public int curFrame ()

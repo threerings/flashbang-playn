@@ -1,0 +1,61 @@
+//
+// Flashbang - a framework for creating PlayN games
+// Copyright (C) 2011 Three Rings Design, Inc., All Rights Reserved
+// http://github.com/threerings/flashbang-playn
+
+package com.threerings.flashbang.anim;
+
+import com.google.common.base.Preconditions;
+
+import com.threerings.flashbang.GameObject;
+import com.threerings.flashbang.ObjectTask;
+
+public class PlayAnimTask extends ObjectTask
+{
+    public static enum Completion {
+        ANIM_COMPLETE,
+        IMMEDIATELY
+    }
+
+    public PlayAnimTask (String name, Completion completion)
+    {
+        _name = name;
+        _completion = completion;
+    }
+
+    public PlayAnimTask (String name)
+    {
+        this(name, Completion.ANIM_COMPLETE);
+    }
+
+    @Override
+    public void init (GameObject target)
+    {
+        Preconditions.checkArgument(target instanceof Model,
+            "PlayAnimTask must be applied to Model");
+        _obj = (Model) target;
+    }
+
+    @Override
+    public boolean update (float dt)
+    {
+        if (_animator == null) {
+            _animator = _obj.playAnimation(_name);
+            Preconditions.checkNotNull(_animator, "No such animation [name=%s]", _name);
+        }
+
+        // Complete when we get to the last frame
+        return _animator.curFrame() == _animator.totalFrames() - 1;
+    }
+
+    @Override
+    public ObjectTask clone ()
+    {
+        return new PlayAnimTask(_name, _completion);
+    }
+
+    protected final String _name;
+    protected final Completion _completion;
+    protected Model _obj;
+    protected AnimationController _animator;
+}
