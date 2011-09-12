@@ -5,15 +5,21 @@
 
 package com.threerings.flashbang.anim.rsrc;
 
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import com.threerings.flashbang.Flashbang;
 import com.threerings.flashbang.rsrc.Resource;
 import com.threerings.flashbang.rsrc.ResourceFactory;
+
+import playn.core.GroupLayer;
 import playn.core.Json;
+import playn.core.Layer;
+import playn.core.PlayN;
 import tripleplay.util.JsonUtil;
 
 public class ModelResource extends Resource
@@ -21,7 +27,10 @@ public class ModelResource extends Resource
     public static final String TYPE = "model";
     public static final ResourceFactory FACTORY = new ResourceFactory() {
         @Override public Resource create (String name, Json.Object json) {
-            LayerDesc rootLayer = LayerDesc.create(json.getObject("rootLayer"));
+            List<LayerDesc> layers = Lists.newArrayList();
+            for (Json.Object jsonLayer : JsonUtil.getArrayObjects(json, "layers")) {
+                layers.add(LayerDesc.create(jsonLayer));
+            }
 
             Json.Object jsonAnims = JsonUtil.requireObject(json, "anims");
             Map<String, ModelAnimDesc> anims = Maps.newHashMap();
@@ -33,7 +42,7 @@ public class ModelResource extends Resource
 
             String defaultAnimation = json.getString("defaultAnimation");
 
-            return new ModelResource(name, rootLayer, anims, defaultAnimation);
+            return new ModelResource(name, layers, anims, defaultAnimation);
         }
     };
 
@@ -45,17 +54,26 @@ public class ModelResource extends Resource
         return (ModelResource) rsrc;
     }
 
-    public final LayerDesc rootLayer;
+    public final List<LayerDesc> layers;
     public final Map<String, ModelAnimDesc> anims;
     public final String defaultAnimation; // Nullable
 
-    public ModelResource (String name, LayerDesc rootLayer, Map<String, ModelAnimDesc> anims,
+    public ModelResource (String name, List<LayerDesc> layers, Map<String, ModelAnimDesc> anims,
         String defaultAnimation)
     {
         super(name);
-        this.rootLayer = rootLayer;
+        this.layers = layers;
         this.anims = anims;
         this.defaultAnimation = defaultAnimation;
+    }
+
+    public GroupLayer build (Map<String, Layer> layerLookup)
+    {
+        GroupLayer root = PlayN.graphics().createGroupLayer();
+        for (LayerDesc layerDesc : layers) {
+            root.add(layerDesc.build("", layerLookup));
+        }
+        return root;
     }
 
     @Override

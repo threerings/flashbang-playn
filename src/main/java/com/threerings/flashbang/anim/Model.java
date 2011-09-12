@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import playn.core.GroupLayer;
 import playn.core.Layer;
 import com.threerings.flashbang.SceneObject;
 import com.threerings.flashbang.anim.rsrc.ModelAnimDesc;
@@ -19,7 +20,7 @@ public class Model extends SceneObject
     public Model (ModelResource rsrc)
     {
         _rsrc = rsrc;
-        _root = _rsrc.rootLayer.build("", _layerLookup);
+        _root = _rsrc.build(_layerLookup);
 
         if (_rsrc.defaultAnimation != null) {
             playAnimation(_rsrc.defaultAnimation);
@@ -55,7 +56,7 @@ public class Model extends SceneObject
 
     protected final ModelResource _rsrc;
     protected final Map<String, Layer> _layerLookup = Maps.newHashMap();
-    protected Layer _root;
+    protected GroupLayer _root;
     protected AnimationController _animator;
 
 }
