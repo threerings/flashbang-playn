@@ -32,6 +32,10 @@ public class AnimationController
                 layerAnimDesc.layerSelector);
             _layerData.add(new LayerAnimData(layerAnimDesc, layer));
         }
+
+        // Force-update to frame 0 of the animation
+        _curFrame = -1;
+        setCurFrameInternal(0);
     }
 
     public int totalFrames ()
