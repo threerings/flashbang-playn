@@ -30,11 +30,6 @@ object FlashbangBuild extends Build {
       javacOptions ++= Seq("-Xlint", "-Xlint:-serial"),
       fork in Compile := true,
 
-      // TODO: reenable doc publishing when scaladoc doesn't choke on our code
-      publishArtifact in (Compile, packageDoc) := false,
-
-      resolvers += "Local Maven Repository" at Path.userHome.asURL + "/.m2/repository",
-
       autoScalaLibrary := false, // no scala-library dependency
       libraryDependencies ++= locals.libDeps ++ Seq(
         "com.google.guava" % "guava" % "r09"
