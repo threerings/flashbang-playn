@@ -71,22 +71,23 @@ public class AppMode extends GameObjectDatabase
     {
     }
 
-    /** Called when the pointer is pressed while the mode is active */
-    protected void onPointerStart (Pointer.Event event)
+    /**
+     * Returns the <code>Pointer.Listener</code> that responds to pointer events in this
+     * AppMode.
+     */
+    protected Pointer.Listener pointerListener ()
     {
-        _input.plistener.onPointerStart(event);
+        return _plistener;
     }
 
-    /** Called when the pointer is released while the mode is active */
-    protected void onPointerEnd (Pointer.Event event)
+    /**
+     * Assigns a new <code>Pointer.Listener</code> to respond to pointer events in this
+     * AppMode.
+     */
+    protected void setPointerListener (Pointer.Listener listener)
     {
-        _input.plistener.onPointerEnd(event);
-    }
-
-    /** Called when the pointer is dragged while the mode is active */
-    protected void onPointerDrag (Pointer.Event event)
-    {
-        _input.plistener.onPointerDrag(event);
+        Preconditions.checkNotNull(listener);
+        _plistener = listener;
     }
 
     void setupInternal (FlashbangApp app, Viewport viewport)
@@ -125,5 +126,8 @@ public class AppMode extends GameObjectDatabase
     protected GroupLayer _modeLayer = PlayN.graphics().createGroupLayer();
     protected FlashbangApp _app;
     protected Viewport _viewport;
+
     boolean _active;
+
+    private Pointer.Listener _plistener = _input.plistener;
 }

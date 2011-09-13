@@ -145,7 +145,7 @@ public abstract class FlashbangApp
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
-               mode.onPointerStart(event);
+               mode.pointerListener().onPointerStart(event);
            }
        });
    }
@@ -155,7 +155,7 @@ public abstract class FlashbangApp
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
-               mode.onPointerEnd(event);
+               mode.pointerListener().onPointerEnd(event);
            }
        });
    }
@@ -165,7 +165,7 @@ public abstract class FlashbangApp
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
-               mode.onPointerDrag(event);
+               mode.pointerListener().onPointerDrag(event);
            }
        });
    }
