@@ -225,7 +225,7 @@ public class Viewport
 
         // Ensure that our modes are rendered at their proper depths
         for (int ii = 0; ii < _modeStack.size(); ++ii) {
-            _modeStack.get(ii).modeLayer().setDepth(ii);
+            _modeStack.get(ii).modeLayer.setDepth(ii);
         }
 
         final AppMode topMode = topMode();
@@ -259,7 +259,7 @@ public class Viewport
         index = Math.min(index, _modeStack.size());
 
         _modeStack.add(index, mode);
-        _topLayer.add(mode.modeLayer());
+        _topLayer.add(mode.modeLayer);
 
         mode.within(new Runnable() {
             @Override public void run () {

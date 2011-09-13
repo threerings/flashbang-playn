@@ -16,6 +16,9 @@ import com.threerings.flashbang.components.LayerComponent;
 
 public class AppMode extends GameObjectDatabase
 {
+    public final Input input = new Input();
+    public final GroupLayer modeLayer = PlayN.graphics().createGroupLayer();
+
     /**
      * @return the currently-active AppMode (or null if no AppMode is active)
      */
@@ -23,11 +26,6 @@ public class AppMode extends GameObjectDatabase
     {
         GameObjectDatabase cur = GameObjectDatabase.get();
         return (cur instanceof AppMode ? (AppMode) cur : null);
-    }
-
-    public final GroupLayer modeLayer ()
-    {
-        return _modeLayer;
     }
 
     /** Returns the AppMode's FlashbangApp */
@@ -112,8 +110,7 @@ public class AppMode extends GameObjectDatabase
         shutdown();
         _app = null;
         _viewport = null;
-        _modeLayer.destroy();
-        _modeLayer = null;
+        modeLayer.destroy();
     }
 
     void enterInternal ()
@@ -131,12 +128,10 @@ public class AppMode extends GameObjectDatabase
     }
 
 
-    protected final Input _input = new Input();
-    protected GroupLayer _modeLayer = PlayN.graphics().createGroupLayer();
     protected FlashbangApp _app;
     protected Viewport _viewport;
 
     boolean _active;
 
-    private Pointer.Listener _plistener = _input.plistener;
+    private Pointer.Listener _plistener = input.plistener;
 }
