@@ -269,7 +269,6 @@ public class Viewport
         mode.destroyInternal();
 
         _modeStack.remove(index);
-        _topLayer.remove(mode.modeLayer());
     }
 
     protected void clearModeStackNow ()
