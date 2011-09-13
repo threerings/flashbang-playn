@@ -16,6 +16,15 @@ import com.threerings.flashbang.components.LayerComponent;
 
 public class AppMode extends GameObjectDatabase
 {
+    /**
+     * @return the currently-active AppMode (or null if no AppMode is active)
+     */
+    public static AppMode get ()
+    {
+        GameObjectDatabase cur = GameObjectDatabase.get();
+        return (cur instanceof AppMode ? (AppMode) cur : null);
+    }
+
     public final GroupLayer modeLayer ()
     {
         return _modeLayer;

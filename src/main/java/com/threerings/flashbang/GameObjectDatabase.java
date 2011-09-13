@@ -21,6 +21,29 @@ import com.google.common.collect.Maps;
 public class GameObjectDatabase
 {
     /**
+     * @return the currently-active GameObjectDatabase (or null if no GameObjectDatabase is active)
+     */
+    public static GameObjectDatabase get ()
+    {
+        return _ctxGameObjectDatabase;
+    }
+
+    /**
+     * Sets this as the currently-active GameObjectDatabase and runs the supplied Runnable.
+     * All calls to GameObjectDatabase.get() from within the supplied Runnable will return this.
+     */
+    public void within (Runnable runnable)
+    {
+        GameObjectDatabase cur = _ctxGameObjectDatabase;
+        _ctxGameObjectDatabase = this;
+        try {
+            runnable.run();
+        } finally {
+            _ctxGameObjectDatabase = cur;
+        }
+    }
+
+    /**
      * Adds a GameObject to the GameObjectDatabase. The GameObject must not be owned by another
      * database.
      *
@@ -316,4 +339,6 @@ public class GameObjectDatabase
     protected Map<String, List<GameObjectRef>> _groupedObjects = Maps.newHashMap();
 
     protected ConnectionGroup _conns = new ConnectionGroup();
+
+    protected static GameObjectDatabase _ctxGameObjectDatabase;
 }

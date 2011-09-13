@@ -157,13 +157,18 @@ public class Viewport
         doModeTransition(ModeTransition.UNWIND, mode);
     }
 
-    public void update (float dt)
+    public void update (final float dt)
     {
         handleModeTransitions();
 
         // update the top mode
         if (!_modeStack.isEmpty()) {
-            topMode().update(dt);
+            final AppMode topMode = topMode();
+            topMode.within(new Runnable() {
+                @Override public void run () {
+                    topMode.update(dt);
+                }
+            });
         }
     }
 
@@ -173,7 +178,7 @@ public class Viewport
             return;
         }
 
-        AppMode initialTopMode = topMode();
+        final AppMode initialTopMode = topMode();
 
         // create a new _pendingModeTransitionQueue right now
         // so that we can properly handle mode transition requests
@@ -223,19 +228,27 @@ public class Viewport
             _modeStack.get(ii).modeLayer().setDepth(ii);
         }
 
-        AppMode topMode = topMode();
+        final AppMode topMode = topMode();
         if (topMode != initialTopMode) {
             if (null != initialTopMode && initialTopMode._active) {
-                initialTopMode.exitInternal();
+                initialTopMode.within(new Runnable() {
+                    @Override public void run () {
+                        initialTopMode.exitInternal();
+                    }
+                });
             }
             if (null != topMode) {
-                topMode.enterInternal();
+                topMode.within(new Runnable() {
+                    @Override public void run () {
+                        topMode.enterInternal();
+                    }
+                });
             }
             this.topModeChanged.emit();
         }
     }
 
-    protected void addModeNow (AppMode mode, int index)
+    protected void addModeNow (final AppMode mode, int index)
     {
         Preconditions.checkNotNull(mode, "Can't insert a null mode in the mode stack");
 
@@ -248,7 +261,11 @@ public class Viewport
         _modeStack.add(index, mode);
         _topLayer.add(mode.modeLayer());
 
-        mode.setupInternal(_app, this);
+        mode.within(new Runnable() {
+            @Override public void run () {
+                mode.setupInternal(_app, Viewport.this);
+            }
+        });
     }
 
     protected void removeModeNow (int index)
@@ -262,11 +279,15 @@ public class Viewport
         index = Math.min(index, _modeStack.size());
 
         // if an active mode is removed, exit it first
-        AppMode mode = _modeStack.get(index);
-        if (mode._active) {
-            mode.exitInternal();
-        }
-        mode.destroyInternal();
+        final AppMode mode = _modeStack.get(index);
+        mode.within(new Runnable() {
+            @Override public void run () {
+                if (mode._active) {
+                    mode.exitInternal();
+                }
+                mode.destroyInternal();
+            }
+        });
 
         _modeStack.remove(index);
     }

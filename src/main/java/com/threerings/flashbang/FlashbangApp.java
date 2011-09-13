@@ -176,13 +176,17 @@ public abstract class FlashbangApp
        return (desiredFramerate() > 0 ? 1000 / desiredFramerate() : 0);
    }
 
-   protected void dispatchToTopAppModes (AppModeOp op)
+   protected void dispatchToTopAppModes (final AppModeOp op)
    {
        for (Viewport viewport : _viewports.values()) {
            if (!viewport.isDestroyed()) {
-               AppMode topMode = viewport.topMode();
+               final AppMode topMode = viewport.topMode();
                if (topMode != null) {
-                   op.apply(topMode);
+                   topMode.within(new Runnable() {
+                       @Override public void run () {
+                           op.apply(topMode);
+                       }
+                   });
                }
            }
        }
