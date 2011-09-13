@@ -76,6 +76,11 @@ public class ModelResource extends Resource
         return root;
     }
 
+    public GroupLayer build ()
+    {
+        return build(Maps.<String, Layer>newHashMap());
+    }
+
     @Override
     protected void doLoad ()
     {
