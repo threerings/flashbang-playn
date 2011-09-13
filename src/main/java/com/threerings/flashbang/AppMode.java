@@ -16,8 +16,6 @@ import com.threerings.flashbang.components.LayerComponent;
 
 public class AppMode extends GameObjectDatabase
 {
-    public final Input input = new Input();
-
     public final GroupLayer modeLayer ()
     {
         return _modeLayer;
@@ -76,19 +74,19 @@ public class AppMode extends GameObjectDatabase
     /** Called when the pointer is pressed while the mode is active */
     protected void onPointerStart (Pointer.Event event)
     {
-        input.plistener.onPointerStart(event);
+        _input.plistener.onPointerStart(event);
     }
 
     /** Called when the pointer is released while the mode is active */
     protected void onPointerEnd (Pointer.Event event)
     {
-        input.plistener.onPointerEnd(event);
+        _input.plistener.onPointerEnd(event);
     }
 
     /** Called when the pointer is dragged while the mode is active */
     protected void onPointerDrag (Pointer.Event event)
     {
-        input.plistener.onPointerDrag(event);
+        _input.plistener.onPointerDrag(event);
     }
 
     void setupInternal (FlashbangApp app, Viewport viewport)
@@ -122,6 +120,8 @@ public class AppMode extends GameObjectDatabase
         exit();
     }
 
+
+    protected final Input _input = new Input();
     protected GroupLayer _modeLayer = PlayN.graphics().createGroupLayer();
     protected FlashbangApp _app;
     protected Viewport _viewport;
