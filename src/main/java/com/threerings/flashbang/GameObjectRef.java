@@ -5,14 +5,12 @@
 
 package com.threerings.flashbang;
 
-import javax.annotation.Nullable;
-
 public final class GameObjectRef
 {
     /**
-     * @return the GameObjectRef for the given GameObject, or a null ref if the object is null.
+     * Returns the GameObjectRef for the given GameObject, or a null ref if the object is null.
      */
-    public static GameObjectRef get (@Nullable GameObject obj)
+    public static GameObjectRef get (GameObject obj)
     {
         return (obj != null ? obj.ref() : NULL);
     }
