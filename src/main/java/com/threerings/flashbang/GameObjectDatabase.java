@@ -201,14 +201,6 @@ public class GameObjectDatabase
         }
     }
 
-    /** Called once per update tick. Updates all objects in the mode. */
-    public void update (float dt)
-    {
-        beginUpdate(dt);
-        endUpdate(dt);
-        _runningTime += dt;
-    }
-
     /**
      * Guarantees that the <code>second</code> GameObject will have its update logic run after
      * <code>first</code> during the update loop.
@@ -249,6 +241,14 @@ public class GameObjectDatabase
     public float getRunningTime ()
     {
         return _runningTime;
+    }
+
+    /** Called once per update tick. Updates all objects in the mode. */
+    protected void update (float dt)
+    {
+        beginUpdate(dt);
+        endUpdate(dt);
+        _runningTime += dt;
     }
 
     /** Updates all objects in the mode. */
