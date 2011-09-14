@@ -13,21 +13,10 @@ import playn.core.Pointer;
 
 import tripleplay.util.Input;
 
-import com.threerings.flashbang.components.LayerComponent;
-
 public class AppMode extends GameObjectDatabase
 {
     public final Input input = new Input();
     public final GroupLayer modeLayer = PlayN.graphics().createGroupLayer();
-
-    /**
-     * @return the currently-active AppMode (or null if no AppMode is active)
-     */
-    public static AppMode get ()
-    {
-        GameObjectDatabase cur = GameObjectDatabase.get();
-        return (cur instanceof AppMode ? (AppMode) cur : null);
-    }
 
     /** Returns the AppMode's FlashbangApp */
     public final FlashbangApp app ()
@@ -39,24 +28,6 @@ public class AppMode extends GameObjectDatabase
     public final Viewport viewport()
     {
         return _viewport;
-    }
-
-    /**
-     * A convenience function that adds the given SceneObject to the mode and attaches its
-     * Layer to the given parent.
-     *
-     * @param parentLayer the GroupLayer to attach the Layer to.
-     */
-    public GameObjectRef addObject (GameObject obj, GroupLayer parentLayer)
-    {
-        Preconditions.checkArgument(obj instanceof LayerComponent,
-            "obj must implement LayerComponent");
-
-        // Attach the object to a GroupLayer
-        // (This is purely a convenience - the client is free to do the attaching themselves)
-        parentLayer.add(((LayerComponent) obj).layer());
-
-        return addObject(obj);
     }
 
     /** Called when the mode is added to the mode stack */

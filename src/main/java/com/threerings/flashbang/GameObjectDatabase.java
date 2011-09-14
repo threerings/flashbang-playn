@@ -9,12 +9,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import playn.core.GroupLayer;
+
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import com.threerings.flashbang.components.LayerComponent;
 
 import react.ConnectionGroup;
 
@@ -88,6 +92,24 @@ public class GameObjectDatabase
         obj.addedToDbInternal(this, ref);
 
         return ref;
+    }
+
+    /**
+     * A convenience function that adds the given SceneObject to the mode and attaches its
+     * Layer to the given parent.
+     *
+     * @param parentLayer the GroupLayer to attach the Layer to.
+     */
+    public GameObjectRef addObject (GameObject obj, GroupLayer parentLayer)
+    {
+        Preconditions.checkArgument(obj instanceof LayerComponent,
+            "obj must implement LayerComponent");
+
+        // Attach the object to a GroupLayer
+        // (This is purely a convenience - the client is free to do the attaching themselves)
+        parentLayer.add(((LayerComponent) obj).layer());
+
+        return addObject(obj);
     }
 
     /**
