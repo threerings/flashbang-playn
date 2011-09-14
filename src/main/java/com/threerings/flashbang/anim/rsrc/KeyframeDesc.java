@@ -5,11 +5,12 @@
 
 package com.threerings.flashbang.anim.rsrc;
 
-import com.threerings.flashbang.desc.DataDesc;
-
 import playn.core.Json;
+
 import tripleplay.util.Interpolator;
 import tripleplay.util.JsonUtil;
+
+import com.threerings.flashbang.desc.DataDesc;
 
 public class KeyframeDesc
     implements DataDesc

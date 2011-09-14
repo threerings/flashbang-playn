@@ -8,14 +8,14 @@ package com.threerings.flashbang.anim.rsrc;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
+
 import playn.core.GroupLayer;
 import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
+
 import tripleplay.util.JsonUtil;
-
-import com.google.common.collect.Lists;
-
 
 public class GroupLayerDesc extends LayerDesc
 {

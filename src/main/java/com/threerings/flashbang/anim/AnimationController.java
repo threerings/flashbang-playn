@@ -7,11 +7,12 @@ package com.threerings.flashbang.anim;
 
 import java.util.List;
 
-import playn.core.Layer;
-import tripleplay.util.Interpolator;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+
+import playn.core.Layer;
+
+import tripleplay.util.Interpolator;
 
 import com.threerings.flashbang.anim.rsrc.KeyframeDesc;
 import com.threerings.flashbang.anim.rsrc.LayerAnimDesc;
@@ -28,7 +29,7 @@ public class AnimationController
         _layerData = Lists.newArrayList();
         for (LayerAnimDesc layerAnimDesc : anim.layerAnims) {
             Layer layer = model.getLayer(layerAnimDesc.layerSelector);
-            Preconditions.checkState(layer != null, "Invalid layer [selector=%s]",
+            Preconditions.checkNotNull(layer, "Invalid layer [selector=%s]",
                 layerAnimDesc.layerSelector);
             _layerData.add(new LayerAnimData(layerAnimDesc, layer));
         }

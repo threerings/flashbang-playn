@@ -5,9 +5,9 @@
 
 package com.threerings.flashbang.tasks;
 
-import tripleplay.util.Interpolator;
-
 import com.google.common.base.Preconditions;
+
+import tripleplay.util.Interpolator;
 
 import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;

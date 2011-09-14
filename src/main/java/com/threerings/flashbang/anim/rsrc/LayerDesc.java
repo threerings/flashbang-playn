@@ -7,10 +7,14 @@ package com.threerings.flashbang.anim.rsrc;
 
 import java.util.Map;
 
-import com.threerings.flashbang.desc.DataDesc;
+import com.google.common.base.Preconditions;
+
 import playn.core.Json;
 import playn.core.Layer;
+
 import tripleplay.util.JsonUtil;
+
+import com.threerings.flashbang.desc.DataDesc;
 
 public abstract class LayerDesc
     implements DataDesc
@@ -31,7 +35,7 @@ public abstract class LayerDesc
 
     public static LayerDesc create (Json.Object json)
     {
-        LayerDesc desc = null;
+        LayerDesc desc;
 
         String typeName = json.getString("type");
         if ("ImageLayer".equals(typeName)) {
@@ -48,6 +52,7 @@ public abstract class LayerDesc
 
     public Layer build (String selectorPrefix, Map<String, Layer> layerLookup)
     {
+        Preconditions.checkNotNull(selectorPrefix, "selectorPrefix must not be null");
         Layer layer = createLayer();
         layer.setTranslation(x, y);
         layer.setScale(scaleX, scaleY);
@@ -86,6 +91,6 @@ public abstract class LayerDesc
 
     protected String getSelector (String selectorPrefix)
     {
-        return (name != null && selectorPrefix != null ? selectorPrefix + name : null);
+        return name != null ? selectorPrefix + name : null;
     }
 }

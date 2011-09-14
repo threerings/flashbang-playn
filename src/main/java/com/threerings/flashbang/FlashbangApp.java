@@ -5,24 +5,25 @@
 
 package com.threerings.flashbang;
 
-import static playn.core.PlayN.graphics;
-
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import com.threerings.flashbang.anim.rsrc.ModelResource;
-import com.threerings.flashbang.rsrc.ImageResource;
-import com.threerings.flashbang.rsrc.SoundResource;
-
 import playn.core.Game;
 import playn.core.GroupLayer;
 import playn.core.PlayN;
 import playn.core.Pointer;
 import playn.core.SurfaceLayer;
+
 import pythagoras.i.Point;
+
+import com.threerings.flashbang.anim.rsrc.ModelResource;
+import com.threerings.flashbang.rsrc.ImageResource;
+import com.threerings.flashbang.rsrc.SoundResource;
+
+import static playn.core.PlayN.graphics;
 
 public abstract class FlashbangApp
     implements Game, Pointer.Listener

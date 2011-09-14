@@ -9,15 +9,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import playn.core.GroupLayer;
-
-import react.ConnectionGroup;
-import react.UnitSignal;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import playn.core.GroupLayer;
+
+import react.ConnectionGroup;
+import react.UnitSignal;
 
 import com.threerings.flashbang.tasks.ParallelTask;
 import com.threerings.flashbang.tasks.TaskContainer;

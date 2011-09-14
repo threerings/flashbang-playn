@@ -7,11 +7,11 @@ package com.threerings.flashbang.tasks;
 
 import com.google.common.base.Preconditions;
 
+import tripleplay.util.Interpolator;
+
 import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 import com.threerings.flashbang.components.LocationComponent;
-
-import tripleplay.util.Interpolator;
 
 public class LocationTask extends InterpolatingTask
 {

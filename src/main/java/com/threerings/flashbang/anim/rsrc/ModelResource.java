@@ -12,15 +12,16 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import com.threerings.flashbang.Flashbang;
-import com.threerings.flashbang.rsrc.Resource;
-import com.threerings.flashbang.rsrc.ResourceFactory;
-
 import playn.core.GroupLayer;
 import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
+
 import tripleplay.util.JsonUtil;
+
+import com.threerings.flashbang.Flashbang;
+import com.threerings.flashbang.rsrc.Resource;
+import com.threerings.flashbang.rsrc.ResourceFactory;
 
 public class ModelResource extends Resource
 {

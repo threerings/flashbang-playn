@@ -7,11 +7,12 @@ package com.threerings.flashbang.anim.rsrc;
 
 import java.util.List;
 
-import playn.core.Json;
-import tripleplay.util.JsonUtil;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+
+import playn.core.Json;
+
+import tripleplay.util.JsonUtil;
 
 import com.threerings.flashbang.desc.DataDesc;
 

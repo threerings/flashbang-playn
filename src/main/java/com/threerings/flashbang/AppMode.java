@@ -5,12 +5,13 @@
 
 package com.threerings.flashbang;
 
+import com.google.common.base.Preconditions;
+
 import playn.core.GroupLayer;
 import playn.core.PlayN;
 import playn.core.Pointer;
-import tripleplay.util.Input;
 
-import com.google.common.base.Preconditions;
+import tripleplay.util.Input;
 
 import com.threerings.flashbang.components.LayerComponent;
 

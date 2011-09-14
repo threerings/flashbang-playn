@@ -9,10 +9,11 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import com.threerings.flashbang.desc.DataDesc;
-
 import playn.core.Json;
+
 import tripleplay.util.JsonUtil;
+
+import com.threerings.flashbang.desc.DataDesc;
 
 /**
  * ModelAnimDesc describes how to animate multiple layers in a single model

@@ -7,11 +7,11 @@ package com.threerings.flashbang.rsrc;
 
 import com.google.common.base.Preconditions;
 
-import com.threerings.flashbang.Flashbang;
-
 import playn.core.Json;
 import playn.core.PlayN;
 import playn.core.Sound;
+
+import com.threerings.flashbang.Flashbang;
 
 public class SoundResource extends Resource
 {

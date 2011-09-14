@@ -7,13 +7,13 @@ package com.threerings.flashbang;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+
 import playn.core.GroupLayer;
 import playn.core.PlayN;
 
 import react.UnitSignal;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 
 /**
  * Viewport contains the AppMode stack. The topmost AppMode in the stack gets ticked on every

@@ -7,15 +7,17 @@ package com.threerings.flashbang.rsrc;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+
 import playn.core.Image;
 import playn.core.Json;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
-import pythagoras.f.Rectangle;
-import tripleplay.util.JsonUtil;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
+import pythagoras.f.Rectangle;
+
+import tripleplay.util.JsonUtil;
 
 import com.threerings.flashbang.Flashbang;
 

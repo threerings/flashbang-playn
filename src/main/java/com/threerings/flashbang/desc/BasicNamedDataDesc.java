@@ -6,6 +6,7 @@
 package com.threerings.flashbang.desc;
 
 import playn.core.Json;
+
 import tripleplay.util.JsonUtil;
 
 public abstract class BasicNamedDataDesc

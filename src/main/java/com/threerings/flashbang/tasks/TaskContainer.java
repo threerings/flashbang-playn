@@ -8,6 +8,7 @@ package com.threerings.flashbang.tasks;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+
 import com.threerings.flashbang.GameObject;
 import com.threerings.flashbang.ObjectTask;
 

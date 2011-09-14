@@ -7,12 +7,13 @@ package com.threerings.flashbang.rsrc;
 
 import com.google.common.base.Preconditions;
 
-import com.threerings.flashbang.Flashbang;
-
 import playn.core.Json;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
+
 import tripleplay.util.JsonUtil;
+
+import com.threerings.flashbang.Flashbang;
 
 /**
  * A ResourceBatch that takes reads a set of resources from a JSON file and loads them

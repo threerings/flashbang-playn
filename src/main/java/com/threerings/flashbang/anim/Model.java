@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 
 import playn.core.GroupLayer;
 import playn.core.Layer;
+
 import com.threerings.flashbang.SceneObject;
 import com.threerings.flashbang.anim.rsrc.ModelAnimDesc;
 import com.threerings.flashbang.anim.rsrc.ModelResource;
@@ -56,7 +57,7 @@ public class Model extends SceneObject
 
     protected final ModelResource _rsrc;
     protected final Map<String, Layer> _layerLookup = Maps.newHashMap();
-    protected GroupLayer _root;
+    protected final GroupLayer _root;
     protected AnimationController _animator;
 
 }

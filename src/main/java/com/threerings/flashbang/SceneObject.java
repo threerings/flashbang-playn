@@ -6,6 +6,7 @@
 package com.threerings.flashbang;
 
 import playn.core.Layer;
+
 import pythagoras.f.Point;
 import pythagoras.f.Vector;
 

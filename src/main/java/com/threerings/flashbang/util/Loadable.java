@@ -7,10 +7,10 @@ package com.threerings.flashbang.util;
 
 import java.util.List;
 
-import playn.core.PlayN;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+
+import playn.core.PlayN;
 
 public abstract class Loadable
 {
