@@ -1,8 +1,25 @@
 import sbt._
 import Keys._
 
+// allows projects to be symlinked into the current directory for a direct dependency,
+// or fall back to obtaining the project from Maven otherwise
+class Locals (locals :(String, String, ModuleID)*) {
+  def addDeps (p :Project) = (locals collect {
+    case (id, subp, dep) if (file(id).exists) => symproj(file(id), subp)
+  }).foldLeft(p) { _ dependsOn _ }
+  def libDeps = locals collect {
+    case (id, subp, dep) if (!file(id).exists) => dep
+  }
+  private def symproj (dir :File, subproj :String = null) =
+    if (subproj == null) RootProject(dir) else ProjectRef(dir, subproj)
+}
+
 object FlashbangBuild extends Build {
-  lazy val flashbang = Project(
+  val locals = new Locals(
+    ("tripleplay", null, "com.threerings" % "tripleplay" % "1.0-SNAPSHOT")
+  )
+
+  lazy val flashbang = locals.addDeps(Project(
     "flashbang", file("."), settings = Defaults.defaultSettings ++ Seq(
       organization := "com.threerings",
       version      := "1.0-SNAPSHOT",
@@ -17,14 +34,10 @@ object FlashbangBuild extends Build {
       publishArtifact in (Compile, packageDoc) := false,
 
       autoScalaLibrary := false, // no scala-library dependency
+      resolvers        += "Forplay Legacy" at "http://forplay.googlecode.com/svn/mavenrepo",
       libraryDependencies ++= Seq(
-        "com.samskivert" % "pythagoras" % "1.1-SNAPSHOT",
-        "com.threerings" % "react" % "1.0-SNAPSHOT",
-        "com.googlecode.playn" % "playn-core" % "1.0-SNAPSHOT",
-        "com.googlecode.playn" % "playn-java" % "1.0-SNAPSHOT",
-        "com.threerings" % "tripleplay" % "1.0-SNAPSHOT",
         "com.google.guava" % "guava" % "r09"
       )
     )
-  )
+  ))
 }
