@@ -210,8 +210,8 @@ public class GameObjectDatabase
     }
 
     /**
-     * Guarantees that the "second" GameObject will have its update logic run after "first"
-     * during the update loop.
+     * Guarantees that the <code>second</code> GameObject will have its update logic run after
+     * <code>first</code> during the update loop.
      */
     public void setUpdateOrder (GameObject first, GameObject second)
     {
