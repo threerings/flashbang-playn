@@ -9,12 +9,9 @@ import playn.core.ImageLayer;
 import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
-
 import pythagoras.f.Rectangle;
-
 import tripleplay.util.JsonUtil;
 
-import com.threerings.flashbang.Flashbang;
 import com.threerings.flashbang.rsrc.ImageResource;
 
 public class ImageLayerDesc extends LayerDesc
