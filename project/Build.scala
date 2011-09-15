@@ -34,7 +34,6 @@ object FlashbangBuild extends Build {
       publishArtifact in (Compile, packageDoc) := false,
 
       autoScalaLibrary := false, // no scala-library dependency
-      resolvers        += "Forplay Legacy" at "http://forplay.googlecode.com/svn/mavenrepo",
       libraryDependencies ++= Seq(
         "com.google.guava" % "guava" % "r09"
       )
