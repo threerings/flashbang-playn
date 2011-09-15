@@ -24,7 +24,7 @@ public class ImageLayerDesc extends LayerDesc
     public ImageResource imageRsrc ()
     {
         if (_imageRsrc == null) {
-            _imageRsrc = (ImageResource) Flashbang.rsrcs().requireResource(imageName);
+            _imageRsrc = ImageResource.require(imageName);
         }
         return _imageRsrc;
     }
