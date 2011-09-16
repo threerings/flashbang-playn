@@ -90,9 +90,9 @@ public class LayerAnimDesc
             Preconditions.checkState(kf.frameIdx > lastKeyframeIdx,
                 "keyframe %s has an invalid frameIdx (<= previous)", ii);
 
-            if (ii < keyframes.size() - 1) {
-                kf.next = keyframes.get(ii + 1);
-            }
+            KeyframeDesc prev = (ii > 0 ? keyframes.get(ii - 1) : null);
+            KeyframeDesc next = (ii < keyframes.size() - 1 ? keyframes.get(ii + 1) : null);
+            kf.init(prev, next);
         }
     }
 
