@@ -21,17 +21,17 @@ public abstract class LayerDesc
 {
     public String name;
 
-    public float x;
-    public float y;
-    public float scaleX;
-    public float scaleY;
-    public float rotation;
-    public float alpha;
-    public boolean visible;
+    public float x = 0;
+    public float y = 0;
+    public float scaleX = 1;
+    public float scaleY = 1;
+    public float rotation = 0;
+    public float alpha = 1;
+    public boolean visible = true;
 
-    public float originX;
-    public float originY;
-    public float depth;
+    public float originX = 0;
+    public float originY = 0;
+    public float depth = 0;
 
     public static LayerDesc create (Json.Object json)
     {
@@ -72,19 +72,19 @@ public abstract class LayerDesc
 
     public void fromJson (Json.Object json)
     {
-        name = json.getString("name");
+        name = JsonUtil.getString(json, "name", null);
 
-        x = JsonUtil.requireFloat(json, "x");
-        y = JsonUtil.requireFloat(json, "y");
-        scaleX = JsonUtil.requireFloat(json, "scaleX");
-        scaleY = JsonUtil.requireFloat(json, "scaleY");
-        rotation = JsonUtil.requireFloat(json, "rotation");
-        alpha = JsonUtil.requireFloat(json, "alpha");
-        visible = JsonUtil.requireBoolean(json, "visible");
+        x = JsonUtil.getFloat(json, "x", 0);
+        y = JsonUtil.getFloat(json, "y", 0);
+        scaleX = JsonUtil.getFloat(json, "scaleX", 1);
+        scaleY = JsonUtil.getFloat(json, "scaleY", 1);
+        rotation = JsonUtil.getFloat(json, "rotation", 0);
+        alpha = JsonUtil.getFloat(json, "alpha", 1);
+        visible = JsonUtil.getBoolean(json, "visible", true);
 
-        originX = JsonUtil.requireFloat(json, "originX");
-        originY = JsonUtil.requireFloat(json, "originY");
-        depth = JsonUtil.requireFloat(json, "depth");
+        originX = JsonUtil.getFloat(json, "originX", 0);
+        originY = JsonUtil.getFloat(json, "originY", 0);
+        depth = JsonUtil.getFloat(json, "depth", 0);
     }
 
     protected abstract Layer createLayer ();
