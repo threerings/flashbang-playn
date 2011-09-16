@@ -29,7 +29,7 @@ public class KeyframeDesc
     public void fromJson (Json.Object json)
     {
         frameIdx = JsonUtil.requireInt(json, "frameIdx");
-        interp = JsonUtil.getEnum(json, "interp", InterpolatorType.class).interp;
+        interp = JsonUtil.requireEnum(json, "interp", InterpolatorType.class).interp;
 
         x = JsonUtil.requireFloat(json, "x");
         y = JsonUtil.requireFloat(json, "y");
