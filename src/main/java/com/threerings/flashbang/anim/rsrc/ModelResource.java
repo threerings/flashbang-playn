@@ -29,13 +29,13 @@ public class ModelResource extends Resource
     public static final ResourceFactory FACTORY = new ResourceFactory() {
         @Override public Resource create (String name, Json.Object json) {
             List<LayerDesc> layers = Lists.newArrayList();
-            for (Json.Object jsonLayer : JsonUtil.getArrayObjects(json, "layers")) {
+            for (Json.Object jsonLayer : json.getObjectArray("layers")) {
                 layers.add(LayerDesc.create(jsonLayer));
             }
 
             Json.Object jsonAnims = JsonUtil.requireObject(json, "anims");
             Map<String, ModelAnimDesc> anims = Maps.newHashMap();
-            for (String animName : JsonUtil.getKeys(jsonAnims)) {
+            for (String animName : jsonAnims.getKeys()) {
                 ModelAnimDesc anim = new ModelAnimDesc();
                 anim.fromJson(jsonAnims.getObject(animName));
                 anims.put(animName, anim);

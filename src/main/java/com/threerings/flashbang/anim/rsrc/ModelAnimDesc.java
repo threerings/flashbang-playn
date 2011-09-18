@@ -33,7 +33,7 @@ public class ModelAnimDesc
     public void fromJson (Json.Object json)
     {
         layerAnims = Lists.newArrayList();
-        for (Json.Object layerAnimJson : JsonUtil.getArrayObjects(json, "layerAnims")) {
+        for (Json.Object layerAnimJson : json.getObjectArray("layerAnims")) {
             LayerAnimDesc layerAnim = new LayerAnimDesc();
             layerAnim.fromJson(layerAnimJson);
             layerAnims.add(layerAnim);
