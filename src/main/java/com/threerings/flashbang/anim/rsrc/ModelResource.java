@@ -59,6 +59,10 @@ public class ModelResource extends Resource
     public final Map<String, ModelAnimDesc> anims;
     public final String defaultAnimation; // Nullable
 
+    public ModelResource (String name) {
+        this(name, Lists.<LayerDesc>newArrayList(), Maps.<String, ModelAnimDesc>newHashMap(), null);
+    }
+
     public ModelResource (String name, List<LayerDesc> layers, Map<String, ModelAnimDesc> anims,
         String defaultAnimation)
     {
