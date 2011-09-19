@@ -12,10 +12,11 @@ import playn.core.PlayN;
 import playn.core.Pointer;
 
 import tripleplay.util.Input;
+import tripleplay.util.PointerInput;
 
 public class AppMode extends GameObjectDatabase
 {
-    public final Input input = new Input();
+    public final PointerInput input = new PointerInput();
     public final GroupLayer modeLayer = PlayN.graphics().createGroupLayer();
 
     /** Returns the AppMode's FlashbangApp */
