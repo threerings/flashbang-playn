@@ -11,7 +11,6 @@ import playn.core.GroupLayer;
 import playn.core.PlayN;
 import playn.core.Pointer;
 
-import tripleplay.util.Input;
 import tripleplay.util.PointerInput;
 
 public class AppMode extends GameObjectDatabase

@@ -12,8 +12,6 @@ import com.google.common.collect.Lists;
 
 import playn.core.Json;
 
-import tripleplay.util.JsonUtil;
-
 import flashbang.desc.DataDesc;
 
 /**

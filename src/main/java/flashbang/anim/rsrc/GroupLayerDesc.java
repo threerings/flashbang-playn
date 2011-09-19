@@ -15,8 +15,6 @@ import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
 
-import tripleplay.util.JsonUtil;
-
 public class GroupLayerDesc extends LayerDesc
 {
     public List<LayerDesc> children;
