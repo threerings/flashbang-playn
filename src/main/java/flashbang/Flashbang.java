@@ -24,7 +24,7 @@ public class Flashbang
     /**
      * @return the currently-active GameObjectDatabase (or null if no GameObjectDatabase is active)
      */
-    public static GameObjectDatabase gameObjectDatabase ()
+    public static GameObjectDatabase objectDatabase ()
     {
         return _ctxGameObjectDatabase;
     }
@@ -47,7 +47,7 @@ public class Flashbang
      * All calls to Flashbang.gameObjectDatabase() from within the supplied Runnable will return
      * the supplied db.
      */
-    public static void withinGameObjectDatabase (GameObjectDatabase db, Runnable runnable)
+    public static void withinObjectDatabase (GameObjectDatabase db, Runnable runnable)
     {
         GameObjectDatabase cur = _ctxGameObjectDatabase;
         _ctxGameObjectDatabase = db;

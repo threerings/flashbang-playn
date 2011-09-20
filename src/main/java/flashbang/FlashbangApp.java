@@ -183,7 +183,7 @@ public abstract class FlashbangApp
            if (!viewport.isDestroyed()) {
                final AppMode topMode = viewport.topMode();
                if (topMode != null) {
-                   Flashbang.withinGameObjectDatabase(topMode, new Runnable() {
+                   Flashbang.withinObjectDatabase(topMode, new Runnable() {
                        @Override public void run () {
                            op.apply(topMode);
                        }
