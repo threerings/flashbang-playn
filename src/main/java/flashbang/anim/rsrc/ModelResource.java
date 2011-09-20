@@ -9,13 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import playn.core.GroupLayer;
 import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
+
+import react.RList;
 
 import tripleplay.util.JsonUtil;
 
@@ -28,7 +29,7 @@ public class ModelResource extends Resource
     public static final String TYPE = "model";
     public static final ResourceFactory FACTORY = new ResourceFactory() {
         @Override public Resource create (String name, Json.Object json) {
-            List<LayerDesc> layers = Lists.newArrayList();
+            RList<LayerDesc> layers = RList.createArrayRList();
             for (Json.Object jsonLayer : json.getObjectArray("layers")) {
                 layers.add(LayerDesc.create(jsonLayer));
             }
@@ -55,15 +56,16 @@ public class ModelResource extends Resource
         return (ModelResource) rsrc;
     }
 
-    public final List<LayerDesc> layers;
+    public final RList<LayerDesc> layers;
     public final Map<String, ModelAnimDesc> anims;
     public final String defaultAnimation; // Nullable
 
     public ModelResource (String name) {
-        this(name, Lists.<LayerDesc>newArrayList(), Maps.<String, ModelAnimDesc>newHashMap(), null);
+        this(name, RList.<LayerDesc>createArrayRList(), Maps.<String, ModelAnimDesc>newHashMap(),
+            null);
     }
 
-    public ModelResource (String name, List<LayerDesc> layers, Map<String, ModelAnimDesc> anims,
+    public ModelResource (String name, RList<LayerDesc> layers, Map<String, ModelAnimDesc> anims,
         String defaultAnimation)
     {
         super(name);
