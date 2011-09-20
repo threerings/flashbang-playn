@@ -24,12 +24,6 @@ public class AppMode extends GameObjectDatabase
         return _app;
     }
 
-    /** Returns the Viewport that this AppMode lives in */
-    public final Viewport viewport()
-    {
-        return _viewport;
-    }
-
     /** Called when the mode is added to the mode stack */
     protected void setup ()
     {

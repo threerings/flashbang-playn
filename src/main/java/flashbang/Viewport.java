@@ -164,7 +164,7 @@ public class Viewport
         // update the top mode
         if (!_modeStack.isEmpty()) {
             final AppMode topMode = topMode();
-            topMode.within(new Runnable() {
+            Flashbang.withinGameObjectDatabase(topMode, new Runnable() {
                 @Override public void run () {
                     topMode.update(dt);
                 }
@@ -231,14 +231,14 @@ public class Viewport
         final AppMode topMode = topMode();
         if (topMode != initialTopMode) {
             if (null != initialTopMode && initialTopMode._active) {
-                initialTopMode.within(new Runnable() {
+                Flashbang.withinGameObjectDatabase(initialTopMode, new Runnable() {
                     @Override public void run () {
                         initialTopMode.exitInternal();
                     }
                 });
             }
             if (null != topMode) {
-                topMode.within(new Runnable() {
+                Flashbang.withinGameObjectDatabase(topMode, new Runnable() {
                     @Override public void run () {
                         topMode.enterInternal();
                     }
@@ -261,7 +261,7 @@ public class Viewport
         _modeStack.add(index, mode);
         _topLayer.add(mode.modeLayer);
 
-        mode.within(new Runnable() {
+        Flashbang.withinGameObjectDatabase(mode, new Runnable() {
             @Override public void run () {
                 mode.setupInternal(_app, Viewport.this);
             }
@@ -280,7 +280,7 @@ public class Viewport
 
         // if an active mode is removed, exit it first
         final AppMode mode = _modeStack.get(index);
-        mode.within(new Runnable() {
+        Flashbang.withinGameObjectDatabase(mode, new Runnable() {
             @Override public void run () {
                 if (mode._active) {
                     mode.exitInternal();
