@@ -41,7 +41,7 @@ public class Model extends SceneObject
     }
 
     @Override
-    public Layer layer ()
+    public GroupLayer layer ()
     {
         return _root;
     }
