@@ -61,25 +61,25 @@ public class TextSceneObject extends SceneObject
 
     public int width ()
     {
-        return _canvasLayer.canvas().width();
+        return _layoutWidth;
     }
 
     public int height ()
     {
-        return _canvasLayer.canvas().height();
+        return _layoutHeight;
     }
 
     protected void redraw ()
     {
         TextLayout layout = PlayN.graphics().layoutText(_text, _format);
 
-        int width = (int) (layout.width() + 0.5f);
-        int height = (int) (layout.height() + 0.5f);
+        _layoutWidth = (int) (layout.width() + 0.5f);
+        _layoutHeight = (int) (layout.height() + 0.5f);
 
-        // If our dimensions haven't changed, reuse our canvas layer
+        // If our dimensions haven't gotten bigger, we can reuse our canvas
         if (_canvasLayer != null) {
-            if (_canvasLayer.canvas().width() != width ||
-                _canvasLayer.canvas().height() != height) {
+            if (_canvasLayer.canvas().width() < _layoutWidth ||
+                _canvasLayer.canvas().height() < _layoutHeight) {
                 _canvasLayer.destroy();
                 _canvasLayer = null;
             } else {
@@ -88,7 +88,7 @@ public class TextSceneObject extends SceneObject
         }
 
         if (_canvasLayer == null) {
-            _canvasLayer = PlayN.graphics().createCanvasLayer(width, height);
+            _canvasLayer = PlayN.graphics().createCanvasLayer(_layoutWidth, _layoutHeight);
             _groupLayer.add(_canvasLayer);
         }
 
@@ -99,6 +99,8 @@ public class TextSceneObject extends SceneObject
     protected CanvasLayer _canvasLayer;
     protected String _text;
     protected TextFormat _format;
+    protected int _layoutWidth;
+    protected int _layoutHeight;
 
     protected static final TextFormat DEFAULT_FORMAT = new TextFormat();
 }
