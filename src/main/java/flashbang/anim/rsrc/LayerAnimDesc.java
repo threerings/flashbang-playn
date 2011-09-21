@@ -21,13 +21,12 @@ public class LayerAnimDesc
     implements DataDesc
 {
     public String layerSelector;
-    public List<KeyframeDesc> keyframes;
+    public List<KeyframeDesc> keyframes = Lists.newArrayList();
 
     public void fromJson (Json.Object json)
     {
         layerSelector = json.getString("layerSelector");
 
-        keyframes = Lists.newArrayList();
         for (Json.Object jsonKeyframe : json.getObjectArray("keyframes")) {
             KeyframeDesc kf = new KeyframeDesc();
             kf.fromJson(jsonKeyframe);

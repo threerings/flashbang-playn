@@ -26,13 +26,12 @@ public class ModelAnimDesc
         LOOP;
     }
 
-    public List<LayerAnimDesc> layerAnims;
+    public List<LayerAnimDesc> layerAnims = Lists.newArrayList();
     public EndBehavior endBehavior;
     public float framerate;
 
     public void fromJson (Json.Object json)
     {
-        layerAnims = Lists.newArrayList();
         for (Json.Object layerAnimJson : json.getObjectArray("layerAnims")) {
             LayerAnimDesc layerAnim = new LayerAnimDesc();
             layerAnim.fromJson(layerAnimJson);

@@ -44,6 +44,14 @@ public class KeyframeDesc
     public boolean visible = true;
     public float alpha = 1;
 
+    public KeyframeDesc () {
+        this(0);
+    }
+
+    public KeyframeDesc (int frame) {
+        this.frameIdx = frame;
+    }
+
     public void fromJson (Json.Object json)
     {
         frameIdx = JsonUtil.requireInt(json, "frameIdx");
