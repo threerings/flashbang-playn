@@ -45,7 +45,7 @@ public class PlayAnimTask extends ObjectTask
         }
 
         // Complete when we get to the last frame
-        return _animator.curFrame() == _animator.totalFrames() - 1;
+        return _animator.frame() == _animator.frames() - 1;
     }
 
     @Override

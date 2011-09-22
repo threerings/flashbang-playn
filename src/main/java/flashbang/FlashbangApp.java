@@ -11,15 +11,14 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import pythagoras.i.Point;
+
 import playn.core.Game;
 import playn.core.GroupLayer;
 import playn.core.PlayN;
 import playn.core.Pointer;
 import playn.core.SurfaceLayer;
 
-import pythagoras.i.Point;
-
-import flashbang.anim.rsrc.ModelResource;
 import flashbang.rsrc.ImageResource;
 import flashbang.rsrc.SoundResource;
 
@@ -33,7 +32,6 @@ public abstract class FlashbangApp
         Flashbang.registerApp(this);
         Flashbang.rsrcs().registerFactory(ImageResource.TYPE, ImageResource.FACTORY);
         Flashbang.rsrcs().registerFactory(SoundResource.TYPE, SoundResource.FACTORY);
-        Flashbang.rsrcs().registerFactory(ModelResource.TYPE, ModelResource.FACTORY);
     }
 
     /**

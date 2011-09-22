@@ -13,7 +13,6 @@ import playn.core.GroupLayer;
 import playn.core.Layer;
 
 import flashbang.SceneObject;
-import flashbang.anim.rsrc.ModelAnimDesc;
 import flashbang.anim.rsrc.ModelResource;
 
 public class Model extends SceneObject
@@ -22,10 +21,6 @@ public class Model extends SceneObject
     {
         _rsrc = rsrc;
         _root = _rsrc.build(_layerLookup);
-
-        if (_rsrc.defaultAnimation != null) {
-            playAnimation(_rsrc.defaultAnimation);
-        }
     }
 
     public Model (String rsrcName)
@@ -40,10 +35,11 @@ public class Model extends SceneObject
 
     public AnimationController playAnimation (String name)
     {
-        ModelAnimDesc animDesc = _rsrc.anims.get(name);
-        _animator = new AnimationController(this, animDesc);
+        _animator = new AnimationController(this, _rsrc.animations().get(name));
         return _animator;
     }
+
+    public float framerate () { return 30; }
 
     @Override
     public GroupLayer layer ()
@@ -64,5 +60,4 @@ public class Model extends SceneObject
     protected final Map<String, Layer> _layerLookup = Maps.newHashMap();
     protected final GroupLayer _root;
     protected AnimationController _animator;
-
 }

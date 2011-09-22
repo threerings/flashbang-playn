@@ -8,27 +8,13 @@ package flashbang.anim.rsrc;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.collect.Lists;
-
 import playn.core.GroupLayer;
-import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
 
 public class GroupLayerDesc extends LayerDesc
 {
     public List<LayerDesc> children;
-
-    @Override
-    public void fromJson (Json.Object json)
-    {
-        super.fromJson(json);
-
-        children = Lists.newArrayList();
-        for (Json.Object jsonChild : json.getArray("children", Json.Object.class)) {
-            children.add(LayerDesc.create(jsonChild));
-        }
-    }
 
     @Override
     public Layer build (String layerNamePrefix, Map<String, Layer> layerNameMap)
