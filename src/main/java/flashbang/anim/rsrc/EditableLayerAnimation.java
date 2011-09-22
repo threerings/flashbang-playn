@@ -18,7 +18,7 @@ public class EditableLayerAnimation implements LayerAnimation
     public EditableLayerAnimation (String layerSelector) {
         this.layerSelector = Value.create(layerSelector);
         for (KeyframeType kt : KeyframeType.values()) {
-            keyframes.put(kt, new EditableKeyframe(kt.defaultValue, 0));
+            keyframes.put(kt, new EditableKeyframe(0, kt.defaultValue, null));
         }
     }
 
@@ -32,5 +32,15 @@ public class EditableLayerAnimation implements LayerAnimation
             max = Math.max(kf.frame(), max);
         }
         return max;
+    }
+
+    public void add (KeyframeType kt, int frame, float value) {
+        EditableKeyframe kf = keyframes.get(kt);
+        while (kf.next() != null && kf.frame() < frame) { kf = kf.next.get(); }
+        if (kf.frame() != frame) {
+            kf.next.update(new EditableKeyframe(frame, value, kf.next.get()));
+        } else {
+            kf.value.update(value);
+        }
     }
 }
