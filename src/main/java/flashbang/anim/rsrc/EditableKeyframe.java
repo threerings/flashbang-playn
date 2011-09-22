@@ -11,13 +11,14 @@ import tripleplay.util.Interpolator;
 
 public class EditableKeyframe implements Keyframe
 {
-    public final Value<Float> value;
     public final Value<Integer> frame;
-    public final Value<EditableKeyframe> next = Value.create(null);
+    public final Value<Float> value;
+    public final Value<EditableKeyframe> next;
 
-    public EditableKeyframe (float value, int frame) {
+    public EditableKeyframe (int frame, float value, EditableKeyframe next) {
         this.value = Value.create(value);
         this.frame = Value.create(frame);
+        this.next = Value.create(next);
     }
 
     @Override public int frame () { return frame.get(); }
