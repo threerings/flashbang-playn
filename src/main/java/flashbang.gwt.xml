@@ -1,0 +1,5 @@
+<!-- defines our GWT module -->
+<module>
+  <inherits name="tripleplay.TriplePlay"/>
+  <source path="flashbang"/>
+</module>
