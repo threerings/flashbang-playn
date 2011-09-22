@@ -35,15 +35,14 @@ public abstract class DataMgr<T extends NamedDataDesc>
     public T requireData (int id)
     {
         T data = getData(id);
-        Preconditions.checkNotNull(data, "No such %s [id=%s]", _klass.getSimpleName(), id);
+        Preconditions.checkNotNull(data, "No such %s [id=%s]", _klass.getName(), id);
         return data;
     }
 
     public T requireData (String name)
     {
         T data = getData(name);
-        Preconditions.checkState(data != null, "No such %s [name=%s]", _klass.getSimpleName(),
-            name);
+        Preconditions.checkState(data != null, "No such %s [name=%s]", _klass.getName(), name);
         return data;
     }
 

@@ -39,7 +39,7 @@ public abstract class BasicNamedDataDesc
     @Override
     public String toString ()
     {
-        return "" + getClass().getSimpleName() + " [id=" + getId() + ", name=" + name + "]";
+        return "" + getClass().getName() + " [id=" + getId() + ", name=" + name + "]";
     }
 
     @Override
