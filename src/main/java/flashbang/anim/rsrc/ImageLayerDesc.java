@@ -5,12 +5,11 @@
 
 package flashbang.anim.rsrc;
 
+import pythagoras.f.Rectangle;
+
 import playn.core.ImageLayer;
-import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
-import pythagoras.f.Rectangle;
-import tripleplay.util.JsonUtil;
 
 import flashbang.rsrc.ImageResource;
 
@@ -24,13 +23,6 @@ public class ImageLayerDesc extends LayerDesc
             _imageRsrc = ImageResource.require(imageName);
         }
         return _imageRsrc;
-    }
-
-    @Override
-    public void fromJson (Json.Object json)
-    {
-        super.fromJson(json);
-        imageName = JsonUtil.requireString(json, "image");
     }
 
     @Override

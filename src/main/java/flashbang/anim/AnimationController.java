@@ -12,47 +12,43 @@ import com.google.common.collect.Lists;
 
 import playn.core.Layer;
 
-import tripleplay.util.Interpolator;
-
-import flashbang.anim.rsrc.KeyframeDesc;
-import flashbang.anim.rsrc.LayerAnimDesc;
-import flashbang.anim.rsrc.ModelAnimDesc;
+import flashbang.anim.rsrc.Keyframe;
+import flashbang.anim.rsrc.KeyframeType;
+import flashbang.anim.rsrc.LayerAnimation;
+import flashbang.anim.rsrc.ModelAnimation;
 
 public class AnimationController
 {
-    public AnimationController (Model model, ModelAnimDesc anim)
+    public AnimationController (Model model, ModelAnimation anim)
     {
-        _desc = anim;
+        _anim = anim;
         _model = model;
 
         // Build our LayerAnimData structure
-        _layerData = Lists.newArrayList();
-        for (LayerAnimDesc layerAnimDesc : anim.layerAnims) {
-            Layer layer = model.getLayer(layerAnimDesc.layerSelector);
+        for (LayerAnimation layerAnim : anim.layers()) {
+            Layer layer = model.getLayer(layerAnim.layerSelector());
             Preconditions.checkNotNull(layer, "Invalid layer [selector=%s]",
-                layerAnimDesc.layerSelector);
-            _layerData.add(new LayerAnimData(layerAnimDesc, layer));
+                layerAnim.layerSelector());
+            _layers.add(new LayerState(layerAnim, layer));
         }
 
+        resetKeyframes();
         // Force-update to frame 0 of the animation
-        _curFrame = -1;
-        setCurFrameInternal(0);
+        _frame = -1;
+        setFrameInternal(0);
     }
 
-    public int totalFrames ()
+    public int frames ()
     {
-        return _desc.totalFrames();
+        return _anim.frames();
     }
 
-    public int curFrame ()
-    {
-        return _curFrame;
-    }
+    public int frame () { return _frame; }
 
-    public void setCurFrame (int curFrame)
+    public void setFrame (int frame)
     {
-        setCurFrameInternal(curFrame);
-        _elapsedTime = (_curFrame / _desc.framerate);
+        setFrameInternal(frame);
+        _elapsedTime = (_frame / _model.framerate());
     }
 
     public boolean stopped ()
@@ -67,114 +63,92 @@ public class AnimationController
 
     public void update (float dt)
     {
-        if (_stopped) {
-            return;
-        }
+        if (_stopped) { return; }
 
         // Calculate our current frame
         _elapsedTime += dt;
-        int newFrame = (int) (_desc.framerate * _elapsedTime);
+        int newFrame = (int) (_model.framerate() * _elapsedTime);
 
         // Apply end behavior
-        if (newFrame >= _desc.totalFrames()) {
-            switch (_desc.endBehavior) {
-            case STOP:
-                newFrame = _desc.totalFrames() - 1;
-                break;
-
-            case LOOP:
-                newFrame %= _desc.totalFrames();
-                break;
-            }
+        if (newFrame >= frames()) {
+            newFrame %= frames();
         }
 
-        setCurFrameInternal(newFrame);
+        setFrameInternal(newFrame);
     }
 
-    protected void setCurFrameInternal (int frame)
-    {
-        if (_curFrame == frame) {
-            return;
+    protected void resetKeyframes () {
+        for (LayerState state : _layers) {
+            for (KeyframeType kt : KeyframeType.values()) {
+                state.keyframeByType[kt.ordinal()] = state.desc.keyframes().get(kt);
+            }
         }
+    }
 
-        Preconditions.checkArgument(frame >= 0 && frame < _desc.totalFrames(),
-            "Frame out of bounds [frame=%s, totalFrames=%s]", frame, _desc.totalFrames());
+    protected void setFrameInternal (int frame)
+    {
+        if (_frame == frame) { return; }
 
-        _curFrame = frame;
+        Preconditions.checkArgument(frame >= 0 && frame < frames(),
+            "Frame out of bounds [frame=%s, totalFrames=%s]", frame, frames());
 
+        if (frame < _frame) {
+            resetKeyframes();
+        }
+        _frame = frame;
+
+        float x = 0, y = 0, xScale = 1, yScale = 1, rotation = 0, alpha = 1;
         // Update our layers
-        for (LayerAnimData layerData : _layerData) {
-            KeyframeDesc kf = layerData.getKeyframe(_curFrame);
-            Layer layer = layerData.layer;
+        for (LayerState state : _layers) {
+            Layer layer = state.layer;
 
-            // Interpolate between this keyframe and the next
-            if (kf.next() != null) {
-                KeyframeDesc next = kf.next();
-                Interpolator interp = kf.interp;
-                int totalFrames = kf.endFrameIdx() - kf.frameIdx + 1;
-                float totalTime = _desc.framerate * totalFrames;
-                int elapsedFrames = _curFrame - kf.frameIdx;
-                float elapsedTime = _desc.framerate * elapsedFrames;
-
-                layer.setTranslation(
-                    interp.apply(kf.x, next.x - kf.x, elapsedTime, totalTime),
-                    interp.apply(kf.y, next.y - kf.y, elapsedTime, totalTime));
-                layer.setScale(
-                    interp.apply(kf.scaleX, next.scaleX - kf.scaleX, elapsedTime, totalTime),
-                    interp.apply(kf.scaleY, next.scaleY - kf.scaleY, elapsedTime, totalTime));
-                layer.setRotation(
-                    interp.apply(kf.rotation, next.rotation - kf.rotation, elapsedTime, totalTime));
-                layer.setAlpha(
-                    interp.apply(kf.alpha, next.alpha - kf.alpha, elapsedTime, totalTime));
-
-            } else {
-                layer.setTranslation(kf.x, kf.y);
-                layer.setScale(kf.scaleX, kf.scaleY);
-                layer.setRotation(kf.rotation);
-                layer.setAlpha(kf.alpha);
-            }
-
-            // Don't interpolate discrete values
-            layer.setVisible(kf.visible);
-        }
-    }
-
-    protected final ModelAnimDesc _desc;
-    protected final Model _model;
-    protected final List<LayerAnimData> _layerData;
-
-    protected int _curFrame;
-    protected boolean _stopped;
-    protected float _elapsedTime;
-
-    protected static class LayerAnimData
-    {
-        public final LayerAnimDesc desc;
-        public final Layer layer;
-
-        public KeyframeDesc getKeyframe (int frameIdx) {
-            // Invalidate our cached keyframe?
-            if (_cachedKeyframe != null && !_cachedKeyframe.validForFrame(frameIdx)) {
-                // Can we save ourselves from looking up our keyframe again?
-                if (_cachedKeyframe.next() != null &&
-                        _cachedKeyframe.next().validForFrame(frameIdx)) {
-                    _cachedKeyframe = _cachedKeyframe.next();
-                } else {
-                    _cachedKeyframe = null;
+            for (KeyframeType kt : KeyframeType.values()) {
+                // Interpolate between this keyframe and the next
+                Keyframe kf = state.keyframeByType[kt.ordinal()];
+                while (kf.next() != null && kf.next().frame() <= _frame) {
+                    kf = kf.next();
+                    state.keyframeByType[kt.ordinal()] = kf;
+                }
+                float interped = kf.value();
+                if (kf.next() != null) {
+                    interped = kf.interp().apply(interped, kf.next().value() - interped,
+                        _frame - kf.frame(), kf.next().frame() - kf.frame());
+                }
+                switch (kt) {
+                case X_LOCATION: x = interped; break;
+                case Y_LOCATION: y = interped; break;
+                case X_SCALE:    xScale = interped; break;
+                case Y_SCALE:    yScale = interped; break;
+                case ROTATION:   rotation = interped; break;
+                case ALPHA:      alpha = interped; break;
                 }
             }
 
-            if (_cachedKeyframe == null) {
-                _cachedKeyframe = desc.getKeyframe(frameIdx);
-            }
-            return _cachedKeyframe;
+            layer.setTranslation(x, y);
+            layer.setScale(xScale, yScale);
+            layer.setRotation(rotation);
+            layer.setAlpha(alpha);
         }
+    }
 
-        public LayerAnimData (LayerAnimDesc desc, Layer layer) {
+    protected final ModelAnimation _anim;
+    protected final Model _model;
+    protected final List<LayerState> _layers = Lists.newArrayList();
+
+    protected int _frame;
+    protected boolean _stopped;
+    protected float _elapsedTime;
+
+    protected static class LayerState
+    {
+        public final LayerAnimation desc;
+        public final Layer layer;
+        public final Keyframe[] keyframeByType = new Keyframe[KeyframeType.values().length];
+
+        public LayerState (LayerAnimation desc, Layer layer) {
             this.desc = desc;
             this.layer = layer;
         }
 
-        protected KeyframeDesc _cachedKeyframe;
     }
 }
