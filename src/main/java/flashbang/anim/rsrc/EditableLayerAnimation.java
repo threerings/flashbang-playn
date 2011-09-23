@@ -43,4 +43,8 @@ public class EditableLayerAnimation implements LayerAnimation
             kf.value.update(value);
         }
     }
+
+    @Override public String toString () {
+        return "EditableLayerAnimation [layer=" + layerSelector() + ", keyframes=" + keyframes + "]";
+    }
 }

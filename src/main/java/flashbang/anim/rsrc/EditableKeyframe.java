@@ -25,4 +25,8 @@ public class EditableKeyframe implements Keyframe
     @Override public float value () { return value.get(); }
     @Override public Interpolator interp () { return Interpolator.LINEAR; }
     @Override public Keyframe next () { return next.get(); }
+
+    @Override public String toString () {
+        return "EditableKeyframe [frame=" + frame() + ", value=" + value() + ", next=" + next() + "]";
+    }
 }
