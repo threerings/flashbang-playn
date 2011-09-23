@@ -21,7 +21,7 @@ object FlashbangBuild extends Build {
       publishArtifact in (Compile, packageDoc) := false,
 
       autoScalaLibrary := false, // no scala-library dependency
-      libraryDependencies ++= Seq(
+      libraryDependencies ++= locals.libDeps ++ Seq(
         "com.google.guava" % "guava" % "r09"
       )
     )
