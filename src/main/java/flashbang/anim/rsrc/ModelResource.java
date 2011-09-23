@@ -28,7 +28,7 @@ public class ModelResource extends Resource
     public static final String TYPE = "model";
     public static final ResourceFactory FACTORY = new ResourceFactory() {
         @Override public Resource create (String name, Json.Object json) {
-            RList<LayerDesc> layers = RList.createArrayRList();
+            RList<LayerDesc> layers = RList.create();
             for (Json.Object jsonLayer : json.getObjectArray("layers")) {
                 layers.add(LayerDesc.create(jsonLayer));
             }
@@ -60,7 +60,7 @@ public class ModelResource extends Resource
     public final String defaultAnimation; // Nullable
 
     public ModelResource (String name) {
-        this(name, RList.<LayerDesc>createArrayRList(), Maps.<String, ModelAnimDesc>newHashMap(),
+        this(name, RList.<LayerDesc>create(), Maps.<String, ModelAnimDesc>newHashMap(),
             null);
     }
 
