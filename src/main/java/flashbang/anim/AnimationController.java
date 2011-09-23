@@ -32,7 +32,6 @@ public class AnimationController
             _layers.add(new LayerState(layerAnim, layer));
         }
 
-        resetKeyframes();
         // Force-update to frame 0 of the animation
         _frame = -1;
         setFrameInternal(0);
@@ -78,11 +77,6 @@ public class AnimationController
     }
 
     protected void resetKeyframes () {
-        for (LayerState state : _layers) {
-            for (KeyframeType kt : KeyframeType.values()) {
-                state.keyframeByType[kt.ordinal()] = state.desc.keyframes().get(kt);
-            }
-        }
     }
 
     protected void setFrameInternal (int frame)
@@ -93,7 +87,9 @@ public class AnimationController
             "Frame out of bounds [frame=%s, totalFrames=%s]", frame, frames());
 
         if (frame < _frame) {
-            resetKeyframes();
+            for (LayerState state : _layers) {
+                state.reset();
+            }
         }
         _frame = frame;
 
@@ -104,16 +100,7 @@ public class AnimationController
 
             for (KeyframeType kt : KeyframeType.values()) {
                 // Interpolate between this keyframe and the next
-                Keyframe kf = state.keyframeByType[kt.ordinal()];
-                while (kf.next() != null && kf.next().frame() <= _frame) {
-                    kf = kf.next();
-                    state.keyframeByType[kt.ordinal()] = kf;
-                }
-                float interped = kf.value();
-                if (kf.next() != null) {
-                    interped = kf.interp().apply(interped, kf.next().value() - interped,
-                        _frame - kf.frame(), kf.next().frame() - kf.frame());
-                }
+                float interped = state.find(kt, _frame).interp(frame);
                 switch (kt) {
                 case X_LOCATION: x = interped; break;
                 case Y_LOCATION: y = interped; break;
@@ -143,12 +130,23 @@ public class AnimationController
     {
         public final LayerAnimation desc;
         public final Layer layer;
-        public final Keyframe[] keyframeByType = new Keyframe[KeyframeType.values().length];
+        public final Keyframe[] prev = new Keyframe[KeyframeType.values().length];
 
         public LayerState (LayerAnimation desc, Layer layer) {
             this.desc = desc;
             this.layer = layer;
+            reset();
         }
 
+        public void reset () {
+            for (KeyframeType kt : KeyframeType.values()) {
+                prev[kt.ordinal()] = desc.keyframes().get(kt);
+            }
+        }
+
+        public Keyframe find (KeyframeType kt, int frame) {
+            prev[kt.ordinal()] = prev[kt.ordinal()].find(frame);
+            return prev[kt.ordinal()];
+        }
     }
 }
