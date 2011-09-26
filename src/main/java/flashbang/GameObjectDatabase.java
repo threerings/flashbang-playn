@@ -206,7 +206,7 @@ public class GameObjectDatabase
     }
 
     /** Returns the number of live GameObjects in this ObjectDB. */
-    public int getObjectCount ()
+    public int objectCount ()
     {
         return _objectCount;
     }
@@ -215,7 +215,7 @@ public class GameObjectDatabase
      * Returns the number of seconds this ObjectDB has been running, as measured by calls to
      * update().
      */
-    public float getRunningTime ()
+    public float runningTime ()
     {
         return _runningTime;
     }
