@@ -5,6 +5,8 @@
 
 package flashbang.tasks;
 
+import playn.core.Layer;
+
 import com.google.common.base.Preconditions;
 
 import tripleplay.util.Interpolator;
@@ -15,24 +17,34 @@ import flashbang.components.ScaleComponent;
 
 public class ScaleTask extends InterpolatingTask
 {
-    public ScaleTask (float x, float y, float time, Interpolator interp)
+    public ScaleTask (Layer layer, float x, float y, float time, Interpolator interp)
     {
         super(time, interp);
+        _layer = layer;
         _toX = x;
         _toY = y;
     }
 
+    public ScaleTask (float x, float y, float time, Interpolator interp)
+    {
+        this(null, x, y, time, interp);
+    }
+
     public ScaleTask (float x, float y, float time)
     {
-        this(x, y, time, Interpolator.LINEAR);
+        this(null, x, y, time, Interpolator.LINEAR);
     }
 
     @Override
     public void init (GameObject obj)
     {
-        Preconditions.checkArgument(obj instanceof ScaleComponent,
-            "ScaleTask only operates on GameObjects that implement ScaleComponent");
-        _target = (ScaleComponent)obj;
+        if (_layer != null) {
+            _target = new LayerWrapper(_layer);
+        } else {
+            Preconditions.checkArgument(obj instanceof ScaleComponent,
+                "ScaleTask only operates on GameObjects that implement ScaleComponent");
+            _target = (ScaleComponent) obj;
+        }
     }
 
     @Override
@@ -54,14 +66,14 @@ public class ScaleTask extends InterpolatingTask
     @Override
     public ObjectTask clone ()
     {
-        return new ScaleTask(_toX, _toY, _totalTime, _interp);
+        return new ScaleTask(_layer, _toX, _toY, _totalTime, _interp);
     }
 
-    protected ScaleComponent _target;
-
+    protected final Layer _layer;
     protected final float _toX;
     protected final float _toY;
 
+    protected ScaleComponent _target;
     protected float _fromX;
     protected float _fromY;
 }

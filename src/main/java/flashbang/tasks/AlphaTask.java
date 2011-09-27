@@ -5,6 +5,8 @@
 
 package flashbang.tasks;
 
+import playn.core.Layer;
+
 import com.google.common.base.Preconditions;
 
 import tripleplay.util.Interpolator;
@@ -15,23 +17,33 @@ import flashbang.components.AlphaComponent;
 
 public class AlphaTask extends InterpolatingTask
 {
-    public AlphaTask (float alpha, float time, Interpolator interp)
+    public AlphaTask (Layer layer, float alpha, float time, Interpolator interp)
     {
         super(time, interp);
+        _layer = layer;
         _toAlpha = alpha;
+    }
+
+    public AlphaTask (float alpha, float time, Interpolator interp)
+    {
+        this(null, alpha, time, interp);
     }
 
     public AlphaTask (float alpha, float time)
     {
-        this(alpha, time, Interpolator.LINEAR);
+        this(null, alpha, time, Interpolator.LINEAR);
     }
 
     @Override
     public void init (GameObject obj)
     {
-        Preconditions.checkArgument(obj instanceof AlphaComponent,
-            "AlphaTask only operates on GameObjects that implement AlphaComponent");
-        _target = (AlphaComponent)obj;
+        if (_layer != null) {
+            _target = new LayerWrapper(_layer);
+        } else {
+            Preconditions.checkArgument(obj instanceof AlphaComponent,
+                "AlphaTask only operates on GameObjects that implement AlphaComponent");
+            _target = (AlphaComponent) obj;
+        }
     }
 
     @Override
@@ -51,11 +63,12 @@ public class AlphaTask extends InterpolatingTask
     @Override
     public ObjectTask clone ()
     {
-        return new AlphaTask(_toAlpha, _totalTime, _interp);
+        return new AlphaTask(_layer, _toAlpha, _totalTime, _interp);
     }
 
-    protected AlphaComponent _target;
-
+    protected final Layer _layer;
     protected final float _toAlpha;
+
+    protected AlphaComponent _target;
     protected float _fromAlpha;
 }
