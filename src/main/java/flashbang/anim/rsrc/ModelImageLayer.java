@@ -5,12 +5,7 @@
 
 package flashbang.anim.rsrc;
 
-import java.util.Map;
-
-public interface LayerAnimation
+public interface ModelImageLayer extends ModelLayer
 {
-    Map<KeyframeType, ? extends Keyframe> keyframes ();
-
-    /** Returns the number of frames in the animation.*/
-    int frames();
+    String imagePath ();
 }

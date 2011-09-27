@@ -7,8 +7,7 @@ package flashbang.anim.rsrc;
 
 import java.util.List;
 
-public interface ModelAnimation
+public interface ModelGroupLayer extends ModelLayer
 {
-    List<? extends LayerAnimation> layers ();
-    int frames ();
+    List<ModelLayer> children ();
 }

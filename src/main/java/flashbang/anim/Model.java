@@ -5,32 +5,25 @@
 
 package flashbang.anim;
 
-import java.util.Map;
-
-import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 
 import playn.core.GroupLayer;
 import playn.core.Layer;
 
 import flashbang.SceneObject;
-import flashbang.anim.rsrc.ModelResource;
+import flashbang.anim.rsrc.Animatable;
 
 public class Model extends SceneObject
 {
-    public Model (ModelResource rsrc)
+    public Model (GroupLayer root, Multimap<String, Animatable> animations)
     {
-        _rsrc = rsrc;
-        _root = _rsrc.build(_layerLookup);
-    }
-
-    public Layer getLayer (String selector)
-    {
-        return _layerLookup.get(selector);
+        _root = root;
+        _animations = animations;
     }
 
     public AnimationController play (String name)
     {
-        _animator = new AnimationController(this, _rsrc.animations().get(name));
+        _animator = new AnimationController(framerate(), _animations.get(name));
         return _animator;
     }
 
@@ -51,8 +44,7 @@ public class Model extends SceneObject
         }
     }
 
-    protected final ModelResource _rsrc;
-    protected final Map<String, Layer> _layerLookup = Maps.newHashMap();
+    protected final Multimap<String, Animatable> _animations;
     protected final GroupLayer _root;
     protected AnimationController _animator;
 }
