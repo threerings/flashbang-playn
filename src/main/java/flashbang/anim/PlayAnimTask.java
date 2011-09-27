@@ -40,7 +40,7 @@ public class PlayAnimTask extends ObjectTask
     public boolean update (float dt)
     {
         if (_animator == null) {
-            _animator = _obj.playAnimation(_name);
+            _animator = _obj.play(_name);
             Preconditions.checkNotNull(_animator, "No such animation [name=%s]", _name);
         }
 

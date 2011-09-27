@@ -12,17 +12,14 @@ import react.Value;
 
 public class EditableLayerAnimation implements LayerAnimation
 {
-    public final Value<String> layerSelector;
     public final RMap<KeyframeType, EditableKeyframe> keyframes = RMap.create();
 
-    public EditableLayerAnimation (String layerSelector) {
-        this.layerSelector = Value.create(layerSelector);
+    public EditableLayerAnimation () {
         for (KeyframeType kt : KeyframeType.values()) {
             keyframes.put(kt, new EditableKeyframe(0, kt.defaultValue, null));
         }
     }
 
-    @Override public String layerSelector () { return layerSelector.get(); }
     @Override public Map<KeyframeType, EditableKeyframe> keyframes () { return keyframes; }
 
     @Override public int frames () {
@@ -45,6 +42,6 @@ public class EditableLayerAnimation implements LayerAnimation
     }
 
     @Override public String toString () {
-        return "EditableLayerAnimation [layer=" + layerSelector() + ", keyframes=" + keyframes + "]";
+        return "EditableLayerAnimation [keyframes=" + keyframes + "]";
     }
 }

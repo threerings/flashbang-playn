@@ -6,16 +6,14 @@
 package flashbang.anim.rsrc;
 
 import java.util.List;
-import java.util.Map;
 
-import playn.core.GroupLayer;
 import playn.core.Layer;
 
+import flashbang.anim.Model;
 import flashbang.rsrc.Resource;
 
 public interface ModelResource
 {
-    List<LayerDesc> layers ();
-    Map<String, ? extends ModelAnimation> animations ();
-    GroupLayer build (Map<String, Layer> layers);
+    List<? extends ModelLayer> children ();
+    Model build ();
 }

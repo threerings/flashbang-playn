@@ -6,28 +6,36 @@
 package flashbang.anim.rsrc;
 
 import java.util.List;
-import java.util.Map;
 
-import react.RList;
-import react.RMap;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 import playn.core.GroupLayer;
 import playn.core.Layer;
 import playn.core.PlayN;
 
+import react.RList;
+import react.Value;
+
+import flashbang.anim.Model;
+
 public class EditableModelResource implements ModelResource
 {
-    public final RList<LayerDesc> layers = RList.create();
-    public final RMap<String, EditableModelAnimation> animations = RMap.create();
+    public final RList<EditableModelLayer> children = RList.create();
 
-    @Override public List<LayerDesc> layers () { return layers; }
-    @Override public Map<String, EditableModelAnimation> animations () { return animations; }
+    // TODO - listen for add and remove to update children
+    public final RList<String> animations = RList.create();
 
-    @Override public GroupLayer build (Map<String, Layer> layerLookup) {
+    public final Value<String> animation = Value.create(null);
+
+    @Override public List<EditableModelLayer> children () { return children; }
+
+    @Override public Model build () {
         GroupLayer root = PlayN.graphics().createGroupLayer();
-        for (LayerDesc layerDesc : layers) {
-            root.add(layerDesc.build("", layerLookup));
+        Multimap<String, Animatable> animations = ArrayListMultimap.create();
+        for (ModelLayer child : children) {
+            child.build(root, this.animations, animations);
         }
-        return root;
+        return new Model(root, animations);
     }
 }

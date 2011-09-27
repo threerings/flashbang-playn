@@ -5,9 +5,9 @@
 
 package flashbang.anim;
 
+import java.util.Collection;
 import java.util.List;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 import playn.core.Layer;
@@ -15,30 +15,29 @@ import playn.core.Layer;
 import react.Value;
 import react.ValueView;
 
+import flashbang.anim.rsrc.Animatable;
 import flashbang.anim.rsrc.Keyframe;
 import flashbang.anim.rsrc.KeyframeType;
 import flashbang.anim.rsrc.LayerAnimation;
-import flashbang.anim.rsrc.ModelAnimation;
 
 public class AnimationController
 {
-    public AnimationController (Model model, ModelAnimation anim) {
-        _anim = anim;
-        _model = model;
+    public AnimationController (float framerate, Collection<Animatable> animation) {
+        _framerate = framerate;
 
-        // Build our LayerAnimData structure
-        for (LayerAnimation layerAnim : anim.layers()) {
-            Layer layer = model.getLayer(layerAnim.layerSelector());
-            Preconditions.checkNotNull(layer, "Invalid layer [selector=%s]",
-                layerAnim.layerSelector());
-            _layers.add(new LayerState(layerAnim, layer));
+        _layers = Lists.newArrayListWithCapacity(animation.size());
+        int frames = 0;
+        for (Animatable anim : animation) {
+            _layers.add(new LayerState(anim));
+            frames = Math.max(frames, anim.animation.frames());
         }
+        _frames = frames;
 
         // Force-update to frame 0 of the animation
         draw(0);
     }
 
-    public int frames () { return _anim.frames(); }
+    public int frames () { return _frames; }
 
     public ValueView<Integer> frameChanged () { return _frame; }
 
@@ -59,7 +58,7 @@ public class AnimationController
 
         _playTime += dt;
 
-        setFrame((int)(_playTime * _model.framerate()) % frames());
+        setFrame((int)(_playTime * _framerate) % frames());
     }
 
     /**
@@ -97,11 +96,11 @@ public class AnimationController
         }
     }
 
-    protected final ModelAnimation _anim;
-    protected final Model _model;
-    protected final List<LayerState> _layers = Lists.newArrayList();
-
+    protected final List<LayerState> _layers;
+    protected final float _framerate;
+    protected final int _frames;
     protected final Value<Integer> _frame = Value.create(0);
+
     protected boolean _stopped;
     protected float _playTime;
 
@@ -110,9 +109,9 @@ public class AnimationController
         public final Layer layer;
         public final Keyframe[] prev = new Keyframe[KeyframeType.values().length];
 
-        public LayerState (LayerAnimation desc, Layer layer) {
-            this.desc = desc;
-            this.layer = layer;
+        public LayerState (Animatable anim) {
+            desc = anim.animation;
+            layer = anim.layer;
             reset();
         }
 

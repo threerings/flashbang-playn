@@ -16,7 +16,6 @@ public class RuntimeLayerAnimation implements LayerAnimation
         _frames = frames;
     }
 
-    @Override public String layerSelector () { return _layerSelector; }
     @Override public Map<KeyframeType, Keyframe> keyframes () { return _keyframes; }
     @Override public int frames () { return _frames; }
 
