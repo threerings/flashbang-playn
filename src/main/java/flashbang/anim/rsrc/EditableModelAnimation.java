@@ -14,6 +14,7 @@ public class EditableModelAnimation implements ModelAnimation
     public final RList<EditableLayerAnimation> layers = RList.create();
 
     @Override public List<EditableLayerAnimation> layers () { return layers; }
+
     @Override public int frames () {
         int max = 1;
         for (LayerAnimation layer : layers) {
@@ -21,5 +22,4 @@ public class EditableModelAnimation implements ModelAnimation
         }
         return max;
     }
-
 }
