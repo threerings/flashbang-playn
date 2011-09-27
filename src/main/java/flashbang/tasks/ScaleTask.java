@@ -25,6 +25,11 @@ public class ScaleTask extends InterpolatingTask
         _toY = y;
     }
 
+    public ScaleTask (Layer layer, float x, float y, float time)
+    {
+        this(layer, x, y, time, Interpolator.LINEAR);
+    }
+
     public ScaleTask (float x, float y, float time, Interpolator interp)
     {
         this(null, x, y, time, interp);

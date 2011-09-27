@@ -24,6 +24,11 @@ public class RotationTask extends InterpolatingTask
         _toRotation = rotation;
     }
 
+    public RotationTask (Layer layer, float rotation, float time)
+    {
+        this(layer, rotation, time, Interpolator.LINEAR);
+    }
+
     public RotationTask (float rotation, float time, Interpolator interp)
     {
         this(null, rotation, time, interp);

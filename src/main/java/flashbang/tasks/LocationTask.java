@@ -25,6 +25,11 @@ public class LocationTask extends InterpolatingTask
         _toY = y;
     }
 
+    public LocationTask (Layer layer, float x, float y, float time)
+    {
+        this(layer, x, y, time, Interpolator.LINEAR);
+    }
+
     public LocationTask (float x, float y, float time, Interpolator interp)
     {
         this(null, x, y, time, interp);

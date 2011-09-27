@@ -24,6 +24,11 @@ public class AlphaTask extends InterpolatingTask
         _toAlpha = alpha;
     }
 
+    public AlphaTask (Layer layer, float alpha, float time)
+    {
+        this(layer, alpha, time, Interpolator.LINEAR);
+    }
+
     public AlphaTask (float alpha, float time, Interpolator interp)
     {
         this(null, alpha, time, interp);
