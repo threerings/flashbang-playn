@@ -28,7 +28,7 @@ public class Model extends SceneObject
         return _layerLookup.get(selector);
     }
 
-    public AnimationController playAnimation (String name)
+    public AnimationController play (String name)
     {
         _animator = new AnimationController(this, _rsrc.animations().get(name));
         return _animator;
