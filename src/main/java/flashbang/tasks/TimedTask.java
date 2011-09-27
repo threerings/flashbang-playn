@@ -8,7 +8,7 @@ package flashbang.tasks;
 import flashbang.GameObject;
 import flashbang.ObjectTask;
 
-public class TimedTask extends ObjectTask
+public abstract class TimedTask extends ObjectTask
 {
     public TimedTask (float time)
     {
@@ -26,12 +26,6 @@ public class TimedTask extends ObjectTask
     {
         _elapsedTime += dt;
         return (_elapsedTime >= _totalTime);
-    }
-
-    @Override
-    public ObjectTask clone ()
-    {
-        return new TimedTask(_totalTime);
     }
 
     protected final float _totalTime;
