@@ -33,11 +33,16 @@ public class EditableMovieConf implements MovieConf
     public final Value<String> animation = Value.create(DEFAULT_ANIMATION);
 
     public void add (EditableMovieGroupLayerConf parent, EditableMovieLayerConf child) {
+        add(parent, child, -1);
+    }
+
+    public void add (EditableMovieGroupLayerConf parent, EditableMovieLayerConf child, int idx) {
         for (String name : animations) {
             if (child.animations.containsKey(name)) continue;
             child.animations.put(name, new EditableAnimConf());
         }
-        parent.children.add(child);
+        if (idx == -1) idx = parent.children.size();
+        parent.children.add(idx, child);
     }
 
     public EditableMovieGroupLayerConf findParent (EditableMovieLayerConf layer) {
