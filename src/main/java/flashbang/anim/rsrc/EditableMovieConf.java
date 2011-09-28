@@ -40,6 +40,22 @@ public class EditableMovieConf implements MovieConf
         parent.children.add(child);
     }
 
+    public EditableMovieGroupLayerConf findParent (EditableMovieLayerConf layer) {
+        return findParent(layer, root);
+    }
+
+    protected EditableMovieGroupLayerConf findParent (EditableMovieLayerConf layer,
+        EditableMovieGroupLayerConf position) {
+        if (position.children.contains(layer)) return position;
+        for (EditableMovieLayerConf child : position.children) {
+            if (!(child instanceof EditableMovieGroupLayerConf)) continue;
+            EditableMovieGroupLayerConf found =
+                findParent(layer, ((EditableMovieGroupLayerConf)child));
+            if (found != null) return found;
+        }
+        return null;
+    }
+
     @Override public Movie build () {
         GroupLayer root = PlayN.graphics().createGroupLayer();
         Multimap<String, Animatable> animations = ArrayListMultimap.create();
