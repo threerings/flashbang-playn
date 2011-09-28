@@ -30,7 +30,7 @@ public class ImageResource extends Resource
             List<Rectangle> frameRects = null;
             if (json.getObject("frameRects") != null) {
                 frameRects = Lists.newArrayList();
-                for (Json.Object jsonRect : json.getObjectArray("frameRects")) {
+                for (Json.Object jsonRect : json.getArray("frameRects", Json.Object.class)) {
                     Rectangle r = new Rectangle();
                     r.x = JsonUtil.requireFloat(jsonRect, "x");
                     r.y = JsonUtil.requireFloat(jsonRect, "y");

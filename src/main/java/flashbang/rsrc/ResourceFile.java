@@ -39,7 +39,7 @@ public class ResourceFile extends ResourceBatch
             @Override public void done (String text) {
                 // Parse our Resources from JSON
                 Json.Object json = PlayN.json().parse(text);
-                for (Json.Object jsonRsrc : json.getObjectArray("resources")) {
+                for (Json.Object jsonRsrc : json.getArray("resources", Json.Object.class)) {
                     String type = JsonUtil.requireString(jsonRsrc, "type");
                     ResourceFactory factory = Flashbang.rsrcs().getFactory(type);
                     Preconditions.checkNotNull(factory,
