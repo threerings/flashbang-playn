@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
 import react.RList;
+import react.UnitSignal;
 import react.Value;
 
 import playn.core.GroupLayer;
@@ -22,6 +23,8 @@ import flashbang.anim.Movie;
 
 public class EditableMovieConf implements MovieConf
 {
+    public final UnitSignal treeChanged = new UnitSignal();
+
     public final EditableMovieGroupLayerConf root = new EditableMovieGroupLayerConf("root");
 
     // TODO - listen for add and remove to update children
@@ -45,4 +48,22 @@ public class EditableMovieConf implements MovieConf
         }
         return new Movie(root, animations);
     }
+
+    protected final RList.Listener<EditableMovieLayerConf> _treeListener =
+        new RList.Listener<EditableMovieLayerConf> () {
+            @Override public void onAdd (EditableMovieLayerConf added) {
+                if (added instanceof EditableMovieGroupLayerConf) {
+                    ((EditableMovieGroupLayerConf)added).children.connect(this);
+                }
+                treeChanged.emit();
+            }
+
+            @Override public void onRemove (EditableMovieLayerConf removed) {
+                if (removed instanceof EditableMovieGroupLayerConf) {
+                    ((EditableMovieGroupLayerConf)removed).children.disconnect(this);
+                }
+                treeChanged.emit();
+            }
+        };
+    { root.children.connect(_treeListener); }
 }
