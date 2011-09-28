@@ -5,13 +5,15 @@
 
 package flashbang.anim.rsrc;
 
+import java.util.List;
+
+import com.google.common.collect.Multimap;
+
+import react.Value;
+
 import playn.core.ImageLayer;
 import playn.core.Layer;
 import playn.core.PlayN;
-
-import pythagoras.f.Rectangle;
-
-import react.Value;
 
 import flashbang.rsrc.ImageResource;
 
@@ -21,16 +23,11 @@ public class EditableMovieImageLayerConf extends EditableMovieLayerConf implemen
 
     @Override public String imagePath () { return imagePath.get(); }
 
-    @Override protected Layer createLayer () {
+    @Override public Layer build (List<String> names, Multimap<String, Animatable> animations) {
         if (_imageRsrc == null) {
             _imageRsrc = ImageResource.require(imagePath());
         }
-        ImageLayer layer = PlayN.graphics().createImageLayer(_imageRsrc.image());
-        if (_imageRsrc.frameRects != null) {
-            Rectangle srcRect = _imageRsrc.frameRects.get(0);
-            layer.setSourceRect(srcRect.x, srcRect.y, srcRect.width, srcRect.height);
-        }
-        return layer;
+        return add(PlayN.graphics().createImageLayer(_imageRsrc.image()), names, animations);
     }
 
     protected ImageResource _imageRsrc;

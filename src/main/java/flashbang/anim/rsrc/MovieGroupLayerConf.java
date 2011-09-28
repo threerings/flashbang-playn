@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface MovieGroupLayerConf extends MovieLayerConf
 {
-    List<MovieLayerConf> children ();
+    List<? extends MovieLayerConf> children ();
 }

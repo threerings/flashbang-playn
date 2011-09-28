@@ -9,13 +9,11 @@ import java.util.List;
 
 import com.google.common.collect.Multimap;
 
-import playn.core.GroupLayer;
 import playn.core.Layer;
 
 public interface MovieLayerConf
 {
-    void build (GroupLayer parent, List<String> animationNames,
-        Multimap<String, Animatable> animations);
+    Layer build (List<String> animationNames, Multimap<String, Animatable> animations);
     String name ();
     AnimConf animation (String name);
 }

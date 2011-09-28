@@ -10,24 +10,24 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
-import playn.core.GroupLayer;
-import playn.core.Layer;
-
 import react.Value;
 import react.ValueView;
+
+import playn.core.Layer;
 
 import flashbang.SceneObject;
 import flashbang.anim.rsrc.AnimConf;
 import flashbang.anim.rsrc.Animatable;
 import flashbang.anim.rsrc.KeyframeConf;
 import flashbang.anim.rsrc.KeyframeType;
+import flashbang.anim.rsrc.MovieConf;
 
 public class Movie extends SceneObject
 {
-    public Movie (GroupLayer root, Multimap<String, Animatable> animations) {
+    public Movie (Layer root, Multimap<String, Animatable> animations) {
         _root = root;
         _animations = animations;
-        play("default");
+        play(MovieConf.DEFAULT_ANIMATION);
     }
 
     /** Returns the number of frames in the currently playing animation. */
@@ -49,7 +49,7 @@ public class Movie extends SceneObject
 
     public float framerate () { return 30; }
 
-    @Override public GroupLayer layer () { return _root; }
+    @Override public Layer layer () { return _root; }
 
     public void play (String name) {
         _stopped = false;
@@ -63,6 +63,7 @@ public class Movie extends SceneObject
         }
 
         draw(0); // Force-update to frame 0 of the animation
+        _frame.update(0);
     }
 
     @Override protected void update (float dt) {
@@ -114,7 +115,7 @@ public class Movie extends SceneObject
     protected final List<LayerState> _layers = Lists.newArrayList();
     protected final Value<Integer> _frame = Value.create(0);
     protected final Multimap<String, Animatable> _animations;
-    protected final GroupLayer _root;
+    protected final Layer _root;
 
     protected static class LayerState {
         public final AnimConf desc;

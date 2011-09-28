@@ -5,14 +5,11 @@
 
 package flashbang.anim.rsrc;
 
-import java.util.List;
-
-import playn.core.Layer;
-
 import flashbang.anim.Movie;
 
 public interface MovieConf
 {
-    List<? extends MovieLayerConf> children ();
+    public static final String DEFAULT_ANIMATION = "default";
+
     Movie build ();
 }
