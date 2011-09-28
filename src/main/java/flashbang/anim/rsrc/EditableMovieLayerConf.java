@@ -15,15 +15,15 @@ import playn.core.Layer;
 import react.RMap;
 import react.Value;
 
-public abstract class EditableModelLayer implements ModelLayer
+public abstract class EditableMovieLayerConf implements MovieLayerConf
 {
     public final Value<String> name = Value.create(null);
 
-    public final RMap<String, EditableLayerAnimation> animations = RMap.create();
+    public final RMap<String, EditableAnimConf> animations = RMap.create();
 
     @Override public String name () { return name.get(); }
 
-    @Override public EditableLayerAnimation animation (String name) { return animations.get(name); }
+    @Override public EditableAnimConf animation (String name) { return animations.get(name); }
 
     @Override public void build (GroupLayer parent, List<String> animationNames,
         Multimap<String, Animatable> animations) {

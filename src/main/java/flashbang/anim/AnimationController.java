@@ -16,9 +16,9 @@ import react.Value;
 import react.ValueView;
 
 import flashbang.anim.rsrc.Animatable;
-import flashbang.anim.rsrc.Keyframe;
+import flashbang.anim.rsrc.KeyframeConf;
 import flashbang.anim.rsrc.KeyframeType;
-import flashbang.anim.rsrc.LayerAnimation;
+import flashbang.anim.rsrc.AnimConf;
 
 public class AnimationController
 {
@@ -105,9 +105,9 @@ public class AnimationController
     protected float _playTime;
 
     protected static class LayerState {
-        public final LayerAnimation desc;
+        public final AnimConf desc;
         public final Layer layer;
-        public final Keyframe[] prev = new Keyframe[KeyframeType.values().length];
+        public final KeyframeConf[] prev = new KeyframeConf[KeyframeType.values().length];
 
         public LayerState (Animatable anim) {
             desc = anim.animation;
@@ -121,7 +121,7 @@ public class AnimationController
             }
         }
 
-        public Keyframe find (KeyframeType kt, int frame) {
+        public KeyframeConf find (KeyframeType kt, int frame) {
             prev[kt.ordinal()] = prev[kt.ordinal()].find(frame);
             return prev[kt.ordinal()];
         }

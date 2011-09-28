@@ -15,7 +15,7 @@ import react.Value;
 
 import flashbang.rsrc.ImageResource;
 
-public class EditableModelImageLayer extends EditableModelLayer implements ModelImageLayer
+public class EditableMovieImageLayerConf extends EditableMovieLayerConf implements MovieImageLayerConf
 {
     public final Value<String> imagePath = Value.create(null);
 

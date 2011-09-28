@@ -12,10 +12,10 @@ import com.google.common.collect.Multimap;
 import playn.core.GroupLayer;
 import playn.core.Layer;
 
-public interface ModelLayer
+public interface MovieLayerConf
 {
     void build (GroupLayer parent, List<String> animationNames,
         Multimap<String, Animatable> animations);
     String name ();
-    LayerAnimation animation (String name);
+    AnimConf animation (String name);
 }

@@ -5,12 +5,9 @@
 
 package flashbang.anim.rsrc;
 
-import java.util.Map;
+import java.util.List;
 
-public interface LayerAnimation
+public interface MovieGroupLayerConf extends MovieLayerConf
 {
-    Map<KeyframeType, ? extends Keyframe> keyframes ();
-
-    /** Returns the number of frames in the animation.*/
-    int frames();
+    List<MovieLayerConf> children ();
 }

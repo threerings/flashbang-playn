@@ -7,7 +7,7 @@ package flashbang.anim.rsrc;
 
 import tripleplay.util.Interpolator;
 
-public interface Keyframe
+public interface KeyframeConf
 {
     /**
      * Returns the start frame for this keyframe. The keyframe is active until the start frame of
@@ -22,13 +22,13 @@ public interface Keyframe
     Interpolator interpolator();
 
     /** Returns the keyframe after this one, or null if this is the last keyframe.  */
-    Keyframe next();
+    KeyframeConf next();
 
     /**
      * Finds the appropriate frame to interpolate the given frame if it's at or after this frame.
      * If the frame is before this one, the behavior is undefined.
      */
-    Keyframe find (int frame);
+    KeyframeConf find (int frame);
 
     /**
      * Interpolates the value for this keyframe for the given frame. If the given frame isn't
