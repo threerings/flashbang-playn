@@ -10,21 +10,21 @@ import java.util.Map;
 import react.RMap;
 import react.Value;
 
-public class EditableLayerAnimation implements LayerAnimation
+public class EditableAnimConf implements AnimConf
 {
-    public final RMap<KeyframeType, EditableKeyframe> keyframes = RMap.create();
+    public final RMap<KeyframeType, EditableKeyframeConf> keyframes = RMap.create();
 
-    public EditableLayerAnimation () {
+    public EditableAnimConf () {
         for (KeyframeType kt : KeyframeType.values()) {
-            keyframes.put(kt, new EditableKeyframe(0, kt.defaultValue, null));
+            keyframes.put(kt, new EditableKeyframeConf(0, kt.defaultValue, null));
         }
     }
 
-    @Override public Map<KeyframeType, EditableKeyframe> keyframes () { return keyframes; }
+    @Override public Map<KeyframeType, EditableKeyframeConf> keyframes () { return keyframes; }
 
     @Override public int frames () {
         int max = 1;
-        for (Keyframe kf : keyframes.values()) {
+        for (KeyframeConf kf : keyframes.values()) {
             while (kf.next() != null) { kf = kf.next(); }
             max = Math.max(kf.frame(), max);
         }
@@ -32,16 +32,16 @@ public class EditableLayerAnimation implements LayerAnimation
     }
 
     public void add (KeyframeType kt, int frame, float value) {
-        EditableKeyframe kf = keyframes.get(kt);
+        EditableKeyframeConf kf = keyframes.get(kt);
         while (kf.next() != null && kf.frame() < frame) { kf = kf.next.get(); }
         if (kf.frame() != frame) {
-            kf.next.update(new EditableKeyframe(frame, value, kf.next.get()));
+            kf.next.update(new EditableKeyframeConf(frame, value, kf.next.get()));
         } else {
             kf.value.update(value);
         }
     }
 
     @Override public String toString () {
-        return "EditableLayerAnimation [keyframes=" + keyframes + "]";
+        return "EditableAnimConf [keyframes=" + keyframes + "]";
     }
 }

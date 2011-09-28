@@ -5,16 +5,15 @@
 
 package flashbang.anim.rsrc;
 
+import java.util.List;
+
 import playn.core.Layer;
 
-public class Animatable
+import flashbang.anim.Movie;
+import flashbang.rsrc.Resource;
+
+public interface MovieConf
 {
-    public final Layer layer;
-    public final AnimConf animation;
-
-    public Animatable (Layer layer, AnimConf animation) {
-        this.layer = layer;
-        this.animation = animation;
-    }
+    List<? extends MovieLayerConf> children ();
+    Movie build ();
 }
-

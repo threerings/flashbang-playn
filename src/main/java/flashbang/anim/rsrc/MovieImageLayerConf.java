@@ -5,9 +5,7 @@
 
 package flashbang.anim.rsrc;
 
-import java.util.List;
-
-public interface ModelGroupLayer extends ModelLayer
+public interface MovieImageLayerConf extends MovieLayerConf
 {
-    List<ModelLayer> children ();
+    String imagePath ();
 }

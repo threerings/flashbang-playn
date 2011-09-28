@@ -13,9 +13,9 @@ import playn.core.Layer;
 import flashbang.SceneObject;
 import flashbang.anim.rsrc.Animatable;
 
-public class Model extends SceneObject
+public class Movie extends SceneObject
 {
-    public Model (GroupLayer root, Multimap<String, Animatable> animations)
+    public Movie (GroupLayer root, Multimap<String, Animatable> animations)
     {
         _root = root;
         _animations = animations;

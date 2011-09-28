@@ -17,25 +17,25 @@ import playn.core.PlayN;
 import react.RList;
 import react.Value;
 
-import flashbang.anim.Model;
+import flashbang.anim.Movie;
 
-public class EditableModelResource implements ModelResource
+public class EditableMovieConf implements MovieConf
 {
-    public final RList<EditableModelLayer> children = RList.create();
+    public final RList<EditableMovieLayerConf> children = RList.create();
 
     // TODO - listen for add and remove to update children
     public final RList<String> animations = RList.create();
 
     public final Value<String> animation = Value.create(null);
 
-    @Override public List<EditableModelLayer> children () { return children; }
+    @Override public List<EditableMovieLayerConf> children () { return children; }
 
-    @Override public Model build () {
+    @Override public Movie build () {
         GroupLayer root = PlayN.graphics().createGroupLayer();
         Multimap<String, Animatable> animations = ArrayListMultimap.create();
-        for (ModelLayer child : children) {
+        for (MovieLayerConf child : children) {
             child.build(root, this.animations, animations);
         }
-        return new Model(root, animations);
+        return new Movie(root, animations);
     }
 }

@@ -5,15 +5,12 @@
 
 package flashbang.anim.rsrc;
 
-import java.util.List;
+import java.util.Map;
 
-import playn.core.Layer;
-
-import flashbang.anim.Model;
-import flashbang.rsrc.Resource;
-
-public interface ModelResource
+public interface AnimConf
 {
-    List<? extends ModelLayer> children ();
-    Model build ();
+    Map<KeyframeType, ? extends KeyframeConf> keyframes ();
+
+    /** Returns the number of frames in the animation.*/
+    int frames();
 }

@@ -31,9 +31,9 @@ public class PlayAnimTask extends ObjectTask
     @Override
     public void init (GameObject target)
     {
-        Preconditions.checkArgument(target instanceof Model,
-            "PlayAnimTask must be applied to Model");
-        _obj = (Model) target;
+        Preconditions.checkArgument(target instanceof Movie,
+            "PlayAnimTask must be applied to Movie");
+        _obj = (Movie) target;
     }
 
     @Override
@@ -56,6 +56,6 @@ public class PlayAnimTask extends ObjectTask
 
     protected final String _name;
     protected final Completion _completion;
-    protected Model _obj;
+    protected Movie _obj;
     protected AnimationController _animator;
 }
