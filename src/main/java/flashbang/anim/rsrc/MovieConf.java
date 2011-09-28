@@ -10,7 +10,6 @@ import java.util.List;
 import playn.core.Layer;
 
 import flashbang.anim.Movie;
-import flashbang.rsrc.Resource;
 
 public interface MovieConf
 {

@@ -39,13 +39,13 @@ public class PlayAnimTask extends ObjectTask
     @Override
     public boolean update (float dt)
     {
-        if (_animator == null) {
-            _animator = _obj.play(_name);
-            Preconditions.checkNotNull(_animator, "No such animation [name=%s]", _name);
+        if (!_started) {
+            _started = true;
+            _obj.play(_name);
         }
 
         // Complete when we get to the last frame
-        return _animator.frame() == _animator.frames() - 1;
+        return _obj.frame() == _obj.frames() - 1;
     }
 
     @Override
@@ -57,5 +57,5 @@ public class PlayAnimTask extends ObjectTask
     protected final String _name;
     protected final Completion _completion;
     protected Movie _obj;
-    protected AnimationController _animator;
+    protected boolean _started;
 }
