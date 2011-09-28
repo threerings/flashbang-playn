@@ -9,11 +9,10 @@ import java.util.List;
 
 import com.google.common.collect.Multimap;
 
-import playn.core.GroupLayer;
-import playn.core.Layer;
-
 import react.RMap;
 import react.Value;
+
+import playn.core.Layer;
 
 public abstract class EditableMovieLayerConf implements MovieLayerConf
 {
@@ -25,15 +24,10 @@ public abstract class EditableMovieLayerConf implements MovieLayerConf
 
     @Override public EditableAnimConf animation (String name) { return animations.get(name); }
 
-    @Override public void build (GroupLayer parent, List<String> animationNames,
-        Multimap<String, Animatable> animations) {
-        Layer layer = createLayer();
-        parent.add(layer);
-        for (String animName : animationNames) {
-            animations.put(animName, new Animatable(layer, animation(animName)));
+    protected Layer add (Layer layer, List<String> names, Multimap<String, Animatable> animations) {
+        for (String name : names) {
+            animations.put(name, new Animatable(layer, animation(name)));
         }
+        return layer;
     }
-
-    protected abstract Layer createLayer ();
-
 }
