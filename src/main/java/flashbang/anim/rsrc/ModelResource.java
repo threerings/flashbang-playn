@@ -29,7 +29,7 @@ public class ModelResource extends Resource
     public static final ResourceFactory FACTORY = new ResourceFactory() {
         @Override public Resource create (String name, Json.Object json) {
             RList<LayerDesc> layers = RList.create();
-            for (Json.Object jsonLayer : json.getObjectArray("layers")) {
+            for (Json.Object jsonLayer : json.getArray("layers", Json.Object.class)) {
                 layers.add(LayerDesc.create(jsonLayer));
             }
 

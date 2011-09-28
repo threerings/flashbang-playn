@@ -27,7 +27,7 @@ public class LayerAnimDesc
     {
         layerSelector = json.getString("layerSelector");
 
-        for (Json.Object jsonKeyframe : json.getObjectArray("keyframes")) {
+        for (Json.Object jsonKeyframe : json.getArray("keyframes", Json.Object.class)) {
             KeyframeDesc kf = new KeyframeDesc();
             kf.fromJson(jsonKeyframe);
             keyframes.add(kf);
