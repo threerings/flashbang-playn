@@ -10,6 +10,8 @@ import java.util.Map;
 import react.RMap;
 import react.Value;
 
+import playn.core.Json;
+
 public class EditableAnimConf implements AnimConf
 {
     public final RMap<KeyframeType, EditableKeyframeConf> keyframes = RMap.create();
@@ -17,6 +19,17 @@ public class EditableAnimConf implements AnimConf
     public EditableAnimConf () {
         for (KeyframeType kt : KeyframeType.values()) {
             keyframes.put(kt, new EditableKeyframeConf(0, kt.defaultValue, null));
+        }
+    }
+
+    public EditableAnimConf (Json.Object obj) {
+        this();// Fill in the defaults. They'll be repaced if there's a frame 0 keyframe
+        Json.Object keyframes = obj.getObject("keyframes");
+        for (String type : keyframes.getKeys()) {
+            KeyframeType kt = KeyframeType.valueOf(type);
+            for (Json.Object kfObj : keyframes.getArray(type, Json.Object.class)) {
+                add(kt, kfObj.getInt("frame"), (float)kfObj.getNumber("value"));
+            }
         }
     }
 

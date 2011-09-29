@@ -10,12 +10,12 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
+import pythagoras.f.Rectangle;
+
 import playn.core.Image;
 import playn.core.Json;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
-
-import pythagoras.f.Rectangle;
 
 import tripleplay.util.JsonUtil;
 
