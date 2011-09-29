@@ -9,9 +9,8 @@ import java.util.List;
 
 import com.google.common.collect.Multimap;
 
-import react.Value;
-
 import playn.core.ImageLayer;
+import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
 
@@ -19,13 +18,15 @@ import flashbang.rsrc.ImageResource;
 
 public class EditableMovieImageLayerConf extends EditableMovieLayerConf implements MovieImageLayerConf
 {
-    public final Value<String> imagePath = Value.create(null);
+    public EditableMovieImageLayerConf () {}
 
-    @Override public String imagePath () { return imagePath.get(); }
+    public EditableMovieImageLayerConf (Json.Object obj) {
+        super(obj);
+    }
 
     @Override public Layer build (List<String> names, Multimap<String, Animatable> animations) {
         if (_imageRsrc == null) {
-            _imageRsrc = ImageResource.require(imagePath());
+            _imageRsrc = ImageResource.require(name());
         }
         return add(PlayN.graphics().createImageLayer(_imageRsrc.image()), names, animations);
     }

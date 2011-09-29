@@ -16,6 +16,7 @@ import react.UnitSignal;
 import react.Value;
 
 import playn.core.GroupLayer;
+import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
 
@@ -31,6 +32,15 @@ public class EditableMovieConf implements MovieConf
     public final RList<String> animations = RList.create(Lists.newArrayList(DEFAULT_ANIMATION));
 
     public final Value<String> animation = Value.create(DEFAULT_ANIMATION);
+
+    public EditableMovieConf () {
+        root.children.connect(_treeListener);
+    }
+
+    public EditableMovieConf (Json.Object obj) {
+        this();
+        root.addChildren(obj);
+    }
 
     public void add (EditableMovieGroupLayerConf parent, EditableMovieLayerConf child) {
         add(parent, child, -1);
@@ -86,5 +96,4 @@ public class EditableMovieConf implements MovieConf
                 treeChanged.emit();
             }
         };
-    { root.children.connect(_treeListener); }
 }

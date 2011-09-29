@@ -10,12 +10,12 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
+import pythagoras.f.Rectangle;
+
 import playn.core.Image;
 import playn.core.Json;
 import playn.core.PlayN;
 import playn.core.ResourceCallback;
-
-import pythagoras.f.Rectangle;
 
 import tripleplay.util.JsonUtil;
 
@@ -30,7 +30,7 @@ public class ImageResource extends Resource
             List<Rectangle> frameRects = null;
             if (json.getObject("frameRects") != null) {
                 frameRects = Lists.newArrayList();
-                for (Json.Object jsonRect : json.getObjectArray("frameRects")) {
+                for (Json.Object jsonRect : json.getArray("frameRects", Json.Object.class)) {
                     Rectangle r = new Rectangle();
                     r.x = JsonUtil.requireFloat(jsonRect, "x");
                     r.y = JsonUtil.requireFloat(jsonRect, "y");

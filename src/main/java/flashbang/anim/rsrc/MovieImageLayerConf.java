@@ -7,5 +7,4 @@ package flashbang.anim.rsrc;
 
 public interface MovieImageLayerConf extends MovieLayerConf
 {
-    String imagePath ();
 }

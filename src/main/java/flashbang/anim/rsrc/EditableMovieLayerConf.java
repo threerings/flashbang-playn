@@ -12,6 +12,7 @@ import com.google.common.collect.Multimap;
 import react.RMap;
 import react.Value;
 
+import playn.core.Json;
 import playn.core.Layer;
 
 public abstract class EditableMovieLayerConf implements MovieLayerConf
@@ -19,6 +20,16 @@ public abstract class EditableMovieLayerConf implements MovieLayerConf
     public final Value<String> name = Value.create(null);
 
     public final RMap<String, EditableAnimConf> animations = RMap.create();
+
+    public EditableMovieLayerConf () {}
+
+    public EditableMovieLayerConf (Json.Object obj) {
+        name.update(obj.getString("name"));
+        Json.Object anims = obj.getObject("animations", null);
+        for (String key : anims.getKeys()) {
+            animations.put(key, new EditableAnimConf(anims.getObject(key)));
+        }
+    }
 
     @Override public String name () { return name.get(); }
 
