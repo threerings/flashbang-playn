@@ -28,6 +28,11 @@ public class Model extends SceneObject
         }
     }
 
+    public Model (String rsrcName)
+    {
+        this(ModelResource.require(rsrcName));
+    }
+
     public Layer getLayer (String selector)
     {
         return _layerLookup.get(selector);
