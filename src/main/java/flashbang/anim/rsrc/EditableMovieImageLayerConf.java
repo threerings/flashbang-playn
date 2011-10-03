@@ -31,5 +31,9 @@ public class EditableMovieImageLayerConf extends EditableMovieLayerConf implemen
         return add(PlayN.graphics().createImageLayer(_imageRsrc.image()), names, animations);
     }
 
+    @Override protected void writeType (Json.Writer writer) {
+        writer.key("type").value("Image");
+    }
+
     protected ImageResource _imageRsrc;
 }

@@ -9,12 +9,12 @@ import java.util.List;
 
 import com.google.common.collect.Multimap;
 
-import react.RList;
-
 import playn.core.GroupLayer;
 import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
+
+import react.RList;
 
 public class EditableMovieGroupLayerConf extends EditableMovieLayerConf
     implements MovieGroupLayerConf
@@ -48,5 +48,18 @@ public class EditableMovieGroupLayerConf extends EditableMovieLayerConf
             layer.add(child.build(names, animations));
         }
         return add(layer, names, animations);
+    }
+
+    @Override protected void writeType (Json.Writer writer) {
+        writer.key("type").value("Group");
+        writeChildren(writer);
+    }
+
+    protected void writeChildren (Json.Writer writer) {
+        writer.key("children").array();
+        for (EditableMovieLayerConf child : children) {
+            child.write(writer);
+        }
+        writer.endArray();
     }
 }
