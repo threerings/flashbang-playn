@@ -11,14 +11,14 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
-import react.RList;
-import react.UnitSignal;
-import react.Value;
-
 import playn.core.GroupLayer;
 import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
+
+import react.RList;
+import react.UnitSignal;
+import react.Value;
 
 import flashbang.anim.Movie;
 
@@ -78,6 +78,12 @@ public class EditableMovieConf implements MovieConf
             root.add(child.build(this.animations, animations));
         }
         return new Movie(root, animations);
+    }
+
+    public void write (Json.Writer writer) {
+       writer.object().key("name").value(root.name.get());
+       root.writeChildren(writer);
+       writer.endObject();
     }
 
     protected final RList.Listener<EditableMovieLayerConf> _treeListener =
