@@ -26,7 +26,7 @@ public abstract class EditableMovieLayerConf implements MovieLayerConf
 
     public EditableMovieLayerConf (Json.Object obj) {
         name.update(obj.getString("name"));
-        Json.Object anims = obj.getObject("animations", null);
+        Json.Object anims = obj.getObject("animations");
         for (String key : anims.getKeys()) {
             animations.put(key, new EditableAnimConf(anims.getObject(key)));
         }
