@@ -58,8 +58,9 @@ public class EditableAnimConf implements AnimConf
         writer.object().key("keyframes").object();
         for (Map.Entry<KeyframeType, EditableKeyframeConf> entry : keyframes.entrySet()) {
             EditableKeyframeConf kf = entry.getValue();
-            if (kf.next() == null && kf.value() == entry.getKey().defaultValue && kf.frame() == 0) continue;
-            writer.key(entry.getKey().name()).array();
+            KeyframeType kt = entry.getKey();
+            if (kf.next() == null && kf.value() == kt.defaultValue && kf.frame() == 0) continue;
+            writer.key(kt.name()).array();
             for (; kf != null; kf = kf.next.get()) {
                 writer.object().
                     key("frame").value(kf.frame()).
