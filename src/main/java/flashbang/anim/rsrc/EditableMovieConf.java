@@ -5,6 +5,7 @@
 
 package flashbang.anim.rsrc;
 
+import playn.core.PlayN;
 import java.util.List;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -78,6 +79,12 @@ public class EditableMovieConf implements MovieConf
             root.add(child.build(this.animations, animations));
         }
         return new Movie(root, animations);
+    }
+
+    public String write () {
+        Json.Writer writer = PlayN.json().newWriter().object().key("movies").array();
+        write(writer);
+        return writer.endArray().endObject().write();
     }
 
     public void write (Json.Writer writer) {
