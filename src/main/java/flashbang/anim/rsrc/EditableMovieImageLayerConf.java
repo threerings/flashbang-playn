@@ -18,7 +18,9 @@ import flashbang.rsrc.ImageResource;
 
 public class EditableMovieImageLayerConf extends EditableMovieLayerConf implements MovieImageLayerConf
 {
-    public EditableMovieImageLayerConf () {}
+    public EditableMovieImageLayerConf (String name) {
+        this.name.update(name);
+    }
 
     public EditableMovieImageLayerConf (Json.Object obj) {
         super(obj);
