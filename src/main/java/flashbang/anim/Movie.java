@@ -6,14 +6,16 @@
 package flashbang.anim;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import playn.core.GroupLayer;
+import playn.core.Layer;
+
 import react.Value;
 import react.ValueView;
-
-import playn.core.Layer;
 
 import flashbang.SceneObject;
 import flashbang.anim.rsrc.AnimConf;
@@ -24,9 +26,11 @@ import flashbang.anim.rsrc.MovieConf;
 
 public class Movie extends SceneObject
 {
-    public Movie (Layer root, Multimap<String, Animatable> animations) {
+    public Movie (Layer root, Map<String, GroupLayer> exports,
+        Multimap<String, Animatable> animations) {
         _root = root;
         _animations = animations;
+        _exports = exports;
         play(MovieConf.DEFAULT_ANIMATION);
     }
 
@@ -42,6 +46,8 @@ public class Movie extends SceneObject
         draw(frame);
         _frame.update(frame);
     }
+
+    public GroupLayer getLayer (String name) { return _exports.get(name); }
 
     public boolean stopped () { return _stopped; }
 
@@ -115,6 +121,7 @@ public class Movie extends SceneObject
     protected final List<LayerState> _layers = Lists.newArrayList();
     protected final Value<Integer> _frame = Value.create(0);
     protected final Multimap<String, Animatable> _animations;
+    protected final Map<String, GroupLayer> _exports;
     protected final Layer _root;
 
     protected static class LayerState {

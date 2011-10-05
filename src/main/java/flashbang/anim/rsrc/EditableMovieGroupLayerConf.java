@@ -6,6 +6,7 @@
 package flashbang.anim.rsrc;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.collect.Multimap;
 
@@ -42,10 +43,12 @@ public class EditableMovieGroupLayerConf extends EditableMovieLayerConf
 
     public List<EditableMovieLayerConf> children () { return children; }
 
-    @Override public Layer build (List<String> names, Multimap<String, Animatable> animations) {
+    @Override public Layer build (List<String> names, Map<String, GroupLayer> exports,
+        Multimap<String, Animatable> animations) {
         GroupLayer layer = PlayN.graphics().createGroupLayer();
+        exports.put(name.get(), layer);
         for (EditableMovieLayerConf child : children) {
-            layer.add(child.build(names, animations));
+            layer.add(child.build(names, exports, animations));
         }
         return add(layer, names, animations);
     }

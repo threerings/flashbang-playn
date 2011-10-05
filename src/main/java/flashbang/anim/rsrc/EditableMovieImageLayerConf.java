@@ -6,9 +6,11 @@
 package flashbang.anim.rsrc;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.collect.Multimap;
 
+import playn.core.GroupLayer;
 import playn.core.ImageLayer;
 import playn.core.Json;
 import playn.core.Layer;
@@ -26,7 +28,8 @@ public class EditableMovieImageLayerConf extends EditableMovieLayerConf implemen
         super(obj);
     }
 
-    @Override public Layer build (List<String> names, Multimap<String, Animatable> animations) {
+    @Override public Layer build (List<String> names, Map<String, GroupLayer> exports,
+        Multimap<String, Animatable> animations) {
         if (_imageRsrc == null) {
             _imageRsrc = ImageResource.require(name());
         }

@@ -5,11 +5,12 @@
 
 package flashbang.anim.rsrc;
 
-import playn.core.PlayN;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 
 import playn.core.GroupLayer;
@@ -75,10 +76,11 @@ public class EditableMovieConf implements MovieConf
     @Override public Movie build () {
         GroupLayer root = PlayN.graphics().createGroupLayer();
         Multimap<String, Animatable> animations = ArrayListMultimap.create();
+        Map<String, GroupLayer> exports = Maps.newHashMap();
         for (MovieLayerConf child : this.root.children) {
-            root.add(child.build(this.animations, animations));
+            root.add(child.build(this.animations, exports, animations));
         }
-        return new Movie(root, animations);
+        return new Movie(root, exports, animations);
     }
 
     public String write () {
