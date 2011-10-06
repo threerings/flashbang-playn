@@ -5,11 +5,13 @@
 
 package flashbang.anim.rsrc;
 
-import flashbang.anim.rsrc.EditableMovieConf;
 import com.google.common.base.Preconditions;
+
 import playn.core.Json;
-import flashbang.anim.Movie;
+
 import flashbang.Flashbang;
+import flashbang.anim.Movie;
+import flashbang.anim.rsrc.EditableMovieConf;
 import flashbang.rsrc.Resource;
 import flashbang.rsrc.ResourceFactory;
 
@@ -19,7 +21,7 @@ public class MovieResource extends Resource
 
     public static final ResourceFactory FACTORY = new ResourceFactory() {
         @Override public Resource create (String name, Json.Object json) {
-            Json.TypedArray<Json.Object> movie = json.getArray(name, Json.Object.class);
+            Json.TypedArray<Json.Object> movie = json.getArray("children", Json.Object.class);
             return new MovieResource(name, new EditableMovieConf(movie));
         }
     };

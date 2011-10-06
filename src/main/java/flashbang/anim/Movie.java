@@ -91,7 +91,8 @@ public class Movie extends SceneObject
             }
         }
 
-        float x = 0, y = 0, xScale = 1, yScale = 1, rotation = 0, alpha = 1;
+        float x = 0, y = 0, xScale = 1, yScale = 1, xOrigin = 0, yOrigin = 1, rotation = 0,
+              alpha = 1;
         // Update our layers
         for (LayerState state : _layers) {
             for (KeyframeType kt : KeyframeType.values()) {
@@ -102,6 +103,8 @@ public class Movie extends SceneObject
                     case Y_LOCATION: y = interped; break;
                     case X_SCALE:    xScale = interped; break;
                     case Y_SCALE:    yScale = interped; break;
+                    case X_ORIGIN:   xOrigin = interped; break;
+                    case Y_ORIGIN:   yOrigin = interped; break;
                     case ROTATION:   rotation = interped; break;
                     case ALPHA:      alpha = interped; break;
                 }
@@ -109,6 +112,7 @@ public class Movie extends SceneObject
             Layer layer = state.layer;
             layer.setTranslation(x, y);
             layer.setScale(xScale, yScale);
+            layer.setOrigin(xOrigin, yOrigin);
             layer.setRotation(rotation);
             layer.setAlpha(alpha);
         }
