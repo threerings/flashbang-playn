@@ -15,8 +15,7 @@ import flashbang.Flashbang;
 
 public class JsonResource extends Resource
 {
-    public static JsonResource require (String name)
-    {
+    public static JsonResource require (String name) {
         Resource rsrc = Flashbang.rsrcs().requireResource(name);
         Preconditions.checkState(rsrc instanceof JsonResource,
             "Not a JsonResource [name=%s]", name);
@@ -35,12 +34,10 @@ public class JsonResource extends Resource
                 _json = PlayN.json().parse(text);
                 loadComplete(null);
             }
-
             @Override public void error (Throwable err) {
                 loadComplete(err);
             }
         });
-
     }
 
     protected Json.Object _json;

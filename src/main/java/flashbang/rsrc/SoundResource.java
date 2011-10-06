@@ -22,31 +22,24 @@ public class SoundResource extends Resource
         }
     };
 
-    public static SoundResource require (String name)
-    {
+    public static SoundResource require (String name) {
         Resource rsrc = Flashbang.rsrcs().requireResource(name);
         Preconditions.checkState(rsrc instanceof SoundResource,
             "Not a SoundResource [name=%s]", name);
         return (SoundResource) rsrc;
     }
 
-    public SoundResource (String path)
-    {
+    public SoundResource (String path) {
         super(path);
     }
 
-    @Override
-    protected void doLoad ()
-    {
+    @Override protected void doLoad () {
         _sound = PlayN.assetManager().getSound(name);
         // sounds currently load immediately
         loadComplete(null);
     }
 
-    public Sound sound ()
-    {
-        return _sound;
-    }
+    public Sound sound () { return _sound; }
 
     protected Sound _sound;
 }

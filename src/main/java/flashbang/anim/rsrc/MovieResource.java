@@ -38,7 +38,6 @@ public class MovieResource extends Resource
     }
 
     @Override protected void doLoad () {
-        // nothing more to load
         loadComplete(null);
     }
 

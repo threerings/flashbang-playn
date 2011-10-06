@@ -43,8 +43,7 @@ public class ImageResource extends Resource
         }
     };
 
-    public static ImageResource require (String name)
-    {
+    public static ImageResource require (String name) {
         Resource rsrc = Flashbang.rsrcs().requireResource(name);
         Preconditions.checkState(rsrc instanceof ImageResource,
             "Not an ImageResource [name=%s]", name);
@@ -53,20 +52,16 @@ public class ImageResource extends Resource
 
     public final List<Rectangle> frameRects;
 
-    public ImageResource (String path, List<Rectangle> frameRects)
-    {
+    public ImageResource (String path, List<Rectangle> frameRects) {
         super(path);
         this.frameRects = frameRects;
     }
 
-    public ImageResource (String path)
-    {
+    public ImageResource (String path) {
         this(path, null);
     }
 
-    @Override
-    protected void doLoad ()
-    {
+    @Override protected void doLoad () {
         PlayN.assetManager().getImage(name).addCallback(new ResourceCallback<Image>() {
             @Override public void done (Image rsrc) {
                 _image = rsrc;
@@ -78,10 +73,7 @@ public class ImageResource extends Resource
         });
     }
 
-    public Image image ()
-    {
-        return _image;
-    }
+    public Image image () { return _image; }
 
     protected Image _image;
 }

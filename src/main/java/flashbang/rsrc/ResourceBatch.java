@@ -19,13 +19,11 @@ import flashbang.util.LoadableBatch;
  */
 public class ResourceBatch extends Loadable
 {
-    public ResourceBatch (String group)
-    {
+    public ResourceBatch (String group) {
         _group = group;
     }
 
-    public void add (Resource rsrc)
-    {
+    public void add (Resource rsrc) {
         Preconditions.checkState(rsrc._group == null,
             "Resource already belongs to a group [rsrc=%s]", rsrc);
         Preconditions.checkState(_state == State.NOT_LOADED,
@@ -34,14 +32,11 @@ public class ResourceBatch extends Loadable
         addInternal(rsrc);
     }
 
-    public boolean contains (String name)
-    {
+    public boolean contains (String name) {
         return _resources.containsKey(name);
     }
 
-    @Override
-    protected void doLoad ()
-    {
+    @Override protected void doLoad () {
         LoadableBatch batch = new LoadableBatch();
         for (Resource rsrc : _resources.values()) {
             batch.add(rsrc);
@@ -56,9 +51,7 @@ public class ResourceBatch extends Loadable
         });
     }
 
-    @Override
-    protected void loadComplete (Throwable err)
-    {
+    @Override protected void loadComplete (Throwable err) {
         if (err == null) {
             try {
                 Flashbang.rsrcs().add(_resources.values());
@@ -70,14 +63,12 @@ public class ResourceBatch extends Loadable
         super.loadComplete(err);
     }
 
-    protected void addInternal (Resource rsrc)
-    {
-        Resource old = _resources.put(rsrc.name, rsrc);
-        rsrc._group = _group;
-        Preconditions.checkState(old == null,
+    protected void addInternal (Resource rsrc) {
+        Preconditions.checkState(_resources.put(rsrc.name, rsrc) == null,
             "A resource with that name is already queued [name=%s]", rsrc.name);
+        rsrc._group = _group;
     }
 
     protected final String _group;
-    protected Map<String, Resource> _resources = Maps.newHashMap();
+    protected final Map<String, Resource> _resources = Maps.newHashMap();
 }

@@ -15,28 +15,24 @@ import flashbang.util.Loadable;
 
 public class ResourceManager
 {
-    public Resource getResource (String name)
-    {
+    public Resource getResource (String name) {
         return _resources.get(name);
     }
 
-    public Resource requireResource (String name)
-    {
+    public Resource requireResource (String name) {
         Resource rsrc = _resources.get(name);
         Preconditions.checkNotNull(rsrc, "No such resource [name=%s]", name);
         return rsrc;
     }
 
-    public boolean isLoaded (String name)
-    {
+    public boolean isLoaded (String name) {
         return (getResource(name) != null);
     }
 
     /**
      * Convenience function to load a set of resources from a JSON file
      */
-    public void loadResourceFile (String filename, Loadable.Callback callback)
-    {
+    public void loadResourceFile (String filename, Loadable.Callback callback) {
         ResourceFile batch = new ResourceFile(filename);
         batch.load(callback);
     }
@@ -44,8 +40,7 @@ public class ResourceManager
     /**
      * Unloads all Resources that belong to the specified group
      */
-    public void unload (String group)
-    {
+    public void unload (String group) {
         for (Resource rsrc : Lists.newArrayList(_resources.values())) {
             if (rsrc.group().equals(group)) {
                 _resources.remove(rsrc.name);
@@ -56,23 +51,19 @@ public class ResourceManager
     /**
      * Unloads all Resources
      */
-    public void unloadAll ()
-    {
+    public void unloadAll () {
         _resources.clear();
     }
 
-    public void registerFactory (String type, ResourceFactory factory)
-    {
+    public void registerFactory (String type, ResourceFactory factory) {
         _factories.put(type, factory);
     }
 
-    public ResourceFactory getFactory (String type)
-    {
+    public ResourceFactory getFactory (String type) {
         return _factories.get(type);
     }
 
-    void add (Resource rsrc)
-    {
+    void add (Resource rsrc) {
         Preconditions.checkNotNull(rsrc._group,
             "Resource doesn't belong to a group [rsrc=%s]", rsrc);
         Preconditions.checkState(rsrc.state() == Loadable.State.LOADED, "Resource must be loaded");
@@ -81,13 +72,12 @@ public class ResourceManager
             "A resource with that name already exists [name=%s]", rsrc.name);
     }
 
-    void add (Iterable<Resource> rsrcs)
-    {
+    void add (Iterable<Resource> rsrcs) {
         for (Resource rsrc : rsrcs) {
             add(rsrc);
         }
     }
 
-    protected Map<String, ResourceFactory> _factories = Maps.newHashMap();
-    protected Map<String, Resource> _resources = Maps.newHashMap();
+    protected final Map<String, ResourceFactory> _factories = Maps.newHashMap();
+    protected final Map<String, Resource> _resources = Maps.newHashMap();
 }

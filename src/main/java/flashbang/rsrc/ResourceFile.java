@@ -20,20 +20,16 @@ import flashbang.Flashbang;
  */
 public class ResourceFile extends ResourceBatch
 {
-    public ResourceFile (String filename, String group)
-    {
+    public ResourceFile (String filename, String group) {
         super(group);
         _filename = filename;
     }
 
-    public ResourceFile (String filename)
-    {
+    public ResourceFile (String filename) {
         this(filename, filename);
     }
 
-    @Override
-    public void doLoad ()
-    {
+    @Override public void doLoad () {
         // First, load the file
         PlayN.assetManager().getText(_filename, new ResourceCallback<String>() {
             @Override public void done (String text) {
