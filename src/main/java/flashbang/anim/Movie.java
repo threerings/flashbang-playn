@@ -26,7 +26,7 @@ import flashbang.anim.rsrc.MovieConf;
 
 public class Movie extends SceneObject
 {
-    public Movie (Layer root, Map<String, GroupLayer> exports,
+    public Movie (GroupLayer root, Map<String, GroupLayer> exports,
         Multimap<String, Animatable> animations) {
         _root = root;
         _animations = animations;
@@ -55,7 +55,7 @@ public class Movie extends SceneObject
 
     public float framerate () { return 30; }
 
-    @Override public Layer layer () { return _root; }
+    @Override public GroupLayer layer () { return _root; }
 
     public void play (String name) {
         _stopped = false;
@@ -122,7 +122,7 @@ public class Movie extends SceneObject
     protected final Value<Integer> _frame = Value.create(0);
     protected final Multimap<String, Animatable> _animations;
     protected final Map<String, GroupLayer> _exports;
-    protected final Layer _root;
+    protected final GroupLayer _root;
 
     protected static class LayerState {
         public final AnimConf desc;
