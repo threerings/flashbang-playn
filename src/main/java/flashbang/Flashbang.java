@@ -30,16 +30,22 @@ public class Flashbang
     }
 
     /**
+     * @return the currently-active AppMode (or null if no AppMode is active)
+     */
+    public static AppMode mode ()
+    {
+        return (_ctxGameObjectDatabase instanceof AppMode ? (AppMode) _ctxGameObjectDatabase :
+            null);
+    }
+
+    /**
      * @return the currently-active Viewport (the viewport that's attached to the current
      * AppMode), or null if no AppMode is active.
      */
     public static Viewport viewport ()
     {
-        if (_ctxGameObjectDatabase == null || !(_ctxGameObjectDatabase instanceof AppMode)) {
-            return null;
-        } else {
-            return ((AppMode) _ctxGameObjectDatabase)._viewport;
-        }
+        AppMode mode = mode();
+        return (mode != null ? mode._viewport : null);
     }
 
     /**
