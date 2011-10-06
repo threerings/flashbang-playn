@@ -24,11 +24,11 @@ public class EditableMovieGroupLayerConf extends EditableMovieLayerConf
 
     public EditableMovieGroupLayerConf (Json.Object obj) {
         super(obj);
-        addChildren(obj);
+        addChildren(obj.getArray("children", Json.Object.class));
     }
 
-    protected void addChildren(Json.Object obj) {
-        for (Json.Object child : obj.getArray("children", Json.Object.class)) {
+    protected void addChildren(Json.TypedArray<Json.Object> kids) {
+        for (Json.Object child : kids) {
             if (child.getString("type").equals("Group")) {
                 children.add(new EditableMovieGroupLayerConf(child));
             } else {

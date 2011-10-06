@@ -39,9 +39,9 @@ public class EditableMovieConf implements MovieConf
         root.children.connect(_treeListener);
     }
 
-    public EditableMovieConf (Json.Object obj) {
+    public EditableMovieConf (Json.TypedArray<Json.Object> children) {
         this();
-        root.addChildren(obj);
+        root.addChildren(children);
     }
 
     public void add (EditableMovieGroupLayerConf parent, EditableMovieLayerConf child) {
