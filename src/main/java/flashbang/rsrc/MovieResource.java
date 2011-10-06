@@ -3,8 +3,9 @@
 // Copyright (C) 2011 Three Rings Design, Inc., All Rights Reserved
 // http://github.com/threerings/flashbang-playn
 
-package flashbang.anim.rsrc;
+package flashbang.rsrc;
 
+import flashbang.anim.rsrc.MovieConf;
 import com.google.common.base.Preconditions;
 
 import playn.core.Json;
@@ -12,12 +13,10 @@ import playn.core.Json;
 import flashbang.Flashbang;
 import flashbang.anim.Movie;
 import flashbang.anim.rsrc.EditableMovieConf;
-import flashbang.rsrc.Resource;
-import flashbang.rsrc.ResourceFactory;
 
 public class MovieResource extends Resource
 {
-    public static final String TYPE = "model";
+    public static final String TYPE = "movie";
 
     public static final ResourceFactory FACTORY = new ResourceFactory() {
         @Override public Resource create (String name, Json.Object json) {

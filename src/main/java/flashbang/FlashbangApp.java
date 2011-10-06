@@ -20,6 +20,7 @@ import playn.core.Pointer;
 import playn.core.SurfaceLayer;
 
 import flashbang.rsrc.ImageResource;
+import flashbang.rsrc.MovieResource;
 import flashbang.rsrc.SoundResource;
 
 import static playn.core.PlayN.graphics;
@@ -31,6 +32,7 @@ public abstract class FlashbangApp
     {
         Flashbang.registerApp(this);
         Flashbang.rsrcs().registerFactory(ImageResource.TYPE, ImageResource.FACTORY);
+        Flashbang.rsrcs().registerFactory(MovieResource.TYPE, MovieResource.FACTORY);
         Flashbang.rsrcs().registerFactory(SoundResource.TYPE, SoundResource.FACTORY);
     }
 
