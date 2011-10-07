@@ -5,8 +5,17 @@
 
 package flashbang;
 
+import com.google.common.base.Function;
+
 public final class GameObjectRef
 {
+    public static final Function<GameObjectRef, GameObject> TO_OBJECT =
+        new Function<GameObjectRef, GameObject>() {
+            @Override public GameObject apply (GameObjectRef ref) {
+                return ref.obj();
+            }
+        };
+
     /**
      * Returns the GameObjectRef for the given GameObject, or a null ref if the object is null.
      */

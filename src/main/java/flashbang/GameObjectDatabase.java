@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import playn.core.GroupLayer;
+import react.ConnectionGroup;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
@@ -19,8 +19,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import flashbang.components.LayerComponent;
-
-import react.ConnectionGroup;
 
 public class GameObjectDatabase
 {
@@ -150,13 +148,8 @@ public class GameObjectDatabase
             return Collections.emptyList();
         }
 
-        List<GameObject> objs = Lists.transform(refs, new Function<GameObjectRef, GameObject>() {
-            @Override public GameObject apply (GameObjectRef ref) {
-                return ref.obj();
-            }
-        });
-
-        return Iterables.filter(objs, Predicates.notNull());
+        return Iterables.filter(Iterables.transform(refs, GameObjectRef.TO_OBJECT),
+            Predicates.notNull());
     }
 
     /**
