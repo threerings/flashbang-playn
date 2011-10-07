@@ -10,7 +10,6 @@ import java.util.Map;
 import playn.core.Json;
 
 import react.RMap;
-import react.Value;
 
 import tripleplay.util.JsonUtil;
 

@@ -5,7 +5,6 @@
 
 package flashbang.anim.rsrc;
 
-import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -15,7 +14,6 @@ import com.google.common.collect.Multimap;
 
 import playn.core.GroupLayer;
 import playn.core.Json;
-import playn.core.Layer;
 import playn.core.PlayN;
 
 import react.RList;

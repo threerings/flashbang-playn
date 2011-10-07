@@ -11,7 +11,6 @@ import java.util.Map;
 import com.google.common.collect.Multimap;
 
 import playn.core.GroupLayer;
-import playn.core.ImageLayer;
 import playn.core.Json;
 import playn.core.Layer;
 import playn.core.PlayN;
