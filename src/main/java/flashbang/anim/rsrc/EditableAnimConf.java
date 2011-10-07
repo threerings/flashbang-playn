@@ -12,13 +12,16 @@ import playn.core.Json;
 import react.RMap;
 import react.Value;
 
+import tripleplay.util.JsonUtil;
+
 public class EditableAnimConf implements AnimConf
 {
     public final RMap<KeyframeType, EditableKeyframeConf> keyframes = RMap.create();
 
     public EditableAnimConf () {
         for (KeyframeType kt : KeyframeType.values()) {
-            keyframes.put(kt, new EditableKeyframeConf(0, kt.defaultValue, null));
+            keyframes.put(kt,
+                new EditableKeyframeConf(0, kt.defaultValue, InterpolatorType.LINEAR, null));
         }
     }
 
@@ -28,7 +31,9 @@ public class EditableAnimConf implements AnimConf
         for (String type : keyframes.getKeys()) {
             KeyframeType kt = KeyframeType.valueOf(type);
             for (Json.Object kfObj : keyframes.getArray(type, Json.Object.class)) {
-                add(kt, kfObj.getInt("frame"), (float)kfObj.getNumber("value"));
+                add(kt, kfObj.getInt("frame"), (float)kfObj.getNumber("value"),
+                    JsonUtil.getEnum(kfObj, "interp", InterpolatorType.class,
+                        InterpolatorType.LINEAR));
             }
         }
     }
@@ -44,13 +49,14 @@ public class EditableAnimConf implements AnimConf
         return max;
     }
 
-    public void add (KeyframeType kt, int frame, float value) {
+    public void add (KeyframeType kt, int frame, float value, InterpolatorType interp) {
         EditableKeyframeConf kf = keyframes.get(kt);
         while (kf.next() != null && kf.frame() < frame) { kf = kf.next.get(); }
         if (kf.frame() != frame) {
-            kf.next.update(new EditableKeyframeConf(frame, value, kf.next.get()));
+            kf.next.update(new EditableKeyframeConf(frame, value, interp, kf.next.get()));
         } else {
             kf.value.update(value);
+            kf.interpolator.update(interp);
         }
     }
 
@@ -64,7 +70,8 @@ public class EditableAnimConf implements AnimConf
             for (; kf != null; kf = kf.next.get()) {
                 writer.object().
                     key("frame").value(kf.frame()).
-                    key("value").value(kf.value()).endObject();
+                    key("value").value(kf.value()).
+                    key("interp").value(kf.interpolator.get().name()).endObject();
             }
             writer.endArray();
         }

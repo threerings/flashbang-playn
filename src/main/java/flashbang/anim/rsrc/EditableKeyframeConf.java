@@ -14,20 +14,23 @@ public class EditableKeyframeConf implements KeyframeConf
     public final Value<Integer> frame;
     public final Value<Float> value;
     public final Value<EditableKeyframeConf> next;
+    public final Value<InterpolatorType> interpolator;
 
-    public EditableKeyframeConf (int frame, float value, EditableKeyframeConf next) {
+    public EditableKeyframeConf (int frame, float value, InterpolatorType interp,
+        EditableKeyframeConf next) {
         this.value = Value.create(value);
         this.frame = Value.create(frame);
+        this.interpolator = Value.create(interp);
         this.next = Value.create(next);
     }
 
     @Override public int frame () { return frame.get(); }
     @Override public float value () { return value.get(); }
-    @Override public Interpolator interpolator () { return Interpolator.LINEAR; }
-    @Override public KeyframeConf next () { return next.get(); }
+    @Override public Interpolator interpolator () { return interpolator.get().interp; }
+    @Override public EditableKeyframeConf next () { return next.get(); }
 
-    @Override public KeyframeConf find (int frame) {
-        KeyframeConf kf = this;
+    @Override public EditableKeyframeConf find (int frame) {
+        EditableKeyframeConf kf = this;
         while (kf.next() != null && kf.next().frame() <= frame) { kf = kf.next(); }
         return kf;
     }
