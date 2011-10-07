@@ -84,15 +84,13 @@ public class EditableMovieConf implements MovieConf
     }
 
     public String write () {
-        Json.Writer writer = PlayN.json().newWriter().object().key("movies").array();
+        Json.Writer writer = PlayN.json().newWriter().object();
         write(writer);
-        return writer.endArray().endObject().write();
+        return writer.endObject().write();
     }
 
     public void write (Json.Writer writer) {
-       writer.object().key("name").value(root.name.get());
        root.writeChildren(writer);
-       writer.endObject();
     }
 
     protected final RList.Listener<EditableMovieLayerConf> _treeListener =
