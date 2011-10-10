@@ -5,9 +5,12 @@
 
 package flashbang.anim;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
@@ -63,7 +66,11 @@ public class Movie extends SceneObject
         _playTime = 0;
         _frames = 0;
 
-        for (Animatable anim : _animations.get(name)) {
+        Collection<Animatable> animatables = _animations.get(name);
+        Preconditions.checkState(!Iterables.isEmpty(animatables), "No such animation [name=%s]",
+            name);
+
+        for (Animatable anim : animatables) {
             _layers.add(new LayerState(anim));
             _frames = Math.max(_frames, anim.animation.frames());
         }
