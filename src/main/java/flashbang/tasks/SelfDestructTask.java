@@ -10,21 +10,18 @@ import flashbang.ObjectTask;
 
 public class SelfDestructTask extends ObjectTask
 {
-    @Override
-    public void init (GameObject obj)
+    @Override public void init (GameObject obj)
     {
         _obj = obj;
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         _obj.destroySelf();
         return true;
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new SelfDestructTask();
     }

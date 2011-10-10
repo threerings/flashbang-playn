@@ -15,14 +15,12 @@ public abstract class TimedTask extends ObjectTask
         _totalTime = time;
     }
 
-    @Override
-    public void init (GameObject obj)
+    @Override public void init (GameObject obj)
     {
         // nada
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         _elapsedTime += dt;
         return (_elapsedTime >= _totalTime);

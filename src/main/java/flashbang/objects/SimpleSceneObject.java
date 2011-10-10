@@ -16,8 +16,7 @@ public class SimpleSceneObject extends SceneObject
         _layer = layer;
     }
 
-    @Override
-    public Layer layer ()
+    @Override public Layer layer ()
     {
         return _layer;
     }

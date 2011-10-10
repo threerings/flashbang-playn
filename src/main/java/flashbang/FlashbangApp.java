@@ -83,8 +83,7 @@ public abstract class FlashbangApp
        return getViewport(Viewport.DEFAULT);
    }
 
-   @Override
-   public void init ()
+   @Override public void init ()
    {
        Point screenSize = screenSize();
        graphics().setSize(screenSize.x, screenSize.y);
@@ -116,8 +115,7 @@ public abstract class FlashbangApp
        return 0;
    }
 
-   @Override
-   public void update (float deltaMillis)
+   @Override public void update (float deltaMillis)
    {
        // We do our work in seconds
        float dt = deltaMillis * 0.001f;
@@ -136,13 +134,11 @@ public abstract class FlashbangApp
        }
    }
 
-   @Override
-   public void paint (float alpha)
+   @Override public void paint (float alpha)
    {
    }
 
-   @Override
-   public void onPointerStart (final Pointer.Event event)
+   @Override public void onPointerStart (final Pointer.Event event)
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
@@ -151,8 +147,7 @@ public abstract class FlashbangApp
        });
    }
 
-   @Override
-   public void onPointerEnd (final Pointer.Event event)
+   @Override public void onPointerEnd (final Pointer.Event event)
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
@@ -161,8 +156,7 @@ public abstract class FlashbangApp
        });
    }
 
-   @Override
-   public void onPointerDrag (final Pointer.Event event)
+   @Override public void onPointerDrag (final Pointer.Event event)
    {
        dispatchToTopAppModes(new AppModeOp() {
            @Override public void apply (AppMode mode) {
@@ -171,8 +165,7 @@ public abstract class FlashbangApp
        });
    }
 
-   @Override
-   public final int updateRate ()
+   @Override public final int updateRate ()
    {
        return (desiredFramerate() > 0 ? 1000 / desiredFramerate() : 0);
    }

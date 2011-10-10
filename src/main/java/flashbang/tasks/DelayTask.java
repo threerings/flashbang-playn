@@ -14,8 +14,7 @@ public class DelayTask extends TimedTask
         super(time);
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new DelayTask(_totalTime);
     }

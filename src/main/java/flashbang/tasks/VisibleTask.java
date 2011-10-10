@@ -26,8 +26,7 @@ public class VisibleTask extends ObjectTask
         this(null, visible);
     }
 
-    @Override
-    public void init (GameObject obj)
+    @Override public void init (GameObject obj)
     {
         if (_layer != null) {
             _target = new LayerWrapper(_layer);
@@ -38,15 +37,13 @@ public class VisibleTask extends ObjectTask
         }
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         _target.setVisible(_visible);
         return true;
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new VisibleTask(_layer, _visible);
     }

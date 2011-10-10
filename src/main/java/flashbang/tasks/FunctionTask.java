@@ -15,21 +15,18 @@ public class FunctionTask extends ObjectTask
         _runnable = runnable;
     }
 
-    @Override
-    public void init (GameObject obj)
+    @Override public void init (GameObject obj)
     {
         // nada
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         _runnable.run();
         return true;
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new FunctionTask(_runnable);
     }

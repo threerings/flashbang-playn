@@ -39,8 +39,7 @@ public class AlphaTask extends InterpolatingTask
         this(null, alpha, time, Interpolator.LINEAR);
     }
 
-    @Override
-    public void init (GameObject obj)
+    @Override public void init (GameObject obj)
     {
         if (_layer != null) {
             _target = new LayerWrapper(_layer);
@@ -51,8 +50,7 @@ public class AlphaTask extends InterpolatingTask
         }
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         if (_elapsedTime == 0) {
             _fromAlpha = _target.alpha();
@@ -65,8 +63,7 @@ public class AlphaTask extends InterpolatingTask
         return (_elapsedTime >= _totalTime);
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new AlphaTask(_layer, _toAlpha, _totalTime, _interp);
     }

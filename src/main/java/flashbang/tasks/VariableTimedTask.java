@@ -23,8 +23,7 @@ public class VariableTimedTask extends TimedTask
         _rands = rands;
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new VariableTimedTask(_minTime, _maxTime, _rands);
     }

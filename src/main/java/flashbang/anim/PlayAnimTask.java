@@ -28,16 +28,14 @@ public class PlayAnimTask extends ObjectTask
         this(name, Complete.ANIM_FINISHED);
     }
 
-    @Override
-    public void init (GameObject target)
+    @Override public void init (GameObject target)
     {
         Preconditions.checkArgument(target instanceof Movie,
             "PlayAnimTask must be applied to Movie");
         _obj = (Movie) target;
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         if (!_started) {
             _started = true;
@@ -47,8 +45,7 @@ public class PlayAnimTask extends ObjectTask
         return (_complete == Complete.IMMEDIATE ? true: _obj.frame() == _obj.frames() - 1);
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new PlayAnimTask(_name, _complete);
     }

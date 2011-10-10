@@ -40,8 +40,7 @@ public class LocationTask extends InterpolatingTask
         this(null, x, y, time, Interpolator.LINEAR);
     }
 
-    @Override
-    public void init (GameObject obj)
+    @Override public void init (GameObject obj)
     {
         if (_layer != null) {
             _target = new LayerWrapper(_layer);
@@ -52,8 +51,7 @@ public class LocationTask extends InterpolatingTask
         }
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         if (_elapsedTime == 0) {
             _fromX = _target.x();
@@ -68,8 +66,7 @@ public class LocationTask extends InterpolatingTask
         return (_elapsedTime >= _totalTime);
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new LocationTask(_layer, _toX, _toY, _totalTime, _interp);
     }

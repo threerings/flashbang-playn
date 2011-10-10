@@ -14,8 +14,7 @@ public class ParallelTask extends TaskContainer
         super(Type.PARALLEL, subtasks);
     }
 
-    @Override
-    protected TaskContainer createClone ()
+    @Override protected TaskContainer createClone ()
     {
         return new ParallelTask();
     }

@@ -51,8 +51,7 @@ public abstract class TaskContainer extends ObjectTask
         return (_activeTaskCount > 0);
     }
 
-    @Override
-    public void init (GameObject target)
+    @Override public void init (GameObject target)
     {
         _target = target;
         for (int ii = 0, ll = _tasks.size(); ii < ll; ii++) {
@@ -63,8 +62,7 @@ public abstract class TaskContainer extends ObjectTask
         }
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         _invalidated = false;
 
@@ -113,8 +111,7 @@ public abstract class TaskContainer extends ObjectTask
         return (0 == _activeTaskCount);
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         TaskContainer theClone = createClone();
         initClone(theClone);

@@ -26,8 +26,7 @@ public class DepthTask extends ObjectTask
         this(null, depth);
     }
 
-    @Override
-    public void init (GameObject obj)
+    @Override public void init (GameObject obj)
     {
         if (_layer != null) {
             _target = new LayerWrapper(_layer);
@@ -38,15 +37,13 @@ public class DepthTask extends ObjectTask
         }
     }
 
-    @Override
-    public boolean update (float dt)
+    @Override public boolean update (float dt)
     {
         _target.setDepth(_toDepth);
         return true;
     }
 
-    @Override
-    public ObjectTask clone ()
+    @Override public ObjectTask clone ()
     {
         return new DepthTask(_layer, _toDepth);
     }

@@ -35,8 +35,7 @@ public class LoadableBatch extends Loadable
         _allLoadables.add(loadable);
     }
 
-    @Override
-    protected void doLoad ()
+    @Override protected void doLoad ()
     {
         if (_allLoadables.isEmpty()) {
             // We don't have anything to load

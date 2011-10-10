@@ -14,8 +14,7 @@ public class RepeatingTask extends TaskContainer
         super(Type.REPEATING, subtasks);
     }
 
-    @Override
-    protected TaskContainer createClone ()
+    @Override protected TaskContainer createClone ()
     {
         return new RepeatingTask();
     }
