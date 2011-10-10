@@ -40,6 +40,11 @@ public class EditableMovieConf implements MovieConf
     public EditableMovieConf (Json.TypedArray<Json.Object> children) {
         this();
         root.addChildren(children);
+        // Initialize our list of animations
+        if (!root.children.isEmpty()) {
+            animations.clear();
+            animations.addAll(root.children.get(0).animations.keySet());
+        }
     }
 
     public void add (EditableMovieGroupLayerConf parent, EditableMovieLayerConf child) {
