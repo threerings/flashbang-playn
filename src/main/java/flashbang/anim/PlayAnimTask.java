@@ -12,20 +12,20 @@ import flashbang.ObjectTask;
 
 public class PlayAnimTask extends ObjectTask
 {
-    public static enum Completion {
-        ANIM_COMPLETE,
-        IMMEDIATELY
+    public static enum Complete {
+        ANIM_FINISHED,
+        IMMEDIATE
     }
 
-    public PlayAnimTask (String name, Completion completion)
+    public PlayAnimTask (String name, Complete complete)
     {
         _name = name;
-        _completion = completion;
+        _complete = complete;
     }
 
     public PlayAnimTask (String name)
     {
-        this(name, Completion.ANIM_COMPLETE);
+        this(name, Complete.ANIM_FINISHED);
     }
 
     @Override
@@ -44,18 +44,17 @@ public class PlayAnimTask extends ObjectTask
             _obj.play(_name);
         }
 
-        // Complete when we get to the last frame
-        return _obj.frame() == _obj.frames() - 1;
+        return (_complete == Complete.IMMEDIATE ? true: _obj.frame() == _obj.frames() - 1);
     }
 
     @Override
     public ObjectTask clone ()
     {
-        return new PlayAnimTask(_name, _completion);
+        return new PlayAnimTask(_name, _complete);
     }
 
     protected final String _name;
-    protected final Completion _completion;
+    protected final Complete _complete;
     protected Movie _obj;
     protected boolean _started;
 }
