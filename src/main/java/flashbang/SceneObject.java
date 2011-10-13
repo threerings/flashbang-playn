@@ -61,24 +61,24 @@ public abstract class SceneObject extends GameObject
     public void setVisible (boolean visible) { layer().setVisible(visible); }
 
     // Utility functions
-    public Point screenToLocal (IPoint screen, Point result)
+    public Point screenToLayer (IPoint screen, Point result)
     {
         return Layer.Util.screenToLayer(layer(), screen, result);
     }
 
-    public Point screenToLocal (IPoint screen)
+    public Point screenToLayer (IPoint screen)
     {
-        return screenToLocal(screen, new Point());
+        return screenToLayer(screen, new Point());
     }
 
-    public Point localToScreen (IPoint local, Point result)
+    public Point layerToScreen (IPoint local, Point result)
     {
         return Layer.Util.layerToScreen(layer(), local, result);
     }
 
-    public Point localToScreen (IPoint local)
+    public Point layerToScreen (IPoint local)
     {
-        return localToScreen(local, new Point());
+        return layerToScreen(local, new Point());
     }
 
     @Override protected void cleanup ()
