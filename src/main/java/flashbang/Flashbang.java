@@ -50,7 +50,7 @@ public class Flashbang
 
     /**
      * Sets the currently-active GameObjectDatabase and runs the supplied Runnable.
-     * All calls to Flashbang.gameObjectDatabase() from within the supplied Runnable will return
+     * All calls to Flashbang.objectDatabase() from within the supplied Runnable will return
      * the supplied db.
      */
     public static void withinObjectDatabase (GameObjectDatabase db, Runnable runnable)
