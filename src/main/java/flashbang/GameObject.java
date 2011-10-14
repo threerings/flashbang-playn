@@ -79,24 +79,16 @@ public class GameObject
     /** Adds a named task to this GameObject. */
     public void addTask (String name, ObjectTask task)
     {
-        addTask(name, task, false);
+        addNamedTask(name, task, false);
     }
 
     /**
-     * Adds a named task to this GameObject.
-     * @param removeExistingTasksWithName if true, all tasks with the given name are removed
-     * from the GameObject first
+     * Adds a named task to this GameObject. If there's an existing task with the same name,
+     * it will be removed.
      */
-    public void addTask (String name, ObjectTask task, boolean removeExistingTasksWithName)
+    public void replaceTask (String name, ObjectTask task)
     {
-        Preconditions.checkArgument(!name.isEmpty(), "name cannot be empty");
-        TaskContainer tasks = findNamedTaskContainer(name, true);
-
-        if (removeExistingTasksWithName) {
-            tasks.removeAllTasks();
-        }
-        task.init(this);
-        tasks.addTask(task);
+        addNamedTask(name, task, true);
     }
 
     /** Removes all tasks from the GameObject. */
@@ -282,6 +274,18 @@ public class GameObject
         }
 
         _dependentObjectRefs.add(ref);
+    }
+
+    protected void addNamedTask (String name, ObjectTask task, boolean replace)
+    {
+        Preconditions.checkArgument(!name.isEmpty(), "name cannot be empty");
+        TaskContainer tasks = findNamedTaskContainer(name, true);
+
+        if (replace) {
+            tasks.removeAllTasks();
+        }
+        task.init(this);
+        tasks.addTask(task);
     }
 
     protected ParallelTask findNamedTaskContainer (String name, boolean create)
