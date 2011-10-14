@@ -8,6 +8,7 @@ package flashbang.anim;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
@@ -59,6 +60,8 @@ public class Movie extends SceneObject
     public float framerate () { return 30; }
 
     @Override public GroupLayer layer () { return _root; }
+
+    public Set<String> animationNames () { return _animations.keySet(); }
 
     public void play (String name) {
         _stopped = false;
