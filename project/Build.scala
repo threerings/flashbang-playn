@@ -22,7 +22,7 @@ object FlashbangBuild extends Build {
 
       autoScalaLibrary := false, // no scala-library dependency
       libraryDependencies ++= locals.libDeps ++ Seq(
-        "com.google.guava" % "guava" % "r09"
+        "com.google.guava" % "guava" % "10.0"
       )
     )
   ))
