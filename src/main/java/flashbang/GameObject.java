@@ -5,6 +5,7 @@
 
 package flashbang;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -383,16 +384,16 @@ public class GameObject
     }
 
     /**
-     * Helper function for implementing getGroups() and getNames() overrides.
+     * Helper function for implementing groups() and names():
+     * <pre><code>
+     * @Override public Iterable<String> groups () {
+     *     return concat(super.groups(), "Foo", "Bar");
+     * }
+     * </code></pre>
      */
-    protected static <T> Iterable<T> concat (T obj, Iterable<T> other)
+    protected static <T> Iterable<T> concat (Iterable<? extends T> other, T... objs)
     {
-        return Iterables.concat(Collections.singleton(obj), other);
-    }
-
-    protected static <T> Iterable<T> concat (T obj1, T obj2, Iterable<T> other)
-    {
-        return Iterables.concat(Collections.singleton(obj1), concat(obj2, other));
+        return Iterables.concat(other, Arrays.asList(objs));
     }
 
     protected static class PendingDependentObject {
