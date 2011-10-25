@@ -49,6 +49,9 @@ public class Movie extends SceneObject
         if (_frame.get() == frame) return;
         draw(frame);
         _frame.update(frame);
+
+        // reset playtime
+        _playTime = (float) _frame.get() / framerate();
     }
 
     public GroupLayer getLayer (String name) { return _exports.get(name); }
