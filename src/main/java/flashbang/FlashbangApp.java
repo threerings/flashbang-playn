@@ -85,14 +85,14 @@ public abstract class FlashbangApp
 
    @Override public void init ()
    {
-       Point screenSize = screenSize();
-       graphics().setSize(screenSize.x, screenSize.y);
+       Point viewSize = viewSize();
+       graphics().setSize(viewSize.x, viewSize.y);
 
        // Create our background
-       SurfaceLayer bg = graphics().createSurfaceLayer(screenSize.x, screenSize.y);
+       SurfaceLayer bg = graphics().createSurfaceLayer(viewSize.x, viewSize.y);
        bg.setDepth(-Float.MAX_VALUE);
        bg.surface().setFillColor(0xffffffff);
-       bg.surface().fillRect(0, 0, screenSize.x, screenSize.y);
+       bg.surface().fillRect(0, 0, viewSize.x, viewSize.y);
        graphics().rootLayer().add(bg);
 
        // Create our default viewport
@@ -103,9 +103,9 @@ public abstract class FlashbangApp
    }
 
    /**
-    * @return the desired screen size
+    * @return the desired size of the game
     */
-   public abstract Point screenSize ();
+   public abstract Point viewSize ();
 
    /**
     * @return the desired framerate (or 0 to run as fast as possible)
