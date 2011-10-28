@@ -104,8 +104,15 @@ public class Movie extends SceneObject
             }
         }
 
-        float x = 0, y = 0, xScale = 1, yScale = 1, xOrigin = 0, yOrigin = 1, rotation = 0,
-              alpha = 1;
+        float x = KeyframeType.X_LOCATION.defaultValue;
+        float y = KeyframeType.Y_LOCATION.defaultValue;
+        float xScale = KeyframeType.X_SCALE.defaultValue;
+        float yScale = KeyframeType.Y_SCALE.defaultValue;
+        float xOrigin = KeyframeType.X_ORIGIN.defaultValue;
+        float yOrigin = KeyframeType.Y_ORIGIN.defaultValue;
+        float rotation = KeyframeType.ROTATION.defaultValue;
+        float alpha = KeyframeType.ALPHA.defaultValue;
+
         // Update our layers
         for (LayerState state : _layers) {
             for (KeyframeType kt : KeyframeType.values()) {
