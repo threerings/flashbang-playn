@@ -11,11 +11,13 @@ import playn.core.GroupLayer;
 import playn.core.PlayN;
 import playn.core.Pointer;
 
+import tripleplay.ui.Interface;
 import tripleplay.util.PointerInput;
 
 public class AppMode extends GameObjectDatabase
 {
     public final PointerInput input = new PointerInput();
+    public final Interface iface = new Interface(input.plistener);
     public final GroupLayer modeLayer = PlayN.graphics().createGroupLayer();
 
     /** Returns the AppMode's FlashbangApp */
@@ -50,17 +52,12 @@ public class AppMode extends GameObjectDatabase
      */
     protected Pointer.Listener pointerListener ()
     {
-        return _plistener;
+        return iface.plistener;
     }
 
-    /**
-     * Assigns a new <code>Pointer.Listener</code> to respond to pointer events in this
-     * AppMode.
-     */
-    protected void setPointerListener (Pointer.Listener listener)
-    {
-        Preconditions.checkNotNull(listener);
-        _plistener = listener;
+    @Override protected void beginUpdate (float dt) {
+        super.beginUpdate(dt);
+        iface.paint(0);
     }
 
     void setupInternal (FlashbangApp app, Viewport viewport)
@@ -98,6 +95,4 @@ public class AppMode extends GameObjectDatabase
     protected Viewport _viewport;
 
     boolean _active;
-
-    private Pointer.Listener _plistener = input.plistener;
 }
