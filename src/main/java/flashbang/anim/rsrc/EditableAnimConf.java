@@ -48,6 +48,15 @@ public class EditableAnimConf implements AnimConf
         return max;
     }
 
+    public boolean hasKeyframe (int frame) {
+        for (KeyframeType kt : KeyframeType.values()) {
+            EditableKeyframeConf kf = keyframes.get(kt);
+            while (kf.next() != null && kf.frame() < frame) { kf = kf.next.get(); }
+            if (kf.frame() == frame) return true;
+        }
+        return false;
+    }
+
     public void add (KeyframeType kt, int frame, float value, InterpolatorType interp) {
         EditableKeyframeConf kf = keyframes.get(kt);
         while (kf.next() != null && kf.frame() < frame) { kf = kf.next.get(); }
