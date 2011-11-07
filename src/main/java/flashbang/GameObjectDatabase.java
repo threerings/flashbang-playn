@@ -285,7 +285,9 @@ public class GameObjectDatabase
         GameObjectRef ref = _listHead;
         while (null != ref) {
             if (ref.isLive()) {
-                ref.obj().cleanupInternal();
+                GameObject obj = ref._obj;
+                ref._obj = null;
+                obj.cleanupInternal();
             }
             ref = ref._next;
         }
