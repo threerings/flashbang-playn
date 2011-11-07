@@ -13,6 +13,7 @@ import com.google.common.collect.Lists;
 import playn.core.GroupLayer;
 import playn.core.PlayN;
 
+import react.Signal;
 import react.UnitSignal;
 
 /**
@@ -23,7 +24,7 @@ public class Viewport
 {
     public static final String DEFAULT = "DefaultViewport";
 
-    public final UnitSignal topModeChanged = new UnitSignal();
+    public final Signal<AppMode> topModeChanged = Signal.create();
     public final UnitSignal destroyed = new UnitSignal();
 
     public Viewport (FlashbangApp app, String name, GroupLayer parentLayer)
@@ -244,7 +245,7 @@ public class Viewport
                     }
                 });
             }
-            this.topModeChanged.emit();
+            this.topModeChanged.emit(topMode);
         }
     }
 
