@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import playn.core.GroupLayer;
+import playn.core.Layer;
 import react.ConnectionGroup;
 
 import com.google.common.base.Preconditions;
@@ -82,6 +83,8 @@ public class GameObjectDatabase
 
         // Attach the object to a GroupLayer
         // (This is purely a convenience - the client is free to do the attaching themselves)
+        Layer layer = ((LayerComponent) obj).layer();
+        Preconditions.checkState(layer != null, "Layer is null");
         parentLayer.add(((LayerComponent) obj).layer());
 
         return addObject(obj);
