@@ -31,6 +31,16 @@ public class TextSceneObject extends SceneObject
         this(text, DEFAULT_FORMAT);
     }
 
+    public TextSceneObject (TextFormat format)
+    {
+        this("", format);
+    }
+
+    public TextSceneObject ()
+    {
+        this("", DEFAULT_FORMAT);
+    }
+
     @Override public Layer layer ()
     {
         return _groupLayer;
