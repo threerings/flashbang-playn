@@ -17,6 +17,7 @@ import tripleplay.util.PointerInput;
 public class AppMode extends GameObjectDatabase
 {
     public final PointerInput input = new PointerInput();
+    public final KeyboardInput keyboard = new KeyboardInput();
     public final Interface iface = new Interface(input.plistener);
     public final GroupLayer modeLayer = PlayN.graphics().createGroupLayer();
 

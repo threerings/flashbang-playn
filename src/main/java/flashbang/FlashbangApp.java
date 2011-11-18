@@ -6,15 +6,19 @@
 package flashbang;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import pythagoras.i.Point;
 
 import playn.core.Game;
 import playn.core.GroupLayer;
+import playn.core.Key;
+import playn.core.Keyboard;
 import playn.core.PlayN;
 import playn.core.Pointer;
 import playn.core.SurfaceLayer;
@@ -26,7 +30,7 @@ import flashbang.rsrc.SoundResource;
 import static playn.core.PlayN.graphics;
 
 public abstract class FlashbangApp
-    implements Game, Pointer.Listener
+    implements Game, Pointer.Listener, Keyboard.Listener
 {
     public FlashbangApp ()
     {
@@ -100,6 +104,7 @@ public abstract class FlashbangApp
 
        // We'll handle all PlayN input events
        PlayN.pointer().setListener(this);
+       PlayN.keyboard().setListener(this);
    }
 
    /**
@@ -165,6 +170,40 @@ public abstract class FlashbangApp
        });
    }
 
+   @Override public void onKeyDown (final Keyboard.Event e)
+   {
+       _downKeys.add(e.key());
+       dispatchToTopAppModes(new AppModeOp() {
+           @Override public void apply (AppMode mode) {
+               mode.keyboard.keyDown.emit(e);
+           }
+       });
+   }
+
+   @Override public void onKeyUp (final Keyboard.Event e)
+   {
+       _downKeys.remove(e.key());
+       dispatchToTopAppModes(new AppModeOp() {
+           @Override public void apply (AppMode mode) {
+               mode.keyboard.keyUp.emit(e);
+           }
+       });
+   }
+
+   @Override public void onKeyTyped (final Keyboard.TypedEvent e)
+   {
+       dispatchToTopAppModes(new AppModeOp() {
+           @Override public void apply (AppMode mode) {
+               mode.keyboard.keyTyped.emit(e);
+           }
+       });
+   }
+
+   public boolean keyDown (Key key)
+   {
+       return _downKeys.contains(key);
+   }
+
    @Override public final int updateRate ()
    {
        return (desiredFramerate() > 0 ? 1000 / desiredFramerate() : 0);
@@ -192,4 +231,5 @@ public abstract class FlashbangApp
 
    protected float _fps;
    protected Map<String, Viewport> _viewports = Maps.newHashMap();
+   protected final Set<Key> _downKeys = Sets.newHashSet();
 }
