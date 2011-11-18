@@ -120,6 +120,14 @@ public abstract class FlashbangApp
        return 0;
    }
 
+   /**
+    * @return true if the specified key is down
+    */
+   public boolean keyDown (Key key)
+   {
+       return _downKeys.contains(key);
+   }
+
    @Override public void update (float deltaMillis)
    {
        // We do our work in seconds
@@ -197,11 +205,6 @@ public abstract class FlashbangApp
                mode.keyboard.keyTyped.emit(e);
            }
        });
-   }
-
-   public boolean keyDown (Key key)
-   {
-       return _downKeys.contains(key);
    }
 
    @Override public final int updateRate ()
