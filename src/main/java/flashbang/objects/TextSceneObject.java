@@ -82,6 +82,16 @@ public class TextSceneObject extends SceneObject
 
     protected void redraw ()
     {
+        // PlayN's text routines don't like empty Strings, so cope with those here.
+        if (_text.isEmpty()) {
+            if (_canvasLayer != null) {
+                _canvasLayer.canvas().clear();
+            }
+            _layoutWidth = 0;
+            _layoutHeight = 0;
+            return;
+        }
+
         TextLayout layout = PlayN.graphics().layoutText(_text, _format);
 
         _layoutWidth = (int) (layout.width() + 0.5f);
