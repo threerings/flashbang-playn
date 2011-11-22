@@ -62,7 +62,7 @@ public class GameObject
     }
 
     /** Removes the GameObject from its parent database. */
-    public void destroySelf ()
+    public final void destroySelf ()
     {
         _parentDb.destroyObject(_ref);
     }
