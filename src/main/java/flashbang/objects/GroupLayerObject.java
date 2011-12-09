@@ -9,7 +9,7 @@ import flashbang.SceneObject;
 
 public class GroupLayerObject extends SceneObject
 {
-    @Override public GroupLayer layer ()
+    @Override public final GroupLayer layer ()
     {
         return _root;
     }
