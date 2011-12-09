@@ -11,8 +11,8 @@ public class GroupLayerObject extends SceneObject
 {
     @Override public GroupLayer layer ()
     {
-        return _layer;
+        return _root;
     }
 
-    protected final GroupLayer _layer = PlayN.graphics().createGroupLayer();
+    protected final GroupLayer _root = PlayN.graphics().createGroupLayer();
 }
