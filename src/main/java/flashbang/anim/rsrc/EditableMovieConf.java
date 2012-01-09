@@ -89,7 +89,7 @@ public class EditableMovieConf implements MovieConf
     public String write () {
         Json.Writer writer = PlayN.json().newWriter().object();
         write(writer);
-        return writer.endObject().write();
+        return writer.end().write();
     }
 
     public void write (Json.Writer writer) {

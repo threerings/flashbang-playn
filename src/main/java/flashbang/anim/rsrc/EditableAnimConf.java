@@ -27,10 +27,10 @@ public class EditableAnimConf implements AnimConf
     public EditableAnimConf (Json.Object obj) {
         this();// Fill in the defaults. They'll be repaced if there's a frame 0 keyframe
         Json.Object keyframes = obj.getObject("keyframes");
-        for (String type : keyframes.getKeys()) {
+        for (String type : keyframes.keys()) {
             KeyframeType kt = KeyframeType.valueOf(type);
             for (Json.Object kfObj : keyframes.getArray(type, Json.Object.class)) {
-                add(kt, kfObj.getInt("frame"), (float)kfObj.getNumber("value"),
+                add(kt, kfObj.getInt("frame"), kfObj.getNumber("value"),
                     JsonUtil.getEnum(kfObj, "interp", InterpolatorType.class,
                         InterpolatorType.LINEAR));
             }
@@ -68,22 +68,23 @@ public class EditableAnimConf implements AnimConf
         }
     }
 
-    public void write (Json.Writer writer) {
-        writer.object().key("keyframes").object();
+    public void write (String key, Json.Writer writer) {
+        writer.object(key).object("keyframes");
         for (Map.Entry<KeyframeType, EditableKeyframeConf> entry : keyframes.entrySet()) {
             EditableKeyframeConf kf = entry.getValue();
             KeyframeType kt = entry.getKey();
             if (kf.next() == null && kf.value() == kt.defaultValue && kf.frame() == 0) continue;
-            writer.key(kt.name()).array();
+            writer.array(kt.name());
             for (; kf != null; kf = kf.next.get()) {
                 writer.object().
-                    key("frame").value(kf.frame()).
-                    key("value").value(kf.value()).
-                    key("interp").value(kf.interpolator.get().name()).endObject();
+                    value("frame", kf.frame()).
+                    value("value", kf.value()).
+                    value("interp", kf.interpolator.get().name()).
+                    end();
             }
-            writer.endArray();
+            writer.end();
         }
-        writer.endObject().endObject();
+        writer.end().end();
     }
 
     @Override public String toString () {

@@ -54,15 +54,15 @@ public class EditableMovieGroupLayerConf extends EditableMovieLayerConf
     }
 
     @Override protected void writeType (Json.Writer writer) {
-        writer.key("type").value("Group");
+        writer.value("type", "Group");
         writeChildren(writer);
     }
 
     protected void writeChildren (Json.Writer writer) {
-        writer.key("children").array();
+        writer.array("children");
         for (EditableMovieLayerConf child : children) {
             child.write(writer);
         }
-        writer.endArray();
+        writer.end();
     }
 }

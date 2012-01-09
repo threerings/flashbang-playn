@@ -27,7 +27,7 @@ public abstract class EditableMovieLayerConf implements MovieLayerConf
     public EditableMovieLayerConf (Json.Object obj) {
         name.update(obj.getString("name"));
         Json.Object anims = obj.getObject("animations");
-        for (String key : anims.getKeys()) {
+        for (String key : anims.keys()) {
             animations.put(key, new EditableAnimConf(anims.getObject(key)));
         }
     }
@@ -37,14 +37,13 @@ public abstract class EditableMovieLayerConf implements MovieLayerConf
     @Override public EditableAnimConf animation (String name) { return animations.get(name); }
 
     public void write (Json.Writer writer) {
-        writer.object().key("name").value(name());
+        writer.object().value("name", name());
         writeType(writer);
-        writer.key("animations").object();
+        writer.object("animations");
         for (Map.Entry<String, EditableAnimConf> entry : animations.entrySet()) {
-            writer.key(entry.getKey());
-            entry.getValue().write(writer);
+            entry.getValue().write(entry.getKey(), writer);
         }
-        writer.endObject().endObject();
+        writer.end().end();
     }
 
     protected abstract void writeType (Json.Writer writer);

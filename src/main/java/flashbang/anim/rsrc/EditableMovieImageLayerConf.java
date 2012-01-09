@@ -36,7 +36,7 @@ public class EditableMovieImageLayerConf extends EditableMovieLayerConf implemen
     }
 
     @Override protected void writeType (Json.Writer writer) {
-        writer.key("type").value("Image");
+        writer.value("type", "Image");
     }
 
     protected ImageResource _imageRsrc;
