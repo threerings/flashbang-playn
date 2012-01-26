@@ -277,7 +277,7 @@ public class Viewport
             index = _modeStack.size() + index;
         }
         index = Math.max(index, 0);
-        index = Math.min(index, _modeStack.size());
+        index = Math.min(index, _modeStack.size() - 1);
 
         // if an active mode is removed, exit it first
         final AppMode mode = _modeStack.get(index);
