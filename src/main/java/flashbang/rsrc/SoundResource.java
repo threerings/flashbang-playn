@@ -34,7 +34,7 @@ public class SoundResource extends Resource
     }
 
     @Override protected void doLoad () {
-        _sound = PlayN.assetManager().getSound(name);
+        _sound = PlayN.assets().getSound(name);
         // sounds currently load immediately
         loadComplete(null);
     }

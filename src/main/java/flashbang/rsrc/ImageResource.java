@@ -62,7 +62,7 @@ public class ImageResource extends Resource
     }
 
     @Override protected void doLoad () {
-        PlayN.assetManager().getImage(name).addCallback(new ResourceCallback<Image>() {
+        PlayN.assets().getImage(name).addCallback(new ResourceCallback<Image>() {
             @Override public void done (Image rsrc) {
                 _image = rsrc;
                 loadComplete(null);

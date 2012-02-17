@@ -29,7 +29,7 @@ public class JsonResource extends Resource
     public Json.Object json () { return _json; }
 
     @Override protected void doLoad () {
-        PlayN.assetManager().getText(name, new ResourceCallback<String>() {
+        PlayN.assets().getText(name, new ResourceCallback<String>() {
             @Override public void done (String text) {
                 _json = PlayN.json().parse(text);
                 loadComplete(null);

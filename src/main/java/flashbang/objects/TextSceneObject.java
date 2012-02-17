@@ -5,8 +5,9 @@
 
 package flashbang.objects;
 
-import playn.core.CanvasLayer;
+import playn.core.CanvasImage;
 import playn.core.GroupLayer;
+import playn.core.ImageLayer;
 import playn.core.Layer;
 import playn.core.PlayN;
 import playn.core.TextFormat;
@@ -84,8 +85,8 @@ public class TextSceneObject extends SceneObject
     {
         // PlayN's text routines don't like empty Strings, so cope with those here.
         if (_text.isEmpty()) {
-            if (_canvasLayer != null) {
-                _canvasLayer.canvas().clear();
+            if (_canvasImage != null) {
+                _canvasImage.canvas().clear();
             }
             _layoutWidth = 0;
             _layoutHeight = 0;
@@ -98,26 +99,29 @@ public class TextSceneObject extends SceneObject
         _layoutHeight = (int) (layout.height() + 0.5f);
 
         // If our dimensions haven't gotten bigger, we can reuse our canvas
-        if (_canvasLayer != null) {
-            if (_canvasLayer.canvas().width() < _layoutWidth ||
-                _canvasLayer.canvas().height() < _layoutHeight) {
-                _canvasLayer.destroy();
-                _canvasLayer = null;
+        if (_canvasImage != null) {
+            if (_canvasImage.canvas().width() < _layoutWidth ||
+                _canvasImage.canvas().height() < _layoutHeight) {
+                _imageLayer.destroy();
+                _imageLayer = null;
+                _canvasImage = null;
             } else {
-                _canvasLayer.canvas().clear();
+                _canvasImage.canvas().clear();
             }
         }
 
-        if (_canvasLayer == null) {
-            _canvasLayer = PlayN.graphics().createCanvasLayer(_layoutWidth, _layoutHeight);
-            _groupLayer.add(_canvasLayer);
+        if (_canvasImage == null) {
+            _canvasImage = PlayN.graphics().createImage(_layoutWidth, _layoutHeight);
+            _imageLayer = PlayN.graphics().createImageLayer(_canvasImage);
+            _groupLayer.add(_imageLayer);
         }
 
-        _canvasLayer.canvas().drawText(layout, 0, 0);
+        _canvasImage.canvas().drawText(layout, 0, 0);
     }
 
     protected final GroupLayer _groupLayer;
-    protected CanvasLayer _canvasLayer;
+    protected ImageLayer _imageLayer;
+    protected CanvasImage _canvasImage;
     protected String _text;
     protected TextFormat _format;
     protected int _layoutWidth;

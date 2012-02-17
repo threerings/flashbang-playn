@@ -31,7 +31,7 @@ public class ResourceFile extends ResourceBatch
 
     @Override public void doLoad () {
         // First, load the file
-        PlayN.assetManager().getText(_filename, new ResourceCallback<String>() {
+        PlayN.assets().getText(_filename, new ResourceCallback<String>() {
             @Override public void done (String text) {
                 // Parse our Resources from JSON
                 Json.Object json = PlayN.json().parse(text);
