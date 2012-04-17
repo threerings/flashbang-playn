@@ -18,7 +18,7 @@ public class AppMode extends GameObjectDatabase
 {
     public final PointerInput input = new PointerInput();
     public final KeyboardInput keyboard = new KeyboardInput();
-    public final Interface iface = new Interface(input.plistener);
+    public final Interface iface = new Interface();
     public final GroupLayer modeLayer = PlayN.graphics().createGroupLayer();
 
     /** Returns the AppMode's FlashbangApp */
@@ -53,7 +53,7 @@ public class AppMode extends GameObjectDatabase
      */
     protected Pointer.Listener pointerListener ()
     {
-        return iface.plistener;
+        return input.plistener;
     }
 
     @Override protected void beginUpdate (float dt) {
